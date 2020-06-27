@@ -1,0 +1,44 @@
+
+General Information
+  This is the algorithm for a program that given the clock in time,
+  clock out time and any breaks will calculate the amount of time worked.
+  This program stores the time internally as minutes since midnight (0:00),
+  because of this there are three formula's used to convert time into this format
+  and then out to hours and minutes. These are the following formulas:
+  
+  Converting from a time in Hours:Minutes format:
+    (Hours * 60) + Minutes = time
+  Converting from minutes since midnight to minutes in the hour:
+    time % 60 = minutes
+  Converting from minutes since midnight to get the hour:
+    floor(time / 60) = hours
+Steps
+  Step 1 - Welcome the user
+    1. Print out general information about the program to the user
+  Step 2 - Prompt user for the clock in time
+    1. Print out a message prompting the user to enter when the shift started.
+    2. Repeat back the entered time and ask the user if the entered value is correct.
+    3. If the user says "no" repeat step 2, otherwise continue
+    4. Take the entered value and use the (Hours * 60) + Minutes equation and store that value in the clock variable.
+  Step 3 - Prompt user for if there was another break
+    1. Ask the user if there are any breaks to be inputted
+    2. If the user said "no" move to step 5, otherwise continue
+    3. move to step 4
+  Step 4 - Handle a new Break
+    1. Prompt user for the break start time
+    2. Prompt user for the break end time
+    3. Ask the user if the inputted times are correct
+    4. If not, repeat this step, otherwise, continue
+    5. Calculate time difference. Store the result to the variable holding the total time spent in breaks, using the same conversion equation (Hours * 60) + Minutes
+  Step 5 - Handle clock out
+    1. Prompt user for the clock out time
+    2. Ask the user if the inputted time is correct
+    3. If not, repeat this step
+    4. Otherwise use the conversion equation to store the time inputted
+  Step 6 - Calculate and print time report
+    1. Get the difference between the clock in and clock out variables
+    2. Print out the time worked without taking breaks into account, using the two conversion formulas to get the hours and minutes into an easily printable form
+    3. Subtract the total time spent in a break from the total time
+    4. Print the result of the last substep using the two conversion formulas to get the hours and minutes into an easily printable form
+  Step 7 - Terminate The Program
+    1. Exit the program
