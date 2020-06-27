@@ -4,7 +4,7 @@
  * CS162
  *
  * This program prompts the user to enter in when their shift starts, any breaks
- * that may of happened, and then there clock out time. It then prints out a
+ * that may of happened, and then their clock out time. It then prints out a
  * small report on how much time they worked.
 */
 
@@ -34,11 +34,13 @@ int getTime(string message) {
   do {
     // Prompting for input
     cout << message;
-    cin >> tempHour >> tempDivider >> tempMinute;
+    cin >> tempHour >> tempDivider >> tempMinute; // get the time like 9:00 as an example
+    cin.ignore(100, '\n'); // clear input buffer
 
     // Confirmation
     cout << "You entered: " << tempHour << ":" << tempMinute << ", is that value correct? [yes/no]: ";
     cin >> confirmation;
+    cin.ignore(100, '\n'); // clear input buffer
   } while("yes" != confirmation);
 
   return (tempHour * 60) + tempMinute;
@@ -84,10 +86,10 @@ void printTimeReport(int timeWorked, int breakTime) {
 void printTimeNotes(int timeWorked) {
   cout << endl << "================================ Notes ================================" << endl;
   
-  if(floor(timeWorked / 60) > 6)
+  if(floor(timeWorked / 60) > 6) // get the hours worked and check if they're over 6
     cout << "You should've taken a lunch break." << endl;
 
-  if(floor(timeWorked / 60) > 8)
+  if(floor(timeWorked / 60) > 8) // get the hours worked and check if they're over 8
     cout << "You should be careful about overtime, be sure to have authorization from your boss." << endl;
   
   cout << "============================ End of Notes =============================" << endl << endl;
@@ -97,7 +99,7 @@ void printTimeNotes(int timeWorked) {
 
 int main(void) {
   int clockInTime = 0, clockOutTime = 0; // These two hold the clock in time and the clock out time of the user
-  int breakTime = 0; // breakTime holds the amount of break time the user enteried
+  int breakTime = 0; // breakTime holds the amount of break time the user entered
   string confirmation = ""; // Used for confirming a user submission
   
   // welcome user
@@ -112,6 +114,7 @@ int main(void) {
   do {
     cout << "Is there a break to be inputted? [yes/no]: ";
     cin >> confirmation;
+    cin.ignore(100, '\n'); // clear input buffer
 
     if("yes" == confirmation) {
       // prompt the user for the start and end
