@@ -2,6 +2,10 @@
  * Jack Thake
  * June 27, 2020
  * CS162
+ *
+ * This program prompts the user to enter in when their shift starts, any breaks
+ * that may of happened, and then there clock out time. It then prints out a
+ * small report on how much time they worked.
 */
 
 #include <cmath>
@@ -96,6 +100,10 @@ int main(void) {
   int breakTime = 0; // breakTime holds the amount of break time the user enteried
   string confirmation = ""; // Used for confirming a user submission
   
+  // welcome user
+  cout << "Welcome to the hour tracking software, please input the correct times in 24 hour formatting when prompted.";
+  cout << endl << "The program will then print a report to the screen displaying how much time you worked." << endl << endl;
+
   // get the shift start
   clockInTime = getTime("Please enter your clock in time: "); 
   cout << endl;
