@@ -27,9 +27,9 @@ using namespace std;
  *               since midnight.
 */
 int getTime(string message) {
-  int tempHour, tempMinute;
-  char tempDivider;
-  string confirmation; 
+  int tempHour, tempMinute; // tempHour holds the hour inputted, ie 8 or 15 etc, tempMinute holds the minute in the hour, ie 15 or 35 etc
+  char tempDivider; // used to capture the ':' character when the times are inputted
+  string confirmation; // holds the user's responce when being asked for confirmation 
 
   do {
     // Prompting for input
@@ -43,7 +43,7 @@ int getTime(string message) {
     cin.ignore(100, '\n'); // clear input buffer
   } while("yes" != confirmation);
 
-  return (tempHour * 60) + tempMinute;
+  return (tempHour * 60) + tempMinute; // convert the hours to minutes and add the minutes in the hour, then return
 }
 
 
@@ -63,6 +63,13 @@ int getTime(string message) {
 void printTimeReport(int timeWorked, int breakTime) {
   int grossTimeWorked = timeWorked; // without taking breaktime away
   int netTimeWorked = timeWorked - breakTime; // with taking breaktime away
+
+  /*
+   * Now we print the time report
+   *
+   * floor(time / 60) = hours
+   * time % 60 = minutes in the hour
+  */
 
   cout << endl << "============================= Time Report =============================" << endl;
   cout << "Gross Time Worked: " << floor(grossTimeWorked / 60) << ":" << grossTimeWorked % 60 << endl;
@@ -117,7 +124,7 @@ int main(void) {
     cin.ignore(100, '\n'); // clear input buffer
 
     if("yes" == confirmation) {
-      // prompt the user for the start and end
+      // prompt the user for the start and end of the break
       int breakStart = getTime("Please enter the time your break started: ");
       int breakEnd = getTime("Please enter the time your break ended: ");
       cout << endl;
