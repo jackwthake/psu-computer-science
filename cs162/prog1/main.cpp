@@ -6,6 +6,8 @@
  * This program prompts the user to enter in when their shift starts, any breaks
  * that may of happened, and then their clock out time. It then prints out a
  * small report on how much time they worked.
+ *
+ * Coded entirely in vim :D
 */
 
 #include <cmath>
