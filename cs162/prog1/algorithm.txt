@@ -1,4 +1,7 @@
-
+Jack Thake
+June 26th, 2020
+CS162 
+ 
 General Information
   This is the algorithm for a program that given the clock in time,
   clock out time and any breaks will calculate the amount of time worked.
