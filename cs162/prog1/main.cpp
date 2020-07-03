@@ -17,6 +17,25 @@ using namespace std;
 
 
 /*
+ * printTime(int hout, int minutes)
+ *
+ * brief: this function takes the hour an minute and prints a formatted time
+ *
+ * hour: holds the hour of the time to be printed
+ * minutes: holds the amount of minutes to be printed
+*/
+void printTime(int hour, int minutes) {
+  cout << hour << ":";
+
+  if(0 == minutes) 
+    cout << "00";
+  else 
+    cout << minutes;
+}
+
+
+
+/*
  * getTime(string message)
  *
  * brief: this function is passed a string holding a prompt that will be printed
@@ -40,10 +59,14 @@ int getTime(string message) {
     cin.ignore(100, '\n'); // clear input buffer
 
     // Confirmation
-    cout << "You entered: " << tempHour << ":" << tempMinute << ", is that value correct? [yes/no]: ";
+    cout << "You entered: ";
+    printTime(tempHour, tempMinute); // print the formatted time back to the user for confirmation
+    cout << ", is that value correct? [yes/no]: ";
+    
+    // recieve the confirmation from the user
     cin >> confirmation;
     cin.ignore(100, '\n'); // clear input buffer
-  } while("yes" != confirmation);
+  } while("yes" != confirmation); // exit when the user confirms the input
 
   return (tempHour * 60) + tempMinute; // convert the hours to minutes and add the minutes in the hour, then return
 }
@@ -74,9 +97,21 @@ void printTimeReport(int timeWorked, int breakTime) {
   */
 
   cout << endl << "============================= Time Report =============================" << endl;
-  cout << "Gross Time Worked: " << floor(grossTimeWorked / 60) << ":" << grossTimeWorked % 60 << endl;
-  cout << "Net Time Worked: " << floor(netTimeWorked / 60) << ":" << netTimeWorked % 60 << endl;
-  cout << "Time Spent in Break: " << floor(breakTime / 60) << ":" << breakTime % 60 << endl;
+
+  cout << "All times in Hour:Minute." << endl;
+
+  cout << "Gross Time Worked: ";
+  printTime(floor(grossTimeWorked / 60), grossTimeWorked % 60); // print the formatted time
+  cout << endl;
+
+  cout << "Net Time Worked: ";
+  printTime(floor(netTimeWorked / 60), netTimeWorked % 60); // print the formatted time
+  cout << endl;
+  
+  cout << "Time spent in breaks(s): ";
+  printTime(floor(breakTime / 60), breakTime % 60); // print the formatted time
+  cout << endl;
+
   cout << "========================= End of Time Report ==========================" << endl;
 }
 
@@ -134,7 +169,7 @@ int main(void) {
       // get the length of the break and add it to the breakTime counter
       breakTime += breakEnd - breakStart;
     } 
-  } while("no" != confirmation);
+  } while("no" != confirmation); // loop until the user is done inputting breaks
 
   // get the shift end
   clockOutTime = getTime("Please enter your clock out time: "); 
