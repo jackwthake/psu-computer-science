@@ -10,28 +10,21 @@
  * Coded entirely in vim :D
 */
 
-#include <cmath>
+#include <cmath> // used for floor()
 #include <iostream>
 using namespace std;
 
-
-
 /*
- * printTime(int hout, int minutes)
- *
- * brief: this function takes the hour an minute and prints a formatted time
- *
- * hour: holds the hour of the time to be printed
- * minutes: holds the amount of minutes to be printed
+ * Function Prototypes
 */
-void printTime(int hour, int minutes) {
-  cout << hour << ":";
 
-  if(0 == minutes) 
-    cout << "00";
-  else 
-    cout << minutes;
-}
+// Input functions
+int getTime(string message);
+
+// Output functions
+void printTime(int hour, int minutes);
+void printTimeReport(int timeWorked, int breakTime);
+void printTimeNotes(int timeWorked);
 
 
 
@@ -69,6 +62,25 @@ int getTime(string message) {
   } while("yes" != confirmation); // exit when the user confirms the input
 
   return (tempHour * 60) + tempMinute; // convert the hours to minutes and add the minutes in the hour, then return
+}
+
+
+
+/*
+ * printTime(int hout, int minutes)
+ *
+ * brief: this function takes the hour an minute and prints a formatted time
+ *
+ * hour: holds the hour of the time to be printed
+ * minutes: holds the amount of minutes to be printed
+ */
+void printTime(int hour, int minutes) {
+  cout << hour << ":";
+  
+  if(0 == minutes)
+    cout << "00";
+  else
+    cout << minutes;
 }
 
 
@@ -180,5 +192,6 @@ int main(void) {
   // Print notes on worked time
   printTimeNotes(clockOutTime - clockInTime);
 
+  // return to operating system
   return 0;
 }
