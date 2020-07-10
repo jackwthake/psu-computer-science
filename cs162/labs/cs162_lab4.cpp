@@ -11,8 +11,7 @@ void get_user_input(const char prompt[], float &result);
 void get_user_prices(float &padding_price, float &carpet_price, float &install_price);
 
 
-int main()
-{
+int main() {
     float width, length, area;
     float carpet_price, padding_price, install_price;
 
