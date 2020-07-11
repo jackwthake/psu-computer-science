@@ -3,4 +3,26 @@ CS162
 July 7th, 2020
 Program 2
 
+This program is a simple puzzle game that has two players and can go no longer
+than 5 rounds. The game starts with player 1 entering a word and then a phrase,
+the word is then imbedded into the passed phrase with the following rules:
+  1. Each word gets one character embedded into it, the nth word gets the nth
+     character, ie. the second character goes in the second words second
+     character, and so on.
+  2. If a word in the player entered phrase is all capitalized we skip the word
+     not embedding any characters into that word.
+  3. If a word is not long enough to embed the current character the word gets
+     skipped and has no character stored in it.
+  4. If a word has a dollar sign infront of it and is long enough, it will have
+     two characters embedded.
 
+------------------ Process ------------------
+Step 1. Prepare variables
+Step 2. Introduce rules to both players
+Step 3. Prompt appropriate player for the secret word and phrase
+Step 4. Hide the word in the phrase
+Step 5. Clear the screen
+Step 6. Get the guessing players input
+Step 7. Compare the guessing players input to the right answer
+Step 8. Check if there are more rounds to be played
+Step 9. Return to the operating system
