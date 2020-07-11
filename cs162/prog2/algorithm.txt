@@ -13,16 +13,43 @@ the word is then imbedded into the passed phrase with the following rules:
      not embedding any characters into that word.
   3. If a word is not long enough to embed the current character the word gets
      skipped and has no character stored in it.
-  4. If a word has a dollar sign infront of it and is long enough, it will have
-     two characters embedded.
+  4. If an underscore is encountered, a random character will be inserted
 
 ------------------ Process ------------------
 Step 1. Prepare variables
+      - We need variables holding which turn it is and the scores of the two
+        players
+      - Will also need variables holding the phrase and word for the current
+        turn, as well as for the individual scores 
 Step 2. Introduce rules to both players
+      - Print out to the players the premise of the game as well as every rule
+        and how the turns work 
 Step 3. Prompt appropriate player for the secret word and phrase
-Step 4. Hide the word in the phrase
-Step 5. Clear the screen
+      - Prompt user for their secret word and store it
+      - Prompt user for their phrase and store it
+Step 4. Clear the screen
+      - Print many new lines, don't use platform specific system calls
+Step 5. Hide the word in the phrase
+      - Separate the phrase into separate words
+      - Loop through all the words looking at one whole word at a time rather
+        than a character at a time
+      - Check each rule individually, if non of them are broken or encountered
+        then we insert the curent character into the word
+      - Then we increment which character in the secret word and the current
+        word in the phrase that we are working with
+      - Continue looping until we run out out of words to use or characters to
+        insert
+      - If we run out of words to insert characters, we throw an error
 Step 6. Get the guessing players input
+      - After displaying the phrase with the imbedded word, prompt them to make
+        their guess
+      - Store their input
 Step 7. Compare the guessing players input to the right answer
+      - If the guessing player is correct then we increment their score
+      - If the guessor is wrong, we increment the non-guessing player's score
 Step 8. Check if there are more rounds to be played
+      - If either score is greator than or equa to 3, then the game is over and
+        a winner is declared.
+      - If not switch wich turn it is and move back to step 3.
 Step 9. Return to the operating system
+      - Return from the program, printing a good bye message.
