@@ -33,8 +33,12 @@ Step 5. Hide the word in the phrase
       - Separate the phrase into separate words
       - Loop through all the words looking at one whole word at a time rather
         than a character at a time
-      - Check each rule individually, if non of them are broken or encountered
-        then we insert the curent character into the word
+      - Check each rule individually
+          - Check if the phrase word is not capitalized (if it is we skip it)
+          - Check if there is enought space in the word to embed a character (if
+            there isn't enough space, we skip it)
+          - If we encounter an underscore, regardless of if it is in a word or
+            not there will be a random character inserted.
       - Then we increment which character in the secret word and the current
         word in the phrase that we are working with
       - Continue looping until we run out out of words to use or characters to
