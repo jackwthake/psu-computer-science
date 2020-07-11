@@ -14,3 +14,7 @@ program2: prog2/main.cpp
 # Labs
 lab4: labs/*lab4.cpp
 	$(CC) $(CXXFLAGS) -o lab4.out  labs/*lab4.cpp
+
+
+clean:
+	rm -rf *.out
