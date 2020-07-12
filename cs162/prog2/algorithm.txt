@@ -13,7 +13,7 @@ the word is then embedded into the passed phrase with the following rules:
   3. If a word is not long enough to embed the current character the word gets skipped and has no character stored in it.
   4. If an underscore is encountered, a random character will be inserted
 
-As an example if the user entered the the word "cat" as the word to be embedded,
+As an example, if the user entered the word "cat" as the word to be embedded,
 and the phrase "hello world, THIS is an_ interest_ng program." the output could
 be "cello warld, this is anG interestyng program."
     ^      ^                   ^
