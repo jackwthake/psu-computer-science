@@ -15,9 +15,14 @@ the word is then embedded into the passed phrase with the following rules:
 
 As an example if the user entered the the word "cat" as the word to be embedded,
 and the phrase "hello world, THIS is an_ interest_ng program." the output could
-be "cello warld, this is anG interestyng program."
+be "cello warld, this is anG interestyng program.", we print the phrase in lowercase as to hide any skipped words
     ^      ^                   ^
     c      a                   t
+
+After we display the converted text, the guessing player makes their guess and a
+point is rewarded if they're right, if not the other player gets a point. Each
+game consists of up to five rounds, each player needing 3 round wins to win the
+game as a whole. The two players switch roles before each new round. 
 
 ------------------ Process ------------------
 Step 1. Prepare variables
