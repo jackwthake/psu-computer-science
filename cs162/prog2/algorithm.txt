@@ -3,6 +3,7 @@ CS162
 July 7th, 2020
 Program 2
 
+------------------ Overview ------------------
 This program is a simple puzzle game that has two players and can go no longer
 than 5 rounds. The game starts with player 1 entering a word and then a phrase,
 the word is then embedded into the passed phrase with the following rules:
