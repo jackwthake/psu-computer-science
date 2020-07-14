@@ -70,7 +70,15 @@ void tokenize_string(const char str[], int str_size, word tokens[]) {
       if(i == str_size - 1 || isblank(str[i + 1])) { /* find the end of the word, respecting the array bounds  */
         tokens[current_word].end_pos = i;
         
-        /* TODO: copy sub string */
+        /* 
+         * Copy the word into the word struct
+        */
+        for(int j = 0; j <= tokens[current_word].end_pos - tokens[current_word].start_pos; ++j) {
+          tokens[current_word].data[j] = str[tokens[current_word].start_pos + j];
+        }
+
+        /* add the terminating null character  */
+        tokens[current_word].data[tokens[current_word].end_pos - tokens[current_word].start_pos + 1] = '\0';
 
         /* get ready for the next word */
         word_started = false;
@@ -87,12 +95,11 @@ int main(void) {
   
   read_into_buffer("Enter something: ", buf, 48);
   cout << buf << endl;
-  cout << strlen(buf) << endl;
 
   tokenize_string(buf, strlen(buf), tokens);
 
   for(int i = 0; i < 12; i++) {
-    cout << tokens[i].start_pos << " " << tokens[i].end_pos << endl;
+    cout << tokens[i].start_pos << " " << tokens[i].end_pos << " " << tokens[i].data << endl;
   }
 
   return EXIT_SUCCESS;
