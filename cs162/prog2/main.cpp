@@ -8,6 +8,7 @@ using namespace std;
 void prompt_user_input(const char *prompt, char *response, unsigned response_length);
 void clear_term();
 char rand_alpha();
+void word_to_lower(char *str);
 
 void introduce_player();
 void embed_word(const char *word, char *phrase);
@@ -17,7 +18,8 @@ const unsigned SECRET_LENGTH = 11;
 const unsigned PHRASE_LENGTH = 101;
 const unsigned MAX_SCORE = 3;
 
-int main(int argc, char **argv) {
+
+int main(void) {
   /* initialise secret_word and phrase */
   char secret_word[SECRET_LENGTH];
   char phrase[PHRASE_LENGTH];
@@ -55,7 +57,7 @@ int main(int argc, char **argv) {
     /* get the guesser's guess */
     prompt_user_input("Guessing player please enter your guess:\n", guess, PHRASE_LENGTH);
 
-    if(strcmp(guess, secret_word) == 0) { /* increment the guessors score if thy're correct */
+    if(strcmp(guess, secret_word) == 0) { /* increment the guessers score if they're correct */
       turn == 1 ? ++player_2_score : ++player_1_score;
       cout << guess << " was correct!" << endl;
     } else {
@@ -127,6 +129,22 @@ char rand_alpha() {
 
 
 /*
+ * void word_to_lower(char *str)
+ *
+ * brief: converts word to fully lowercase
+ *
+ * str: string to be set to all lowercase
+*/
+void word_to_lower(char *str) {
+  unsigned len = strlen(str);
+
+  for (int i = 0; i < len; ++i) {
+    str[i] = tolower(str[i]);
+  }
+}
+
+
+/*
  * void introduce_player()
  *
  * brief: introduces the rules to the players
@@ -134,8 +152,8 @@ char rand_alpha() {
 void introduce_player() {
   cout << "Welcome to word hider!\n"
        << "In this game each player takes turns either guessing or hiding words.\n"
-       << "As a guessor your job is to guess the word the hider has hidden.\n"
-       << "Each round the guessor guesses right there score increases by one and\n"
+       << "As a guesser your job is to guess the word the hider has hidden.\n"
+       << "Each round the guesser guesses right their score increases by one and\n"
        << "the same for the hider, once a player reaches a score of " << MAX_SCORE << " the game ends.\n"
        << "At the end of each round roles are swapped. The rules for how the program\n"
        << "hides words are as follows: \n"
@@ -159,17 +177,18 @@ void introduce_player() {
  * phrase: phrase to hide the word in
 */
 void embed_word(const char *word, char *phrase) {
+  unsigned len = strlen(phrase);
   int counter = 0; /* holds number of characters since the last space */
   int cur_word_char = 0; /* holds the current character needing to be embedded */
   bool has_word_editted = false;
 
   /* loop through string */
-  for (int i = 0; i < strlen(phrase); ++i) {
+  for (unsigned i = 0; i < len; ++i) {
     if(isspace(phrase[i])) { /* check if current char is a space */
       counter = 0; /* reset chars since last space */
       has_word_editted = false; /* reset for the next word */
     } else {
-      if(counter == cur_word_char && !has_word_editted) { /* check if were looking at the right character in the word */
+      if(counter == cur_word_char && !has_word_editted) { /* check if we're looking at the right character in the word */
         if(!isupper(phrase[i])) { /* make sure the character is lowercase */
           phrase[i] = word[cur_word_char]; /* replace the character */
           ++cur_word_char; /* increment which character in the word we're working with */
@@ -184,4 +203,8 @@ void embed_word(const char *word, char *phrase) {
     if(phrase[i] == '_')
       phrase[i] = rand_alpha(); /* set to random character */
   }
+
+  /* convert phrase to lowercase */
+  word_to_lower(phrase);
 }
+
