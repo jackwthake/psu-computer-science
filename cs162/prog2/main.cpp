@@ -55,7 +55,7 @@ int main(void) {
     cout << "Guessing player may now look at the screen.\n\nThe phrase to guess from is:\n"
          << phrase << endl;
     /* get the guesser's guess */
-    prompt_user_input("Guessing player please enter your guess:\n", guess, PHRASE_LENGTH);
+    prompt_user_input("Guessing player please enter your guess:\n", guess, SECRET_LENGTH);
 
     if(strcmp(guess, secret_word) == 0) { /* increment the guessers score if they're correct */
       turn == 1 ? ++player_2_score : ++player_1_score;
