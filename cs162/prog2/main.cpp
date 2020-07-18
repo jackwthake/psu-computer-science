@@ -32,39 +32,46 @@ int main(int argc, char **argv) {
   introduce_player();
 
   while(player_1_score < MAX_SCORE && player_2_score < MAX_SCORE) {
+    /* print out the score and which player should be guessing */
     cout << "Score: P1: " << player_1_score << " | P2: " << player_2_score << " | Round " << round << '\n'
          << "It is currently Player " << turn << "'s turn hiding a word." << endl;
     
+    /* get the secret word from the player */
     sprintf(prompt, "Player %d please enter your secret word while the other player looks away:\n", turn);    
     prompt_user_input(prompt, secret_word, SECRET_LENGTH);
     
+    /* get the phrase from the player */
     sprintf(prompt, "Player %d please enter your phrase while the other player continues to looks away:\n", turn);    
     prompt_user_input(prompt, phrase, PHRASE_LENGTH);
 
+    /* clear the screen */
     clear_term();
-
+    /* embed the word */
     embed_word(secret_word, phrase);
 
+    /* tell guessor the phrase */
     cout << "Guessing player may now look at the screen.\n\nThe phrase to guess from is:\n"
          << phrase << endl;
-
+    /* get the guesser's guess */
     prompt_user_input("Guessing player please enter your guess:\n", guess, PHRASE_LENGTH);
 
-    if(strcmp(guess, secret_word) == 0) {
+    if(strcmp(guess, secret_word) == 0) { /* increment the guessors score if thy're correct */
       turn == 1 ? ++player_2_score : ++player_1_score;
       cout << guess << " was correct!" << endl;
     } else {
-      turn == 1 ? ++player_1_score : ++player_2_score;
+      turn == 1 ? ++player_1_score : ++player_2_score; /* increment the hider's score otherwise */
       cout << guess << " was wrong :(" << endl;
     }
 
-    turn == 1 ? turn = 2 : turn = 1;
-    ++round;
+    turn == 1 ? turn = 2 : turn = 1; /* switch the turn */
+    ++round; /* increment the round */
 
     cout << endl << endl << endl;
   }
 
+  /* print the final score */
   cout << "Game Over!\nFinal score was: P1: " << player_1_score << " | P2: " << player_2_score << endl;
+  
   return 0;
 }
 
