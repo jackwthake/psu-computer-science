@@ -38,7 +38,6 @@ int main(int argc, char **argv) {
 }
 
 
-
 /*
  * void prompt_user_input(const char *prompt, char *response, unsigned response_length)
  *
@@ -51,11 +50,10 @@ int main(int argc, char **argv) {
 void prompt_user_input(const char *prompt, char *response, unsigned response_length) {
   cout << prompt;
 
-  cin.width(response_length);
-  cin.get(response, response_length, '\n');
-  cin.ignore(100, '\n');
+  cin.width(response_length); /* respect array bounds */
+  cin.get(response, response_length, '\n'); /* read in */
+  cin.ignore(100, '\n'); /* clear input buffer */
 }
-
 
 
 /*
@@ -72,33 +70,41 @@ void clear_term() {
 }
 
 
-
+/*
+ * void embed_word(const char *word, char *phrase)
+ *
+ * brief: hides a word into the phrase
+ *
+ * word: word to be hidden
+ * phrase: phrase to hide the word in
+*/
 void embed_word(const char *word, char *phrase) {
   int counter = 0; /* holds number of characters since the last space */
   int cur_word_char = 0; /* holds the current character needing to be embedded */
   bool has_word_editted = false;
 
+  /* loop through string */
   for (int i = 0; i < strlen(phrase); ++i) {
-    if(isspace(phrase[i])) {
-      counter = 0;
-      has_word_editted = false;
+    if(isspace(phrase[i])) { /* check if current char is a space */
+      counter = 0; /* reset chars since last space */
+      has_word_editted = false; /* reset for the next word */
     } else {
-      if(counter == cur_word_char && !has_word_editted) {
-        if(!isupper(phrase[i])) {
-          phrase[i] = word[cur_word_char];
-          ++cur_word_char;
-          has_word_editted = true;
+      if(counter == cur_word_char && !has_word_editted) { /* check if were looking at the right character in the word */
+        if(!isupper(phrase[i])) { /* make sure the character is lowercase */
+          phrase[i] = word[cur_word_char]; /* replace the character */
+          ++cur_word_char; /* increment which character in the word we're working with */
+          has_word_editted = true; /* don't keep editting this word */
         }
       }
 
-      ++counter;
+      ++counter; /* one more character without hitting a space */
     }
 
+    /* check for the underscore rule */
     if(phrase[i] == '_')
-      phrase[i] = rand_alpha();
+      phrase[i] = rand_alpha(); /* set to random character */
   }
 }
-
 
 
 /*
