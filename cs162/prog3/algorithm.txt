@@ -1,0 +1,65 @@
+Jack Thake
+Program 3
+CS162, July, 28th, 2020
+
+The point of this program is to keep track of pizzas and their various
+attributes. To achieve this we'll need a couple of data structures, a
+class and an enum to make it all run smoothly, those being:
+  1. A data structure representing one node in the linear linked list,
+     holds the actual data for that node, and a pointer to the next node in the
+     linked list
+  2. A class representing one linear linked list, holding functions for
+     deletion, insertion, traversal as well as instantiation, and deallocation.
+  3. A struct representing one pizza, which will consist of the following
+     member variables:
+      * The name of the pizza
+      * A description of the pizza
+      * Additions to the pizza (extra toppings)
+      * Subtractions from the pizza (removing toppings)
+      * A rating out of 5 in terms of how good it tastes
+      * The price of that pizza
+  4. An enum representing the type of command entered by the user (creation,
+     deletion, etc..) used to make communication between functions easier.
+
+To aid the cleanliness of the code, the codebase will be split into very tightly
+packaged and reusable modules, this will make it much easier to expand as well
+as debug the code. Each function will have one and only one purpose delegated
+any other needs to another function.
+
+My implementation of Linked List will contain a head pointer but also a tail
+pointer as we'll only ever want to append to the list rather than insert into
+the middle of the list, as the order doesn't fully matter. This will aid in the
+speed of the program as we won't need to find the end of the list.
+
+The program will both read and write all the pizza's to the file system to allow
+the user entered data to persist to the next time the program gets run. The data
+file will be called pizza.txt and will hold all the entries using a '|' as a
+separator for the above-mentioned members of the pizza data structure. 
+Pizzas will be stored in a linear linked list. This has an added upside of not
+limiting the number of pizzas the program can handle - as we're not using an
+array of fixed size. This will be a challenge but the benefits make it worthwhile. 
+  
+The program consists of three main parts (or challenges), Those being as
+follows:
+  1. Creating a reliable and fast implementation of Linear Linked Lists
+  2. Successfully reading and decoding the data files into a Linear Linked
+     List of pizza data structures
+  3. Creating a responsive and easy to use "front-end" to the Linear Linked List
+  4. Breaking down each pizza's members and storing them into the file
+  5. Deallocating all nodes of the linked list without causing any segmentation
+     faults or leaving any memory leaks
+
+The program will first start by opening, and decoding the data file into the
+Linear Linked List. After that finishes, and we've verified no errors from the
+creation of the linked list has occurred, the program will print to the user all
+available commands as well as maybe some stats about how many pizzas have been
+loaded from the data file, and how large the file is in bytes. It will then prompt
+the user for a command, those commands being either to: create, search, display and quit. 
+each command will then prompt the user for whatever inputs may be necessary for that
+command. The program will loop continuing to prompt the user for commands,
+modify the Linear Linked List until the user enters the quit command at which
+point the program will leave the loop and will destroy the Linear Linked List
+being careful not to cause a segmentation fault and to not cause any memory
+leaks. Then committing all changes to the data file, printing out some stats about how
+many pizzas were written, and the total size of the file before we terminate the
+program back to the operating system.
