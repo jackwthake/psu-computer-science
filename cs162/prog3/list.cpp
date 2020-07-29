@@ -10,6 +10,7 @@
 #include "list.h"
 
 #include <cstring>
+#include <fstream>
 #include <iostream>
 using namespace std;
 
@@ -17,6 +18,43 @@ using namespace std;
 
 /* constructor */
 list::list() { /* we don't need to do anything here. */  }
+
+
+
+/* loads in a file on creation */
+list::list(const char *file_path) {
+  ifstream data_file;
+  data_file.open(file_path);
+
+  if(!data_file)
+    return;
+
+  while(!data_file.eof()) {
+    Pizza pizza; /* prepare one struct */
+    
+    /* read in all the member variables */
+    data_file.get(pizza.name, field_length, '|');
+    data_file.ignore(100, '|');
+    data_file.get(pizza.description, field_length, '|');
+    data_file.ignore(100, '|');
+    data_file.get(pizza.additions, field_length, '|');
+    data_file.ignore(100, '|');
+    data_file.get(pizza.removals, field_length, '|');
+    data_file.ignore(100, '|');
+    
+    data_file >> pizza.rating;
+    data_file.ignore(100, '|');
+
+    data_file >> pizza.price;
+    data_file.ignore(100, '\n');
+
+    if(strcmp(pizza.name, "") != 0) /* if an empty one is read, it is ignored. */
+      this->add(pizza);
+  }
+
+  /* cleanup */
+  data_file.close();
+}
 
 
 
@@ -145,5 +183,38 @@ const Pizza *list::exists(char name[]) {
   }
 
   return nullptr;
+}
+
+
+
+/*
+ * bool list::write_list_to_file(const char *file_path)
+ *
+ * brief: writes the current list to file, returns true if successful.
+ *
+ * const char *file_path: the file to be written to
+ * return: true if successful, false otherwise.
+*/
+bool list::write_list_to_file(const char *file_path) {
+  ofstream data_file;
+  data_file.open(file_path);
+
+  if(!data_file) /* if the file could not be opened, return */
+    return false;
+
+  node *current = this->head;
+  while(current) {
+    data_file << current->data.name << '|'
+              << current->data.description << '|'
+              << current->data.additions << '|'
+              << current->data.removals << '|'
+              << current->data.rating << '|'
+              << current->data.price << endl;
+
+    current = current->next;
+  }
+
+  data_file.close();
+  return true;
 }
 

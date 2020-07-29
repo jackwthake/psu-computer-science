@@ -20,6 +20,7 @@ struct node {
 class list {
   public:
     list(); /* allocate */
+    list(const char *file_path); /* load in a file on creation */
     ~list(); /* deallocate */
 
     void add(const Pizza &); /* add one item */
@@ -27,6 +28,8 @@ class list {
     void display_all(); /* list all items */
 
     const Pizza *exists(char[]); /* check if a pizza exists */
+
+    bool write_list_to_file(const char *);
   private:
     node *head = nullptr; /* start of list */
     node *tail = nullptr; /* end of list */
