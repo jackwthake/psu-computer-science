@@ -18,7 +18,7 @@ using namespace std;
 
 /* constructor */
 list::list() {
-  this->head = NULL;
+  this->head = NULL; /* initialize head and tail pointers */
   this->tail = NULL;
 }
 
@@ -32,26 +32,26 @@ list::list(const char *file_path) {
   if(!data_file)
     return;
   
-  this->head = NULL;
+  this->head = NULL; /* initialize head and tail pointers */
   this->tail = NULL;
 
   while(!data_file.eof()) {
     Pizza pizza; /* prepare one struct */
     
     /* read in all the member variables */
-    data_file.get(pizza.name, field_length, '|');
+    data_file.get(pizza.name, field_length, '|'); /* read in name member */
     data_file.ignore(100, '|');
-    data_file.get(pizza.description, field_length, '|');
+    data_file.get(pizza.description, field_length, '|'); /* read in description member */
     data_file.ignore(100, '|');
-    data_file.get(pizza.additions, field_length, '|');
+    data_file.get(pizza.additions, field_length, '|'); /* read in additions member */
     data_file.ignore(100, '|');
-    data_file.get(pizza.removals, field_length, '|');
+    data_file.get(pizza.removals, field_length, '|'); /* read in removals member */
     data_file.ignore(100, '|');
     
-    data_file >> pizza.rating;
+    data_file >> pizza.rating; /* read in rating member */
     data_file.ignore(100, '|');
 
-    data_file >> pizza.price;
+    data_file >> pizza.price; /* read in price member */
     data_file.ignore(100, '\n');
 
     if(strcmp(pizza.name, "") != 0) /* if an empty one is read, it is ignored. */
@@ -66,14 +66,14 @@ list::list(const char *file_path) {
 
 /* destructor */
 list::~list() {
-  node *current = this->head;
+  node *current = this->head; /* prepare to loop through all nodes */
 
   while(current) {
     current = current->next; /* get the next item before the current one is deleted */
-    delete current; 
+    delete current; /* delete the dynamic memory  */
   }
 
-  this->head = NULL;
+  this->head = NULL; /* reset head and tail pointers */
   this->tail = NULL;
 }
 
@@ -115,19 +115,20 @@ void list::add(const Pizza &pizza) {
  * return: returns true if the item was deleted, false otherwise.
 */
 bool list::remove(char name[]) {
-  node *current = this->head;
+  /* we start off looking at the first node, since it's the first the previous is just the current one */
+  node *current = this->head; 
   node *previous = this->head;
 
   while(current) {
-    if(strcmp(current->data.name, name) == 0) {
-      if(previous == this->head) {
+    if(strcmp(current->data.name, name) == 0) { /* if we found the node we're looking for */
+      if(previous == this->head) { /* If this is the first item, set the head to the next node */
         this->head = current->next;
-        delete current;
+        delete current; /* delete the removed node */
       } else {
         if(current->next == NULL) { /* if the one being deleted is the last element */
-          previous->next = NULL;
+          previous->next = NULL; /* set the previous node's next pointer to NULL as it's now the last node */
           this->tail = previous; /* move the tail backwards */
-        } else
+        } else /* we're in the middle of the list */
           previous->next = current->next; /* not the last element */
 
         delete current; /* delete the element */
@@ -136,6 +137,7 @@ bool list::remove(char name[]) {
       return true; /* we've deleted the item, no need to keep searching */
     }
 
+    /* update which nodes were pointing to */
     previous = current;
     current = current->next;
   }
@@ -151,10 +153,14 @@ bool list::remove(char name[]) {
  * brief: lists all elements in the list.
 */
 void list::display_all() {
+  /* get ready to go through the list */
   node *current = this->head;
+  int count = 1;
+
   while(current) {
+    /* print out the current nodes members */
     std::cout << endl
-              << "----------------------\n"
+              << "---------- " << count << " ----------\n"
               << "Name: " << current->data.name << "\n"
               << "Description: " << current->data.description << "\n"
               << "Additions: " << current->data.additions << "\n"
@@ -163,6 +169,8 @@ void list::display_all() {
               << "Price: " << current->data.price << "\n" 
               << "----------------------\n" << endl;
     
+    /* prepare for the next iteration */
+    ++count;
     current = current->next;
   }
 }
@@ -179,15 +187,22 @@ void list::display_all() {
  * return: the matching pizza struct or an empty struct
 */
 const Pizza *list::exists(char name[]) {
+  /* get ready to go through the list */
   node *current = this->head;
+
   while(current) {
-    if(strcmp(current->data.name, name) == 0) {
-      return &current->data;
+    if(strcmp(current->data.name, name) == 0) { /* if the name were searching for matches the current node's name */
+      return &current->data; /* return that Pizza struct's address */
     }
 
+    /* Prepare for the next iteration */
     current = current->next;
   }
 
+  /* 
+   * if we've reached out here than we haven't found any matches so we return a
+   * NULL address 
+  */
   return NULL;
 }
 
@@ -202,14 +217,18 @@ const Pizza *list::exists(char name[]) {
  * return: true if successful, false otherwise.
 */
 bool list::write_list_to_file(const char *file_path) {
+  /* open the data file */
   ofstream data_file;
   data_file.open(file_path);
 
   if(!data_file) /* if the file could not be opened, return */
     return false;
 
+  /* get ready to go through the list */
   node *current = this->head;
+
   while(current) {
+    /* write into the file each of the node's embers, seaprated by '|'. */
     data_file << current->data.name << '|'
               << current->data.description << '|'
               << current->data.additions << '|'
@@ -217,9 +236,11 @@ bool list::write_list_to_file(const char *file_path) {
               << current->data.rating << '|'
               << current->data.price << endl;
 
+    /* prepare for the next iteration */
     current = current->next;
   }
 
+  /* cleanup after ourselves */
   data_file.close();
   return true;
 }
