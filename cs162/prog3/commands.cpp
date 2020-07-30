@@ -70,29 +70,29 @@ void get_input(const char *prompt, char *res, int len) {
 
 
 /*
- * command_type get_user_command(void)
+ * cmd_type_type get_user_command(void)
  *
  * brief: prompts the user to enter a command, returns the correct type of
  *        command the user entered
  *
  * return: returns the corresponding enum value for the user-entered comman.
 */
-command_type get_user_command(void) {
+int get_user_command(void) {
   char cmd[cmd_size];
   get_input("Please enter a command: ", cmd, cmd_size);
 
   if(strcmp(cmd, "create") == 0)
-    return command_type::command_create;
+    return cmd_type_create;
   if(strcmp(cmd, "search") == 0)
-    return command_type::command_search;
+    return cmd_type_search;
   if(strcmp(cmd, "display") == 0)
-    return command_type::command_display;
+    return cmd_type_display;
   if(strcmp(cmd, "help") == 0)
-    return command_type::command_help;
+    return cmd_type_help;
   if(strcmp(cmd, "quit") == 0)
-    return command_type::command_quit;
+    return cmd_type_quit;
   else
-    return command_type::command_unknown;
+    return cmd_type_unknown;
 }
 
 

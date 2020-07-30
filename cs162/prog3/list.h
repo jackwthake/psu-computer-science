@@ -31,8 +31,8 @@ class list {
 
     bool write_list_to_file(const char *);
   private:
-    node *head = nullptr; /* start of list */
-    node *tail = nullptr; /* end of list */
+    node *head; /* start of list */
+    node *tail; /* end of list */
 };
 
 #endif

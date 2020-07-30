@@ -17,19 +17,19 @@ int main(void) {
 
   while(running) {
     switch(get_user_command()) {
-      case command_type::command_create:
+      case cmd_type_create:
         create_command(pizzas);
         break; 
-      case command_type::command_search:
+      case cmd_type_search:
         search_command(pizzas);
         break; 
-      case command_type::command_display:
+      case cmd_type_display:
         display_command(pizzas);
         break; 
-      case command_type::command_help:
+      case cmd_type_help:
         help_command();
         break; 
-      case command_type::command_quit:
+      case cmd_type_quit:
         running = false;
         break; 
       default:

@@ -3,13 +3,13 @@
 
 #include "list.h"
 
-enum command_type {
-  command_create,
-  command_search,
-  command_display,
-  command_quit,
-  command_help,
-  command_unknown
+enum {
+  cmd_type_create,
+  cmd_type_search,
+  cmd_type_display,
+  cmd_type_quit,
+  cmd_type_help,
+  cmd_type_unknown
 };
 
 const unsigned cmd_size = 10;
@@ -20,7 +20,7 @@ void get_input_value(const char *prompt, int &value);
 void get_input_value(const char *prompt, float &value);
 
 /* command functions  */
-command_type get_user_command();
+int get_user_command();
 void create_command(list &data);
 void search_command(list &data);
 void display_command(list &data);

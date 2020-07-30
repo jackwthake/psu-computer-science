@@ -17,7 +17,10 @@ using namespace std;
 
 
 /* constructor */
-list::list() { /* we don't need to do anything here. */  }
+list::list() {
+  this->head = NULL;
+  this->tail = NULL;
+}
 
 
 
@@ -28,6 +31,9 @@ list::list(const char *file_path) {
 
   if(!data_file)
     return;
+  
+  this->head = NULL;
+  this->tail = NULL;
 
   while(!data_file.eof()) {
     Pizza pizza; /* prepare one struct */
@@ -67,8 +73,8 @@ list::~list() {
     delete current; 
   }
 
-  this->head = nullptr;
-  this->tail = nullptr;
+  this->head = NULL;
+  this->tail = NULL;
 }
 
 
@@ -85,7 +91,7 @@ void list::add(const Pizza &pizza) {
     this->head->data = pizza; /* set the data to the passed pizza */
  
     /* set head and tail pointers */   
-    this->head->next = nullptr; /* set next to nullptr  */
+    this->head->next = NULL; /* set next to NULL  */
     this->tail = head; /* only one item */
   } else {
     /* create the new node and shuffle forward the tail pointer */
@@ -94,7 +100,7 @@ void list::add(const Pizza &pizza) {
 
     /* set the node's members */
     this->tail->data = pizza;
-    this->tail->next = nullptr; /* last element */ 
+    this->tail->next = NULL; /* last element */
   }
 }
 
@@ -118,8 +124,8 @@ bool list::remove(char name[]) {
         this->head = current->next;
         delete current;
       } else {
-        if(current->next == nullptr) { /* if the one being deleted is the last element */
-          previous->next = nullptr;
+        if(current->next == NULL) { /* if the one being deleted is the last element */
+          previous->next = NULL;
           this->tail = previous; /* move the tail backwards */
         } else
           previous->next = current->next; /* not the last element */
@@ -182,7 +188,7 @@ const Pizza *list::exists(char name[]) {
     current = current->next;
   }
 
-  return nullptr;
+  return NULL;
 }
 
 
