@@ -3,71 +3,51 @@ using namespace std;
 
 #include "list.h"
 #include "pizza.h"
+#include "commands.h"
 
 
-
-/*
- * void get_input(const char *prompt, char *res, int len)
- *
- * brief: prints out the prompt value, than reads in the user's input into the
- *        response string
- *
- * const char *prompt: the text to be displayed to the user.
- * char *res: the response from the user.
- * int len: the maximum length of the response.
-*/
-void get_input(const char *prompt, char *res, int len) {
-  cout << prompt; /* print prompt to user  */
-
-  /* respect array bounds while recieving input */
-  cin.width(len);
-  cin.get(res, len, '\n');
-
-  /* flush input buffer */
-  cin.ignore(100, '\n');
-}
-
-
-
-/*
- * void get_input_value(const char *prompt, T &value)
- *
- * brief: prints out the prompt value, reads in one value from the user, using
- *        the passed type. The reason why I am using templates is just to limit
- *        code duplication, this makes it far cleaner in terms of the
- *        implementation.
- *
- * const char *prompt: the prompt to be displayed to the user
- * T &value: the variable to be set with the user's input
-*/
-template <typename T>
-void get_input_value(const char *prompt, T &value) {
-  cout << prompt; /* print prompt to user */
-  
-  /* read in value */
-  cin >> value;
-
-  /* flush input buffer */
-  cin.ignore(100, '\n');  
-}
-
+void introduction(void);
 
 
 int main(void) {
   list pizzas("pizza.txt");
+  bool running = true;
 
-  cout << "first print" << endl;
-  pizzas.display_all();
+  introduction();
 
+  while(running) {
+    switch(get_user_command()) {
+      case command_type::command_create:
+        create_command(pizzas);
+        break; 
+      case command_type::command_search:
+        search_command(pizzas);
+        break; 
+      case command_type::command_display:
+        display_command(pizzas);
+        break; 
+      case command_type::command_help:
+        help_command();
+        break; 
+      case command_type::command_quit:
+        running = false;
+        break; 
+      default:
+        cout << "Unknown command." << endl;
+        break;
+    }
+  }
+
+  cout << "Quitting..." << endl;
   pizzas.write_list_to_file("pizza.txt");
 
-  char test[12];
-  int test2;
-
-  get_input("string of text: ", test, 12);
-  get_input_value("value test: ", test2);
-
-  cout << test << endl << test2 << endl;;
-
   return 1;
+}
+
+
+
+void introduction(void) {
+  cout << "Welcome to the number 1 Pizza keep-tracker!" << endl;
+
+  help_command();
 }
