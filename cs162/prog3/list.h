@@ -2,8 +2,8 @@
  * Jack Thake
  * CS162, Program 3, July 29th, 2020
  *
- * This file holds the prototypes for the node struct and the list class and
- * their members. the list class represents one linear linked list while the
+ * This file holds the prototypes for the node struct, list class, as well as
+ * their members. The list class represents one linear linked list while the
  * node struct represents one node inside the linked list.
 */
 

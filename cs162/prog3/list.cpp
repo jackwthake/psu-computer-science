@@ -82,8 +82,8 @@ list::~list() {
 /*
  * void list::add(const Pizza &pizza)
  *
- * brief: adds one pizza to the endd of the list
- * const Pizza &pizza: the pizza oto be added
+ * brief: adds one pizza to the end of the list
+ * const Pizza &pizza: the pizza to be added
 */
 void list::add(const Pizza &pizza) {
   if(!this->head) { /* if the list is empty */
@@ -137,7 +137,7 @@ bool list::remove(char name[]) {
       return true; /* we've deleted the item, no need to keep searching */
     }
 
-    /* update which nodes were pointing to */
+    /* update which nodes we're pointing to */
     previous = current;
     current = current->next;
   }
@@ -158,7 +158,7 @@ void list::display_all() {
   int count = 1;
 
   while(current) {
-    /* print out the current nodes members */
+    /* print out the current node's members */
     std::cout << endl
               << "---------- " << count << " ----------\n"
               << "Name: " << current->data.name << "\n"
@@ -191,7 +191,7 @@ const Pizza *list::exists(char name[]) {
   node *current = this->head;
 
   while(current) {
-    if(strcmp(current->data.name, name) == 0) { /* if the name were searching for matches the current node's name */
+    if(strcmp(current->data.name, name) == 0) { /* if the name we're searching for matches the current node's name */
       return &current->data; /* return that Pizza struct's address */
     }
 
@@ -228,7 +228,7 @@ bool list::write_list_to_file(const char *file_path) {
   node *current = this->head;
 
   while(current) {
-    /* write into the file each of the node's embers, seaprated by '|'. */
+    /* write into the file each of the node's members, separated by '|'. */
     data_file << current->data.name << '|'
               << current->data.description << '|'
               << current->data.additions << '|'

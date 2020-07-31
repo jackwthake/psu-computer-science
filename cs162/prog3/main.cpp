@@ -26,7 +26,7 @@ int main(void) {
   /* welcome the user */
   introduction();
 
-  /* repeat until the user enter's quit */
+  /* repeat until the user enters "quit" */
   while(running) {
     switch(get_user_command()) { /* prompt the user for a command */
       case cmd_type_create:
