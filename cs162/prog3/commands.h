@@ -11,7 +11,7 @@
 #include "list.h"
 
 /*
- * Used to simplify comunication between functions, each enum value represents a
+ * Used to simplify communication between functions, each enum value represents a
  * certain command entered by the user.
 */
 enum {
