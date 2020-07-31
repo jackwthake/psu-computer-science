@@ -136,7 +136,7 @@ char rand_alpha() {
  * str: string to be set to all lowercase
 */
 void word_to_lower(char *str) {
-  unsigned len = strlen(str);
+  int len = strlen(str);
 
   for (int i = 0; i < len; ++i) {
     str[i] = tolower(str[i]);
