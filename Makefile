@@ -6,7 +6,7 @@ default: cs162
 ################
 # cs162
 ################
-cs162: program1 program2 program3 lab4 lab6
+cs162: program1 program2 program3 lab4 lab6 lab7
 
 #Programs
 program1: cs162/prog1/main.cpp
@@ -24,6 +24,9 @@ lab4: cs162/labs/*4/*lab4.cpp
 
 lab6: cs162/labs/*6/*lab6.cpp
 	$(CC) $(CXXFLAGS) -o bin/lab6.out  cs162/labs/*6/*.cpp cs162/labs/*6/*.o
+
+lab7: cs162/labs/*7/*lab7.cpp
+	$(CC) $(CXXFLAGS) -o bin/lab7.out  cs162/labs/*7/*.cpp cs162/labs/*7/*.o
 
 clean:
 	rm -rf *.out
