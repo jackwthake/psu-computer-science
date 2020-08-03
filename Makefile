@@ -1,12 +1,18 @@
 CC=g++
 CXXFLAGS=-O0 -fno-elide-constructors -pedantic-errors -ansi -Wextra -Wall -Winit-self -Wold-style-cast -Woverloaded-virtual -Wuninitialized  -Winit-self -std=c++11
+UNAME_S := $(shell uname -s)
 
 default: cs162
 
 ################
 # cs162
 ################
+
+ifeq ($(UNAME_S),Darwin)
+cs162: program1 program2 program3 lab4 # We don't compile lab 6 and 7, because the .o files aren't compatible
+else 
 cs162: program1 program2 program3 lab4 lab6 lab7
+endif
 
 #Programs
 program1: cs162/prog1/main.cpp
