@@ -3,17 +3,6 @@
 using namespace std;
 
 
-static void get_input(const char *prompt, char *value) {
-  cout << prompt; /* print prompt to user */
-  
-  /* read in value */
-  cin >> value;
-
-  /* flush input buffer */
-  cin.ignore(100, '\n');  
-}
-
-
 static void get_input(const char *prompt, int &value) {
   cout << prompt; /* print prompt to user */
   
@@ -37,9 +26,26 @@ static void get_input(const char *prompt, char *res, int len) {
 }
 
 
+static void refine_command(char *cmd, char *refined) {
+  int i, j = 0;
+  for(i = 0; i < strlen(cmd); ++i) {
+    if(!isspace(cmd[i])) {
+      refined[j] = tolower(cmd[i]);
+      ++j;
+    }
+  }
+
+  refined[j] = '\0';
+}
+
+
 int get_user_command(void) {
-  char cmd[cmd_size]; /* buffer for the command to be stored in */
-  get_input("Please enter a command: ", cmd); /* prompt the user, recieve input into the buffer */
+  char buf[cmd_size]; /* buffer for the command to be stored in */
+  char cmd[cmd_size];
+  get_input("Please enter a command: ", buf, cmd_size); /* prompt the user, recieve input into the buffer */
+
+  /* refine the command, remove spaces, and convert the command to lowercase */
+  refine_command(buf, cmd);
 
   /* test which command was entered, returning the corresponding enum value */
   if(strcmp(cmd, "create") == 0) 
@@ -75,6 +81,7 @@ void createCommand(pizza list[], int length) {
   }
 }
 
+
 void searchCommand(pizza list[], int length) {
   int index = 0;
   char tester[field_length];
@@ -98,6 +105,7 @@ void searchCommand(pizza list[], int length) {
   cout << "No result found with that name." << endl;
 }
 
+
 void displayCommand(pizza list[], int length) {
   int index = 0;
   
@@ -112,6 +120,7 @@ void displayCommand(pizza list[], int length) {
     ++index;
   }
 }
+
 
 void helpCommand() {
   /* print the commands in a formatted way. */
