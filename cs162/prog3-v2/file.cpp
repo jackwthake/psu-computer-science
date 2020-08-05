@@ -26,16 +26,18 @@ static void read_from_file(ifstream &file, char response[], int length) {
  * reads in a data file, filling out the passed array with pizza structs,
  * returns true the file was successfully opened and read from, false otherwise.
 */
-bool read_file(const char *fp, pizza list[], int length) {
+void read_file(const char *fp, pizza list[], int length) {
   int index = 0;
   char temp[field_length];
 
   ifstream data;
   data.open(fp);
 
+  /* dont try to read if the file doesn't exist. */
   if(!data)
-    return false;
+    return;
 
+  /* read in until we either reach eof or the end of the array */
   while(!data.eof() && index < length) {
     read_from_file(data, list[index].name, field_length);
     read_from_file(data, list[index].description, field_length);
@@ -49,8 +51,8 @@ bool read_file(const char *fp, pizza list[], int length) {
     ++index;
   }
 
+  /* cleanup */
   data.close();
-  return true;
 } 
 
 
@@ -62,11 +64,12 @@ bool write_file(const char *fp, pizza list[], int length) {
   ofstream data;
   data.open(fp);
 
+  /* don't write if there was an error  */
   if(!data)
     return false;
   
   for(int i = 0; i < length; ++i) {
-    if(strcmp(list[i].name, "") != 0) {
+    if(strcmp(list[i].name, "") != 0) { /* only write in valid structs */
       data << list[i].name << "|"
            << list[i].description << "|"
            << list[i].additions << "|"
@@ -76,6 +79,7 @@ bool write_file(const char *fp, pizza list[], int length) {
     }
   }
 
+  /* cleanup */
   data.close();
   return true;
 }

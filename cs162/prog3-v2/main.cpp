@@ -24,10 +24,10 @@ int main(void) {
   pizza list[num_pizzas] = { 0 }; /* initialize the array, filling it with 0's */
 
   /* open the data file, do error checking */
-  if(!read_file("pizza.txt", list, num_pizzas)) {
-    cerr << "Failed to load data file. Exitting." << endl;
-    return EXIT_FAILURE;
-  }
+  read_file("pizza.txt", list, num_pizzas);
+
+  cout << "Welcome to the pizza noting tool! Created by Jack Thake." << endl;
+  helpCommand();
   
   /* main loop for commands */
   main_loop(list);

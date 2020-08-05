@@ -9,7 +9,7 @@
 
 #include "pizza.h"
 
-bool read_file(const char *fp, pizza list[], int length);
+void read_file(const char *fp, pizza list[], int length);
 bool write_file(const char *fp, pizza list[], int length);
 
 #endif
