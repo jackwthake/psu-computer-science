@@ -92,7 +92,7 @@ int get_user_command(void) {
 void createCommand(pizza list[], int length) {
   int index = 0; /* holds position in the array */
 
-  /* loop until we find an empt array index */
+  /* loop until we find an empty array index */
   while(strcmp(list[index].name, "") != 0) 
     ++index;
 
@@ -113,7 +113,7 @@ void createCommand(pizza list[], int length) {
 
 
 /*
- * searches thr passed array for a user entered name, if it exists, print its
+ * searches the passed array for a user entered name, if it exists, print its
  * info otherwise state nothing was found.
 */
 void searchCommand(pizza list[]) {

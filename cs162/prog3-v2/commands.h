@@ -9,7 +9,7 @@
 
 #include "pizza.h"
 
-/* used to make communication between the functions more easy to read */
+/* used to make communication between the functions easier to read */
 enum {
   cmd_create = 0,
   cmd_search,
