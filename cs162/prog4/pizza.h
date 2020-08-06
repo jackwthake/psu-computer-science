@@ -21,4 +21,7 @@ struct pizza {
   char price[price_length];
 };
 
+void read_pizza_from_user(pizza &result);
+void print_pizza(pizza &printable);
+
 #endif
