@@ -9,9 +9,9 @@ default: cs162
 ################
 
 ifeq ($(UNAME_S),Darwin)
-cs162: program1 program2 program3 lab4 # We don't compile lab 6 and 7, because the .o files aren't compatible
+cs162: program1 program2 program3 program4 lab4 # We don't compile lab 6 and 7, because the .o files aren't compatible
 else 
-cs162: program1 program2 program3 lab4 lab6 lab7
+cs162: program1 program2 program3 program4 lab4 lab6 lab7
 endif
 
 #Programs
@@ -23,6 +23,9 @@ program2: cs162/prog2/main.cpp
 
 program3: cs162/prog3/main.cpp cs162/prog3/list.cpp cs162/prog3/commands.cpp
 	$(CC) $(CXXFLAGS) -o bin/prog3.out  cs162/prog3/*.cpp
+
+program4: cs162/prog4/main.cpp cs162/prog4/input.cpp
+	$(CC) $(CXXFLAGS) -o bin/prog4.out  cs162/prog4/*.cpp
 
 # Labs
 lab4: cs162/labs/*4/*lab4.cpp
