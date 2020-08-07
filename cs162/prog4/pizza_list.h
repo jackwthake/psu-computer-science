@@ -22,6 +22,8 @@ class pizza_list {
     void displ_all_with_rating(unsigned rating);
 
   private:
+    void bubble_sort();
+
     int length;
     node *head;
 };

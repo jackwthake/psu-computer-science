@@ -1,5 +1,6 @@
 #include "pizza_list.h"
 #include <cstring>
+#include <ctype.h>
 
 pizza_list::pizza_list() {
   this->head = nullptr;
@@ -31,6 +32,10 @@ void pizza_list::add_pizza() {
     this->head->data = addition;
     this->head->next = old_head;
   }
+
+  this->bubble_sort();
+
+  ++length;
 }
 
 pizza *pizza_list::exists(const char *name) {
@@ -78,5 +83,31 @@ void pizza_list::displ_all_with_rating(unsigned rating) {
 
     current = current->next;
   }  
+}
+
+void pizza_list::bubble_sort() {
+  int changes;
+  node *current, *previous;
+
+  do {
+    changes = 0;
+    current = previous = this->head;
+
+    while(current) {
+      if(current != previous) {
+        if(tolower(previous->data.name[0]) > tolower(current->data.name[0])) {
+          pizza temp = previous->data;
+
+          previous->data = current->data;
+          current->data = temp;
+
+          ++changes;
+        }
+      }
+
+      previous = current;
+      current = current->next;
+    }
+  } while(changes > 0);
 }
 
