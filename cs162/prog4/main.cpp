@@ -5,12 +5,9 @@
 using namespace std;
 
 int main(void) {
-  pizza_list list;
+  pizza_list list("pizza.txt");
 
-  list.add_pizza();
-  list.add_pizza();
-
-  list.displ_most_recent();
+  list.displ_all();
 
   if(list.exists("test1"))
     cout << "exists" << endl;

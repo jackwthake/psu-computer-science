@@ -12,18 +12,22 @@ struct node {
 class pizza_list {
   public:
     pizza_list();
+    pizza_list(char *filepath);
     ~pizza_list();
 
     void add_pizza();
-    pizza *exists(const char *name);
+    void add_pizza(pizza &item);
+    pizza *exists(const char *name) const;
 
-    void displ_all();
-    void displ_most_recent();
-    void displ_all_with_rating(unsigned rating);
+    void displ_all() const;
+    void displ_most_recent() const;
+    void displ_all_with_rating(unsigned rating) const;
 
   private:
     void bubble_sort();
+    void write_to_file() const;
 
+    char *fp;
     int length;
     node *head;
 };
