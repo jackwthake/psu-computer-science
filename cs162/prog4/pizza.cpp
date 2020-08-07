@@ -1,5 +1,6 @@
 #include "pizza.h"
 #include "input.h"
+#include <time.h>
 
 #include <iostream>
 using namespace std;
@@ -12,11 +13,13 @@ void read_pizza_from_user(pizza &result) {
   get_input_phrase("Enter any removals from the pizza: ", result.removals, field_length);
   get_input("Enter a Rating from 0 to 5: ", result.rating);
   get_input_word("Enter the price: $", result.price);
+
+  result.time_added = time(NULL);
 }
 
 void print_pizza(pizza &printable) {
   cout << endl
-       << "----------==----------\n"
+       << "----------------------\n"
        << "Name: " << printable.name << "\n"
        << "Description: " << printable.description << "\n"
        << "Additions: " << printable.additions << "\n"

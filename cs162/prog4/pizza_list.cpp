@@ -67,7 +67,19 @@ void pizza_list::displ_all() {
 }
 
 void pizza_list::displ_most_recent() {
-  print_pizza(this->head->data);
+  node *current = this->head, *most_recent = nullptr;
+
+  while(current) {
+    if(most_recent) {
+      if(current->data.time_added > most_recent->data.time_added)
+        most_recent = current;
+    } else
+      most_recent = current;
+
+    current = current->next;
+  }
+
+  print_pizza(most_recent->data);
 }
 
 void pizza_list::displ_all_with_rating(unsigned rating) {

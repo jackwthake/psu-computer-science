@@ -10,7 +10,7 @@ int main(void) {
   list.add_pizza();
   list.add_pizza();
 
-  list.displ_all();
+  list.displ_most_recent();
 
   if(list.exists("test1"))
     cout << "exists" << endl;

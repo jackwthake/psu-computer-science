@@ -17,6 +17,7 @@ struct pizza {
   char additions[field_length];
   char removals[field_length];
 
+  int time_added;
   int rating;
   char price[price_length];
 };
