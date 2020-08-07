@@ -12,7 +12,6 @@ struct node {
 class pizza_list {
   public:
     pizza_list();
-    pizza_list(char *filepath);
     ~pizza_list();
 
     void add_pizza();
@@ -27,7 +26,6 @@ class pizza_list {
     void bubble_sort();
     void write_to_file() const;
 
-    char *fp;
     int length;
     node *head;
 };

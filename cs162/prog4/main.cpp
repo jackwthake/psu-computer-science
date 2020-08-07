@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(void) {
-  pizza_list list("pizza.txt");
+  pizza_list list;
 
   list.displ_all();
 

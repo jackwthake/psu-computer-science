@@ -6,18 +6,12 @@
 using namespace std;
 
 pizza_list::pizza_list() {
-  this->head = nullptr;
-  this->length = 0;
-}
-
-pizza_list::pizza_list(char *filepath) {
   ifstream data;
-  data.open(filepath);
+  data.open("pizza.txt");
 
   this->head = nullptr;
   this->length = 0;
-  this->fp = filepath;
-  
+
   if(!data)
     return;
 
@@ -172,7 +166,7 @@ void pizza_list::bubble_sort() {
 
 void pizza_list::write_to_file() const {
   ofstream data_file;
-  data_file.open(this->fp);
+  data_file.open("pizza.txt");
 
   if(!data_file) /* if the file could not be opened, return */
     return;
