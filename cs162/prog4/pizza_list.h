@@ -16,6 +16,8 @@ class pizza_list {
 
     void add_pizza();
     void add_pizza(pizza &item);
+    void remove_item(const char *name);
+    void clear_list();
     pizza *exists(const char *name) const;
 
     void displ_all() const;

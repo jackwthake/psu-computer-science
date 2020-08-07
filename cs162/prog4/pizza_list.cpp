@@ -43,16 +43,8 @@ pizza_list::pizza_list() {
 }
 
 pizza_list::~pizza_list() {
-  node *current, *next = this->head;
-  
   this->write_to_file();
-
-  while(next) {
-    current = next;
-    next = next->next;
-
-    delete current;
-  }
+  this->clear_list();
 }
 
 void pizza_list::add_pizza() {
@@ -77,6 +69,42 @@ void pizza_list::add_pizza(pizza &item) {
   this->bubble_sort();
 
   ++length;
+}
+
+void pizza_list::remove_item(const char *name) {
+  node *current = this->head, *previous = this->head;
+
+  while(current) {
+    if(strcmp(name, current->data.name) == 0) {
+      previous->next = current->next;
+      
+      delete current;
+      return;
+    }
+
+    previous = current;
+    current = current->next;
+  }
+}
+
+void pizza_list::clear_list() {
+  node *current = this->head, *previous = this->head;
+
+  while(current) {
+    if(current == previous) {
+      this->head = current->next;
+      delete current;
+    } else if(!current->next) {
+      previous->next = nullptr;
+      delete current;
+    } else {
+      previous->next = current->next;
+      delete current;
+    }
+
+    previous = current;
+    current = current->next;
+  }
 }
 
 pizza *pizza_list::exists(const char *name) const {

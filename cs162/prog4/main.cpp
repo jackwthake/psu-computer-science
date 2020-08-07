@@ -8,6 +8,8 @@ int main(void) {
   pizza_list list;
 
   list.displ_all();
+  list.remove_item("Cheese");
+  list.displ_all();
 
   if(list.exists("test1"))
     cout << "exists" << endl;
