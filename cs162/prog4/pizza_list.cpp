@@ -3,6 +3,7 @@
 #include <ctype.h>
 
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 pizza_list::pizza_list() {
@@ -40,6 +41,8 @@ pizza_list::pizza_list() {
     if(strcmp(item.name, "") != 0) /* if an empty one is read, it is ignored. */
       this->add_pizza(item);
   }
+
+  data.close();
 }
 
 pizza_list::~pizza_list() {
@@ -105,6 +108,8 @@ void pizza_list::clear_list() {
     previous = current;
     current = current->next;
   }
+
+  this->head = nullptr;
 }
 
 pizza *pizza_list::exists(const char *name) const {
@@ -209,8 +214,8 @@ void pizza_list::write_to_file() const {
               << current->data.additions << '|'
               << current->data.removals << '|'
               << current->data.rating << '|'
-              << current->data.price << '|'
-              << current->data.time_added << endl;
+              << current->data.time_added << '|'
+              << current->data.price << endl;
 
     /* prepare for the next iteration */
     current = current->next;

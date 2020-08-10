@@ -25,7 +25,7 @@ void print_pizza(pizza &printable) {
        << "Additions: " << printable.additions << "\n"
        << "Removals: " << printable.removals << "\n"
        << "Rating (Out of 5): " << printable.rating << "\n" 
-       << "Price: " << printable.price << "\n" 
+       << "Price: $" << printable.price << "\n" 
        << "----------------------\n" << endl;
 }
 
