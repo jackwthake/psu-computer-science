@@ -89,7 +89,7 @@ int main(void) {
       list.displ_most_recent(); /* display most recent addition to list*/
     else if(strcmp(command, "help") == 0)
       help(); /* print commands */
-    else 
+    else if(strcmp(command, "quit") != 0) /* we only do this so it doesn't print quit as unrecognized */ 
       cout << "No recognized command entered." << endl;
   } while(strcmp(command, "quit")); /* exit if user enters quit */
 

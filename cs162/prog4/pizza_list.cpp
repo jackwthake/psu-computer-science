@@ -99,11 +99,14 @@ void pizza_list::remove_item(const char *name) {
   /* loop until the end of the list */
   while(current) {
     if(strcmp(name, current->data.name) == 0) {
-      previous->next = current->next; /* unlink the matched node */
+      if(current == head) {
+        head = current->next;
+      } else {
+        previous->next = current->next; /* unlink the matched node */
       
-      /* deallocate the now unlinked node */
-      delete current;
-
+        /* deallocate the now unlinked node */
+        delete current;
+      }
       /* exit as we've already deleted */
       return;
     }
@@ -183,19 +186,21 @@ void pizza_list::displ_most_recent() const {
   /* get ready for traversale */
   node *current = this->head, *most_recent = nullptr;
 
-  while(current) {
-    if(most_recent) { /* if we've already found a recent node in the past iterations */
-      if(current->data.time_added > most_recent->data.time_added) /* compare times  */
-        most_recent = current;
-    } else /* set most recent to the current as we don't have another one */
-      most_recent = current;
-
-    /* prep for next iteration */
-    current = current->next;
+  if(this->head) {
+     while(current) {
+       if(most_recent) { /* if we've already found a recent node in the past iterations */
+         if(current->data.time_added > most_recent->data.time_added) /* compare times  */
+           most_recent = current;
+       } else /* set most recent to the current as we don't have another one */
+         most_recent = current;
+    
+       /* prep for next iteration */
+       current = current->next;
+     }
+    
+     /* print the result */
+     print_pizza(most_recent->data);
   }
-
-  /* print the result */
-  print_pizza(most_recent->data);
 }
 
 
