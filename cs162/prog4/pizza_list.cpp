@@ -127,10 +127,7 @@ void pizza_list::clear_list() {
     if(current == previous) { /* if we're pointing at head */
       this->head = current->next; /* unlink first elemont */
       delete current; /* deallocate */
-    } else if(!current->next) { /* last element */
-      previous->next = nullptr; /* unlink item */
-      delete current; /* deallocate */
-    } else { /* middle of list */
+    } else { /* middle and end of list */
       previous->next = current->next; /* unlink node */
       delete current; /* deallocate */
     }
