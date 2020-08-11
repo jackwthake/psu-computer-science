@@ -230,7 +230,7 @@ void pizza_list::bubble_sort() {
     while(current) {
       if(current != previous) { /* if the current node isn't head */
         /* if the ascii value of the first char is greator, swap values */
-        if(tolower(previous->data.name[0]) > tolower(current->data.name[0])) {
+        if(strcmp(current->data.name, previous->data.name) < 0) {
           pizza temp = previous->data;
 
           previous->data = current->data;
