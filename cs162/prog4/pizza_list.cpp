@@ -6,18 +6,23 @@
 #include <iostream>
 using namespace std;
 
+/* creates a linear linked list, reads in from a file */
 pizza_list::pizza_list() {
+  /* initialise file */
   ifstream data;
   data.open("pizza.txt");
 
+  /* init member vars */
   this->head = nullptr;
   this->length = 0;
 
+  /* if the file doesn't exist */
   if(!data)
     return;
 
+  /* while theres more to read */
   while(!data.eof()) {
-    pizza item;
+    pizza item; /* item to be added */
 
     /* read in all the member variables */
     data.get(item.name, field_length, '|'); /* read in name member */
@@ -42,91 +47,123 @@ pizza_list::pizza_list() {
       this->add_pizza(item);
   }
 
+  /* cleanup */
   data.close();
 }
 
+
+/* destructor */
 pizza_list::~pizza_list() {
-  this->write_to_file();
-  this->clear_list();
+  this->write_to_file(); /* write list to file */
+  this->clear_list(); /* destroy list and empty memory */
 }
 
-void pizza_list::add_pizza() {
-  pizza addition;
-  read_pizza_from_user(addition);
 
+/* add one pizza to the list  */
+void pizza_list::add_pizza() {
+  pizza addition; /* pizza to be added */
+  read_pizza_from_user(addition); /* read in all pizza info from user */
+
+  /* add to the list */
   this->add_pizza(addition);
 }
 
+
+/* add a specific pizza to the list */
 void pizza_list::add_pizza(pizza &item) {
-  if(this->head == nullptr) {
+  /* logic for insertion */
+  if(this->head == nullptr) { /* if the list is empty */
     this->head = new node;
     this->head->data = item;
     this->head->next = nullptr;
-  } else {
+  } else { /* not empty list */
     node *old_head = this->head;
     this->head = new node;
     this->head->data = item;
     this->head->next = old_head;
   }
 
+  /* sort list alphabetically */
   this->bubble_sort();
 
-  ++length;
+  /* increment list length */
+  ++this->length;
 }
 
+
+/* remove pizza with a specific name */
 void pizza_list::remove_item(const char *name) {
+  /* get ready for traversal */
   node *current = this->head, *previous = this->head;
 
+  /* loop until the end of the list */
   while(current) {
     if(strcmp(name, current->data.name) == 0) {
-      previous->next = current->next;
+      previous->next = current->next; /* unlink the matched node */
       
+      /* deallocate the now unlinked node */
       delete current;
+
+      /* exit as we've already deleted */
       return;
     }
 
+    /* prep for next iteration */
     previous = current;
     current = current->next;
   }
 }
 
+
+/* remove all from list */
 void pizza_list::clear_list() {
+  /* get ready for traversal*/
   node *current = this->head, *previous = this->head;
 
   while(current) {
-    if(current == previous) {
-      this->head = current->next;
-      delete current;
-    } else if(!current->next) {
-      previous->next = nullptr;
-      delete current;
-    } else {
-      previous->next = current->next;
-      delete current;
+    if(current == previous) { /* if we're pointing at head */
+      this->head = current->next; /* unlink first elemont */
+      delete current; /* deallocate */
+    } else if(!current->next) { /* last element */
+      previous->next = nullptr; /* unlink item */
+      delete current; /* deallocate */
+    } else { /* middle of list */
+      previous->next = current->next; /* unlink node */
+      delete current; /* deallocate */
     }
 
+    /* prep for next iteration */
     previous = current;
     current = current->next;
   }
 
+  /* clear head pointer as it's memory has all been deallocated */
   this->head = nullptr;
 }
 
+
+/* search for a given pizza */
 pizza *pizza_list::exists(const char *name) const {
+  /* get ready for traversal */
   node *current = this->head;
 
   while(current) {
     if(strcmp(name, current->data.name) == 0) {
-      return &current->data;
+      return &current->data; /* return the match */
     }
 
+    /* prep for next iteration */
     current = current->next;
   }
 
+  /* if we reach this then we didn't find any matching pizza */
   return NULL;
 }
 
+
+/* display all in the lists alphabetical order */
 void pizza_list::displ_all() const {
+  /* get ready for traversal */
   node *current = this->head;
   int count = 1;
   
@@ -140,37 +177,48 @@ void pizza_list::displ_all() const {
   }
 }
 
+
+/* display the most recent addition to the list */
 void pizza_list::displ_most_recent() const {
+  /* get ready for traversale */
   node *current = this->head, *most_recent = nullptr;
 
   while(current) {
-    if(most_recent) {
-      if(current->data.time_added > most_recent->data.time_added)
+    if(most_recent) { /* if we've already found a recent node in the past iterations */
+      if(current->data.time_added > most_recent->data.time_added) /* compare times  */
         most_recent = current;
-    } else
+    } else /* set most recent to the current as we don't have another one */
       most_recent = current;
 
+    /* prep for next iteration */
     current = current->next;
   }
 
+  /* print the result */
   print_pizza(most_recent->data);
 }
 
+
+/* display all with a certain rating */
 void pizza_list::displ_all_with_rating(unsigned rating) const {
+  /* prep for next iteration */
   node *current = this->head;
   int count = 1;
 
   while(current) {
     if(current->data.rating == rating) {
-      print_pizza(current->data);
+      print_pizza(current->data); /* if the ratings match, print */
       
       ++count;
     }
 
+    /* prep for next iteration */
     current = current->next;
   }  
 }
 
+
+/* sort the list alphabetically  */
 void pizza_list::bubble_sort() {
   int changes;
   node *current, *previous;
@@ -180,23 +228,28 @@ void pizza_list::bubble_sort() {
     current = previous = this->head;
 
     while(current) {
-      if(current != previous) {
+      if(current != previous) { /* if the current node isn't head */
+        /* if the ascii value of the first char is greator, swap values */
         if(tolower(previous->data.name[0]) > tolower(current->data.name[0])) {
           pizza temp = previous->data;
 
           previous->data = current->data;
           current->data = temp;
 
+          /* increment amound of changes on the current iteration */
           ++changes;
         }
       }
 
+      /* prep for next iteration */
       previous = current;
       current = current->next;
     }
-  } while(changes > 0);
+  } while(changes > 0); /* we loop until we haven't needed to change anything in the list */
 }
 
+
+/* write the list to file */
 void pizza_list::write_to_file() const {
   ofstream data_file;
   data_file.open("pizza.txt");

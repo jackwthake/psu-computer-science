@@ -5,6 +5,7 @@
 #include <iostream>
 using namespace std;
 
+/* read in one pizza prompting the user for each member */
 void read_pizza_from_user(pizza &result) {
   /* read in pizza info */
   get_input_phrase("Enter the pizza's name: ", result.name, field_length);
@@ -17,6 +18,8 @@ void read_pizza_from_user(pizza &result) {
   result.time_added = time(NULL);
 }
 
+
+/* print a gieven pizza's members to the user */
 void print_pizza(pizza &printable) {
   cout << endl
        << "----------------------\n"
