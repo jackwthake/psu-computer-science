@@ -1,3 +1,13 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This program is the imporved program from program 3, it keeps track of user
+ * entered pizzas inside of a data file, and uses a sorted linear linked list
+ * this file holds the program's entry point as well as all of the code to
+ * handle commands.
+*/
+
 #include "input.h"
 #include "pizza_list.h"
 

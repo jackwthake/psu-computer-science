@@ -1,3 +1,11 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This file holds all of the function implementations for recieving input from
+ * the user.
+*/
+
 #include "input.h"
 #include <iostream>
 using namespace std;

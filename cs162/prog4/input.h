@@ -1,3 +1,10 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This file holds all prototypes and declarations for the user input functions
+*/
+
 #ifndef INPUT_H
 #define INPUT_H
 

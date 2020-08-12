@@ -1,3 +1,10 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This file holds all of the implementations for my sorted linked list
+*/
+
 #include "pizza_list.h"
 #include <cstring>
 #include <ctype.h>

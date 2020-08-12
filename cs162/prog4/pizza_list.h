@@ -1,3 +1,11 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This file holds all prototypes and declarations for the sorted linear linked
+ * list
+*/
+
 #ifndef PIZZA_LIST_H
 #define PIZZA_LIST_H
 

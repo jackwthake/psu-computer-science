@@ -1,3 +1,10 @@
+/*
+ * Jack Thake, Program 4, Aug 8, 2020
+ * CS162
+ *
+ * This file holds all implementations for the pizza struct's ease of use functions
+*/
+
 #include "pizza.h"
 #include "input.h"
 #include <time.h>
