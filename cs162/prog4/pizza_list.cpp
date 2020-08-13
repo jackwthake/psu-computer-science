@@ -132,7 +132,7 @@ void pizza_list::clear_list() {
 
   while(current) {
     if(current == previous) { /* if we're pointing at head */
-      this->head = current->next; /* unlink first elemont */
+      this->head = current->next; /* unlink first element */
       delete current; /* deallocate */
     } else { /* middle and end of list */
       previous->next = current->next; /* unlink node */
@@ -187,7 +187,7 @@ void pizza_list::displ_all() const {
 
 /* display the most recent addition to the list */
 void pizza_list::displ_most_recent() const {
-  /* get ready for traversale */
+  /* get ready for traversal */
   node *current = this->head, *most_recent = nullptr;
 
   if(this->head) {
@@ -245,7 +245,7 @@ void pizza_list::bubble_sort() {
           previous->data = current->data;
           current->data = temp;
 
-          /* increment amound of changes on the current iteration */
+          /* increment amount of changes on the current iteration */
           ++changes;
         }
       }
