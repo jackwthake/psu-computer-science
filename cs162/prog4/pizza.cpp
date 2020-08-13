@@ -26,7 +26,7 @@ void read_pizza_from_user(pizza &result) {
 }
 
 
-/* print a gieven pizza's members to the user */
+/* print a given pizza's members to the user */
 void print_pizza(pizza &printable) {
   cout << endl
        << "----------------------\n"
