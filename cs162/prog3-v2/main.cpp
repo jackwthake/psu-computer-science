@@ -35,10 +35,10 @@ int main(void) {
   /* close the data file, do error checking */
   if(!write_file("pizza.txt", list, num_pizzas)) {
     cerr << "Failed to write to data file. Exitting." << endl;
-    return EXIT_FAILURE;
+    return 0;
   }
 
-  return EXIT_SUCCESS;
+  return 1;
 }
 
 

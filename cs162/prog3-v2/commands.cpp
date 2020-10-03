@@ -10,22 +10,22 @@
 using namespace std;
 
 
-/* 
+/*
  * this function reads in one singular integer, static because we don't need it
  * outside this translation unit.
 */
 static void get_input(const char *prompt, int &value) {
   cout << prompt; /* print prompt to user */
-  
+
   /* read in value */
   cin >> value;
 
   /* flush input buffer */
-  cin.ignore(100, '\n');  
+  cin.ignore(100, '\n');
 }
 
 
-/* 
+/*
  * this function reads in a single string of text, static because we don't need it
  * outside this translation unit.
 */
@@ -41,7 +41,7 @@ static void get_input(const char *prompt, char *res, int len) {
 }
 
 
-/* 
+/*
  * this function takes in a string from the user, and removes all spaces, sets
  * everything to lowercase as well - makes parsing easier
  */
@@ -49,7 +49,7 @@ static void refine_command(char *cmd, char *refined) {
   int j = 0; /* holds the current position in the refined string */
 
   /* loop through the passed command */
-  for(int i = 0; i < strlen(cmd); ++i) {
+  for(unsigned i = 0; i < strlen(cmd); ++i) {
     if(!isspace(cmd[i])) { /* only fires if the current char is not a space */
       refined[j] = tolower(cmd[i]); /* move over that specific character */
       ++j; /* we only increment j when we've set a char in the refined pointer */
@@ -61,9 +61,9 @@ static void refine_command(char *cmd, char *refined) {
 }
 
 
-/* 
+/*
  * prompts the user for a command, parses the input, returns an integer value
- * representing the command that was entered (see the commands.h) 
+ * representing the command that was entered (see the commands.h)
 */
 int get_user_command(void) {
   char buf[cmd_size]; /* buffer for the un-refined command to be stored in */
@@ -74,7 +74,7 @@ int get_user_command(void) {
   refine_command(buf, cmd);
 
   /* test which command was entered, returning the corresponding enum value */
-  if(strcmp(cmd, "create") == 0) 
+  if(strcmp(cmd, "create") == 0)
     return cmd_create; /* create command */
   if(strcmp(cmd, "search") == 0)
     return cmd_search; /* search command */
@@ -94,7 +94,7 @@ void createCommand(pizza list[], int length) {
   int index = 0; /* holds position in the array */
 
   /* loop until we find an empty array index */
-  while(strcmp(list[index].name, "") != 0) 
+  while(strcmp(list[index].name, "") != 0)
     ++index;
 
   /* check if that index is within bounds */
@@ -153,7 +153,7 @@ void searchCommand(pizza list[]) {
 /* prints all pizzas in the array */
 void displayCommand(pizza list[]) {
   int index = 0; /* position in array */
-  
+
   /* formatting */
   cout << "----------------------" << endl;
 
@@ -181,4 +181,3 @@ void helpCommand() {
        << '\t' << "help     : print this help messgae" << "\n"
        << '\t' << "quit     : exit the program." << endl;
 }
-
