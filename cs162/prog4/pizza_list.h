@@ -32,7 +32,7 @@ class pizza_list {
 
     void displ_all() const; /* display all alphabetically */
     void displ_most_recent() const; /* display most recent addition */
-    void displ_all_with_rating(unsigned rating) const; /* display all with a given rating */
+    void displ_all_with_rating(int rating) const; /* display all with a given rating */
 
   private:
     void bubble_sort(); /* sort the list */

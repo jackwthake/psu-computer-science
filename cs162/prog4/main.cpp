@@ -105,5 +105,5 @@ int main(void) {
 
   cout << "Exitting" << endl;
 
-  return EXIT_SUCCESS;
+  return 0;
 }
