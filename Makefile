@@ -61,4 +61,4 @@ endif
 	$(CC) $(CXXFLAGS) -o bin/163/lab1.out cs162/labs/*1/*.cpp cs162/labs/*1/*.o
 
 clean:
-	rm -rf *.out
+	rm -rf bin/
