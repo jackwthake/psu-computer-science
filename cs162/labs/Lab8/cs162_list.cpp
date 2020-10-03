@@ -42,7 +42,7 @@ void list::append(int to_add)
 
   current->next = new node;
   current->next->data = to_add;
-  current->next->next = nullptr;
+  current->next->next = NULL;
 }
 
 
@@ -56,7 +56,7 @@ void list::remove_last()
       current = current->next;
 
     delete current->next;
-    current->next = nullptr;
+    current->next = NULL;
 }
 
 //Deallocate all nodes (Destructor)

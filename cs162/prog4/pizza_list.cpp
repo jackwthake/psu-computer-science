@@ -20,7 +20,7 @@ pizza_list::pizza_list() {
   data.open("pizza.txt");
 
   /* init member vars */
-  this->head = nullptr;
+  this->head = NULL;
   this->length = 0;
 
   /* if the file doesn't exist */
@@ -40,7 +40,7 @@ pizza_list::pizza_list() {
     data.ignore(100, '|');
     data.get(item.removals, field_length, '|'); /* read in removals member */
     data.ignore(100, '|');
-    
+
     data >> item.rating; /* read in rating member */
     data.ignore(100, '|');
 
@@ -79,10 +79,10 @@ void pizza_list::add_pizza() {
 /* add a specific pizza to the list */
 void pizza_list::add_pizza(pizza &item) {
   /* logic for insertion */
-  if(this->head == nullptr) { /* if the list is empty */
+  if(this->head == NULL) { /* if the list is empty */
     this->head = new node;
     this->head->data = item;
-    this->head->next = nullptr;
+    this->head->next = NULL;
   } else { /* not empty list */
     node *old_head = this->head;
     this->head = new node;
@@ -110,7 +110,7 @@ void pizza_list::remove_item(const char *name) {
         head = current->next;
       } else {
         previous->next = current->next; /* unlink the matched node */
-      
+
         /* deallocate the now unlinked node */
         delete current;
       }
@@ -145,7 +145,7 @@ void pizza_list::clear_list() {
   }
 
   /* clear head pointer as it's memory has all been deallocated */
-  this->head = nullptr;
+  this->head = NULL;
 }
 
 
@@ -173,7 +173,7 @@ void pizza_list::displ_all() const {
   /* get ready for traversal */
   node *current = this->head;
   int count = 1;
-  
+
   while(current) {
     /* print out the current node's members */
     print_pizza(current->data);
@@ -188,7 +188,7 @@ void pizza_list::displ_all() const {
 /* display the most recent addition to the list */
 void pizza_list::displ_most_recent() const {
   /* get ready for traversal */
-  node *current = this->head, *most_recent = nullptr;
+  node *current = this->head, *most_recent = NULL;
 
   if(this->head) {
      while(current) {
@@ -197,11 +197,11 @@ void pizza_list::displ_most_recent() const {
            most_recent = current;
        } else /* set most recent to the current as we don't have another one */
          most_recent = current;
-    
+
        /* prep for next iteration */
        current = current->next;
      }
-    
+
      /* print the result */
      print_pizza(most_recent->data);
   }
@@ -209,7 +209,7 @@ void pizza_list::displ_most_recent() const {
 
 
 /* display all with a certain rating */
-void pizza_list::displ_all_with_rating(unsigned rating) const {
+void pizza_list::displ_all_with_rating(int rating) const {
   /* prep for next iteration */
   node *current = this->head;
   int count = 1;
@@ -217,13 +217,13 @@ void pizza_list::displ_all_with_rating(unsigned rating) const {
   while(current) {
     if(current->data.rating == rating) {
       print_pizza(current->data); /* if the ratings match, print */
-      
+
       ++count;
     }
 
     /* prep for next iteration */
     current = current->next;
-  }  
+  }
 }
 
 
@@ -284,6 +284,5 @@ void pizza_list::write_to_file() const {
   }
 
   /* cleanup after ourselves */
-  data_file.close();  
+  data_file.close();
 }
-

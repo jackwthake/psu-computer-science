@@ -17,7 +17,7 @@ using namespace std;
 
 /* converts a string to all lower case */
 void to_lower_str(char *str) {
-  for(int i = 0; i < strlen(str); ++i) {
+  for(unsigned i = 0; i < strlen(str); ++i) {
     str[i] = tolower(str[i]);
   }
 }
@@ -64,8 +64,8 @@ void help() {
        << "\tclear\t\tDeletes everything in the list\n\n"
        << "\tprint\t\tPrints all pizzas in alphabetical order\n"
        << "\tprint recent\tPrints most recently added pizza\n"
-       << "\tprint rating\tPrints all with a given rating\n\n" 
-       << "\thelp\t\tPrints this help message" << endl;  
+       << "\tprint rating\tPrints all with a given rating\n\n"
+       << "\thelp\t\tPrints this help message" << endl;
 }
 
 
@@ -77,7 +77,7 @@ int main(void) {
   /* prints all available commands on startup */
   help();
 
-  do { 
+  do {
     /* prompt user for a command, convert it to lowercase */
     get_input_phrase("Please enter a command: ", command, 31);
     to_lower_str(command);
@@ -99,7 +99,7 @@ int main(void) {
       list.displ_most_recent(); /* display most recent addition to list*/
     else if(strcmp(command, "help") == 0)
       help(); /* print commands */
-    else if(strcmp(command, "quit") != 0) /* we only do this so it doesn't print quit as unrecognized */ 
+    else if(strcmp(command, "quit") != 0) /* we only do this so it doesn't print quit as unrecognized */
       cout << "No recognized command entered." << endl;
   } while(strcmp(command, "quit")); /* exit if user enters quit */
 
@@ -107,4 +107,3 @@ int main(void) {
 
   return EXIT_SUCCESS;
 }
-
