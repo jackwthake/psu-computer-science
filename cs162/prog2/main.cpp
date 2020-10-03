@@ -1,6 +1,8 @@
 #include <iostream>
 #include <ctype.h>
 #include <cstring>
+#include <cstdlib>
+#include <stdio.h>
 #include <time.h>
 using namespace std;
 
@@ -25,11 +27,11 @@ int main(void) {
   char phrase[PHRASE_LENGTH];
   char guess[SECRET_LENGTH];
   char prompt[129];
-  
+
   /* game variables */
   int turn = 1, round = 1;
   unsigned player_1_score = 0, player_2_score = 0;
-  
+
   /* introduce rules */
   introduce_player();
 
@@ -37,13 +39,13 @@ int main(void) {
     /* print out the score and which player should be guessing */
     cout << "Score: P1: " << player_1_score << " | P2: " << player_2_score << " | Round " << round << '\n'
          << "It is currently Player " << turn << "'s turn hiding a word." << endl;
-    
+
     /* get the secret word from the player */
-    sprintf(prompt, "Player %d please enter your secret word while the other player looks away:\n", turn);    
+    sprintf(prompt, "Player %d please enter your secret word while the other player looks away:\n", turn);
     prompt_user_input(prompt, secret_word, SECRET_LENGTH);
-    
+
     /* get the phrase from the player */
-    sprintf(prompt, "Player %d please enter your phrase while the other player continues to looks away:\n", turn);    
+    sprintf(prompt, "Player %d please enter your phrase while the other player continues to looks away:\n", turn);
     prompt_user_input(prompt, phrase, PHRASE_LENGTH);
 
     /* clear the screen */
@@ -73,7 +75,7 @@ int main(void) {
 
   /* print the final score */
   cout << "Game Over!\nFinal score was: P1: " << player_1_score << " | P2: " << player_2_score << endl;
-  
+
   return 0;
 }
 
@@ -164,7 +166,7 @@ void introduce_player() {
        << "     not embedding any characters into that word.\n"
        << "  3. If a word is not long enough to embed the current character the word gets\n"
        << "     skipped and has no character stored in it.\n"
-       << "  4. If an underscore is encountered, a random character will be inserted" << endl << endl; 
+       << "  4. If an underscore is encountered, a random character will be inserted" << endl << endl;
 }
 
 
@@ -207,4 +209,3 @@ void embed_word(const char *word, char *phrase) {
   /* convert phrase to lowercase */
   word_to_lower(phrase);
 }
-
