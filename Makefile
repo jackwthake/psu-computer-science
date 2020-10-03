@@ -58,7 +58,7 @@ endif
 
 # labs
 163_lab1: cs163/labs/*1/*lab1.cpp
-	$(CC) $(CXXFLAGS) -o bin/163/lab1.out cs162/labs/*1/*.cpp cs162/labs/*1/*.o
+	$(CC) $(CXXFLAGS) -o bin/163/lab1.out cs163/labs/*1/*.cpp cs163/labs/*1/*.o
 
 clean:
 	rm -rf bin/
