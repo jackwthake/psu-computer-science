@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-O0 -fno-elide-constructors -pedantic-errors -ansi -Wextra -Wall -Winit-self -Wold-style-cast -Woverloaded-virtual -Wuninitialized  -Winit-self -std=c++11
+CXXFLAGS=-Wall -ansi
 UNAME_S := $(shell uname -s)
 
 default: cs162

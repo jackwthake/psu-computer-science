@@ -21,14 +21,14 @@ void main_loop(pizza list[]);
 
 
 int main(void) {
-  pizza list[num_pizzas] = { 0 }; /* initialize the array, filling it with 0's */
+  pizza list[num_pizzas];
 
   /* open the data file, do error checking */
   read_file("pizza.txt", list, num_pizzas);
 
   cout << "Welcome to the pizza noting tool! Created by Jack Thake." << endl;
   helpCommand();
-  
+
   /* main loop for commands */
   main_loop(list);
 
@@ -45,7 +45,7 @@ int main(void) {
 /* the main driver of the program, loops until the user enters quit, executes commands. */
 void main_loop(pizza list[]) {
   bool running = true;
-  
+
   while(running) {
     int cmd_type = get_user_command(); /* get the entered command type */
 
@@ -69,6 +69,5 @@ void main_loop(pizza list[]) {
         cout << "Unrecognized command." << endl;
         break;
     }
-  } 
+  }
 }
-

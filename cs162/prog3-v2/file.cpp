@@ -12,7 +12,7 @@
 using namespace std;
 
 
-/* 
+/*
  * reads in a portion of the passed file, static because it is not needed in
  * global scope.
 */
@@ -28,7 +28,6 @@ static void read_from_file(ifstream &file, char response[], int length) {
 */
 void read_file(const char *fp, pizza list[], int length) {
   int index = 0;
-  char temp[field_length];
 
   ifstream data;
   data.open(fp);
@@ -53,7 +52,7 @@ void read_file(const char *fp, pizza list[], int length) {
 
   /* cleanup */
   data.close();
-} 
+}
 
 
 /*
@@ -67,7 +66,7 @@ bool write_file(const char *fp, pizza list[], int length) {
   /* don't write if there was an error  */
   if(!data)
     return false;
-  
+
   for(int i = 0; i < length; ++i) {
     if(strcmp(list[i].name, "") != 0) { /* only write in valid structs */
       data << list[i].name << "|"
