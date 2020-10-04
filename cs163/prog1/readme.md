@@ -1,8 +1,4 @@
-Jack Thake<br>
-CS163<br>
-Karla Fant<br>
-10•3•20<br>
-647 words<br>
+Jack Thake • CS163 • Karla Fant • 10.3.20 • 647 words
 
 # Design Write up for Program One
 This program will contain several classes and structures representing a list of
@@ -27,9 +23,9 @@ Linked Lists. It will have the following exposed public member functions:
 - **constructor**: Takes in the number of priority levels to be used, initializes.
   all N of the priority lists. Keeps itself shielded by not exposing the Lists
   to the function caller. It will return nothing.
-- **destructor**: Will take no parameters and will simply just oversee the
+- **destructor**: Will take no parameters and will simply oversee the
   deallocation of all the member lists. It will return nothing.
-- **add_item**: Will take a reference to an already created project structure, as.
+- **add_item**: Will take a reference to an already created project structure, as
   well as that project's priority level. It will then add that project to the
   respective list, if the list doesn't exist, the function will return false
   to indicate an error. Otherwise the item is passed to the list's add_item
@@ -47,7 +43,7 @@ Linked Lists. It will have the following exposed public member functions:
 
 ---
 ## Linear Linked List class
-One individual linked list. this will contain a head pointer that points to the
+One individual linked list. This will contain a head pointer that points to the
 first node, as well as all functionality with dealing with the linked list. It
 will contain the following exposed public member functions:
 - **constructor**: Will take no arguments and will initialize all member
@@ -65,7 +61,7 @@ will contain the following exposed public member functions:
 The node structure holds one item in the linear linked list as well the link to
 the next node in the list. These will be represented as:
 - **data**: Represents one individual project.
-- **next**: Holds a pointer to the next node int the list, NULL if it is the
+- **next**: Holds a pointer to the next node in the list, NULL if it is the
   last node.
 
 ---
