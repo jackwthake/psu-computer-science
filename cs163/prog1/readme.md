@@ -15,6 +15,10 @@ To achieve this structure the following will be implemented:
 - A list class which will manage the Linear Linked List's memory and nodes.
 - A node structure containing an individual project and a pointer to the next
   list item.
+  
+[//]: #test
+This will create the following structure where the client can never directly access the list's memory.
+![class diagram](img/class_diagram.jpg)
 
 ---
 ## List Manager class
