@@ -15,13 +15,13 @@ To achieve this structure the following will be implemented:
 - A list class which will manage the Linear Linked List's memory and nodes.
 - A node structure containing an individual project and a pointer to the next
   list item.
-  
+
 [//]: #test
 This will create the following structure where the client can never directly access the list's memory.
 ![class diagram](img/class_diagram.jpg)
 
 ---
-## List Manager class
+## list_manager Class
 The purpose of the manager class will be to interface with the individual Linear
 Linked Lists. It will have the following exposed public member functions:
 - **constructor**: Takes in the number of priority levels to be used, initializes.
@@ -35,6 +35,8 @@ Linked Lists. It will have the following exposed public member functions:
   to indicate an error. Otherwise the item is passed to the list's add_item
   function and the function will return it's return code. In no part of this
   process will the caller gain access to any of the hidden infrastructure.
+- **remove_item**: Will take in the projects name, and the priority level of the project.
+  It'll then call the corresponding lists remove function, returning it's result.
 - **display_priority**: Will take an integer value representing the priority
   levels to display to the user. If that list exists, call it's print
   function and return true. If the rating does not have an associated
@@ -46,7 +48,7 @@ Linked Lists. It will have the following exposed public member functions:
   any members.
 
 ---
-## Linear Linked List class
+## project_list Class
 One individual linked list. This will contain a head pointer that points to the
 first node, as well as all functionality with dealing with the linked list. It
 will contain the following exposed public member functions:
@@ -57,11 +59,22 @@ will contain the following exposed public member functions:
 - **add_item**: Will take in a reference to an initialized project structure. It
   will add the passed structure to the list, if successful return true,
   Otherwise returning false.
-- **display_all**: Will take no arguments, simply print all nodes in the list
-  to the console. This function will only return false if the link is empty.
-
+- **remove_item**: Will take in the name of the project, and call the recursive version
+  of this function, returning it's result.
+- **display_all**: Will take no arguments. if the list is empty it'll return false,
+  otherwise it'll then call the recursive version of this function and then return true.
+[//]: #test
+And the following private functions:
+- **remove_item**: will take in a head pointer, and the name to search for. each iteration
+  will check if we've reached the end of the list, if so return false. The second condition
+  being that the current node's name matches the search value, if so then remove it and return
+  true. If neither of those are met, call itself again, passing the next node and the same search
+  value.
+- **display_all**: will take in a head pointer. each iteration will first check if it's
+  at the end of the list, if not it'll print out the current node's data members,
+  before calling itself again passing the next node in the list.
 ---
-## Node Structure
+## node Data Structure
 The node structure holds one item in the linear linked list as well the link to
 the next node in the list. These will be represented as:
 - **data**: Represents one individual project.
@@ -69,7 +82,7 @@ the next node in the list. These will be represented as:
   last node.
 
 ---
-## Project Structure
+## project Data Structure
 The project structure will contain all of the information regarding one
 individual project. It will hold the following members:
 - **name**: The name of the project.
