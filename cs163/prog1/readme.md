@@ -4,7 +4,7 @@ Jack Thake • CS163 • Karla Fant • 10.3.20 • 647 words
 This program will contain several classes and structures representing a list of
 home improvement projects. At the highest level, all projects will be split up
 into groups sorted by their priority, from highest priority to lowest. each
-group of a given priority will be a Linear Linked List. Each node of one of the
+group of a given priority will be represented as a Linear Linked List. Each node in the
 respective lists will contain the following: The structure containing all of the
 project's data and a pointer, that points to the next node in the list.
 
