@@ -16,7 +16,7 @@ To achieve this structure the following will be implemented:
 - A node structure containing an individual project and a pointer to the next
   list item.
 
-[//]: #test
+
 This will create the following structure where the client can never directly access the list's memory.
 ![class diagram](img/class_diagram.jpg)
 
@@ -63,7 +63,8 @@ will contain the following exposed public member functions:
   of this function, returning it's result.
 - **display_all**: Will take no arguments. if the list is empty it'll return false,
   otherwise it'll then call the recursive version of this function and then return true.
-[//]: #test
+
+
 And the following private functions:
 - **remove_item**: will take in a head pointer, and the name to search for. each iteration
   will check if we've reached the end of the list, if so return false. The second condition
