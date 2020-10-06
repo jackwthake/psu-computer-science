@@ -1,96 +1,81 @@
-Jack Thake • CS163 • Karla Fant • 10.3.20 • 647 words
+Jack Thake • CS163 • Karla Fant • 10.6.20
 
 # Design Write up for Program One
+## Abstract
 This program will contain several classes and structures representing a list of
-home improvement projects. At the highest level, all projects will be split up
-into groups sorted by their priority, from highest priority to lowest. each
-group of a given priority will be represented as a Linear Linked List. Each node in the
-respective lists will contain the following: The structure containing all of the
-project's data and a pointer, that points to the next node in the list.
+home improvement projects. At the highest level, The manager class
+(**CS_project_manager**) will contain a linear linked list where each node holds a
+list that contains all projects of that corresponding priority.
+
+![list structure](img/list_structure.png)
+
+### Classes and structures
+This Will be achieved by creating two classes and 3 structures.
+The first class being the top level manager of the priority list -
+**CS_project_manager**, This will also be the class that the client
+communicates with, all the others will be shielded away. The
+second class being the container fo each list of individual
+projects - **CS_project_list**. To make these two classes work three structures
+are needed, those are as follows:
+- **CS_project_manager_node**: Represents one node in **CS_project_manager**'s
+  list. It will contain the following data members:
+  - **CS_project_list**: The data for a given node, contains a list of projects.
+  - **priority**: The priority of the **CS_project_list**.
+  - **next**: A pointer to the next node in the top level list.
+- **CS_project_list_node**: Represents one node in **CS_project_list**'s list. it
+  will contain the following data members:
+  - **CS_project**: One individual project.
+  - **next**: A pointer to the next node in the list
+- **CS_project**: Represents one project in the list. It will contain the following
+  data members:
+  - **name**: The name of the project.
+  - **estimated_cost**: The estimated cost of the whole project.
+  - **project_length**: The projected amount of time for that project to be completed
+  - **workers**: The name of any hired workers or companies, ```NULL``` if there are none.
+  - **completion_date**: The estimated date of completion.
+  - **project_coolness**: A very objective rating out of 5 on how cool the project is, 0
+    being pretty lame, 5 being very epic.
 
 ---
-## Class structure
-To achieve this structure the following will be implemented:
-- A manager class that holds the lists of projects by priority.
-- A list class which will manage the Linear Linked List's memory and nodes.
-- A node structure containing an individual project and a pointer to the next
-  list item.
-
-
-This will create the following structure where the client can never directly access the list's memory.
-![class diagram](img/class_diagram.jpg)
+## Error reporting
+Each function will report errors by integer values, those integers can then be interpreted
+by the enum **CS_error**. Those error states being:
+- **FAILURE**: Function was not successful.
+- **SUCCESS**: Function was successful.
+- **MEM_ALLOC_FAIL**: Memory failed to be allocated.
 
 ---
-## list_manager Class
-The purpose of the manager class will be to interface with the individual Linear
-Linked Lists. It will have the following exposed public member functions:
-- **constructor**: Takes in the number of priority levels to be used, initializes.
-  all N of the priority lists. Keeps itself shielded by not exposing the Lists
-  to the function caller. It will return nothing.
-- **destructor**: Will take no parameters and will simply oversee the
-  deallocation of all the member lists. It will return nothing.
-- **add_item**: Will take a reference to an already created project structure, as
-  well as that project's priority level. It will then add that project to the
-  respective list, if the list doesn't exist, the function will return false
-  to indicate an error. Otherwise the item is passed to the list's add_item
-  function and the function will return it's return code. In no part of this
-  process will the caller gain access to any of the hidden infrastructure.
-- **remove_item**: Will take in the projects name, and the priority level of the project.
-  It'll then call the corresponding lists remove function, returning it's result.
-- **display_priority**: Will take an integer value representing the priority
-  levels to display to the user. If that list exists, call it's print
-  function and return true. If the priority does not have an associated
-  priority, return false. This process will never allow the caller access to
-  any members.
-- **display_all**: Will take no parameters, and will loop through all the member
-  lists calling each's print function. This will only return false if none of
-  the lists have nodes. This process will never allow the caller access to
-  any members.
+## Class Member Functions
+### **CS_project_manager**:
+- `constructor`: This will take no arguments and simply prepare the internal list
+  pointers. It will return nothing.
+- `destructor`: This will take no arguments and oversee the deallocation of all
+  dynamic memory. It will return nothing.
+- `add_priority`: This will take in an integer value, that value representing the
+  priority level of the new list. The function will then add a node with the corresponding
+  priority set. returning **SUCCESS** if the node was successfully allocated, **MEM_ALLOC_FAIL**
+  otherwise.
+- `remove_priority`: This will take in an integer value, that value representing the
+  priority level to be removed. The function will then iterate through the list until
+  it finds a matching priority, deallocating that node and returning **SUCCESS**, or
+  returning **FAILURE** if the node could not be found.
+- `display_priority`: This will take in an integer value, that value representing
+  the priority level to be displayed to the user. The function then iterates through
+  the list until it finds a matching priority. Once a match is found, we call the matching
+  priority's node's display member function and return it's return value. If no match is found,
+  **FAILURE** is returned.
+- `display_all`: This will take no parameters. It will then iterate through the list,
+  calling each node's display member function. If one node returns **FAILURE** then it
+  will also return **FAILURE**, otherwise it will return **SUCCESS**.
 
----
-## project_list Class
-One individual linked list. This will contain a head pointer that points to the
-first node, as well as all functionality with dealing with the linked list. It
-will contain the following exposed public member functions:
-- **constructor**: Will take no arguments and will initialize all member
-  variables.
-- **destructor**: Will take no arguments and will oversee the deallocation of
-  all dynamically allocated memory
-- **add_item**: Will take in a reference to an initialized project structure. It
-  will add the passed structure to the list, if successful return true,
-  Otherwise returning false.
-- **remove_item**: Will take in the name of the project, and call the recursive version
-  of this function, returning it's result.
-- **display_all**: Will take no arguments. if the list is empty it'll return false,
-  otherwise it'll then call the recursive version of this function and then return true.
-
-
-And the following private functions:
-- **remove_item**: will take in a head pointer, and the name to search for. each iteration
-  will check if we've reached the end of the list, if so return false. The second condition
-  being that the current node's name matches the search value, if so then remove it and return
-  true. If neither of those are met, call itself again, passing the next node and the same search
-  value.
-- **display_all**: will take in a head pointer. each iteration will first check if it's
-  at the end of the list, if not it'll print out the current node's data members,
-  before calling itself again passing the next node in the list.
----
-## node Data Structure
-The node structure holds one item in the linear linked list as well the link to
-the next node in the list. These will be represented as:
-- **data**: Represents one individual project.
-- **next**: Holds a pointer to the next node in the list, NULL if it is the
-  last node.
-
----
-## project Data Structure
-The project structure will contain all of the information regarding one
-individual project. It will hold the following members:
-- **name**: The name of the project.
-- **estimated cost**: The total estimated cost of the whole project.
-- **length of project**: How much time (in days) the project will take before
-  completion.
-- **hired workers**: This will contain the name of any workers, or companies
-  contracted for the work.
-- **completion date**: The estimated date of completion for the whole project.
-- **coolness rating**: Super objective measure of how cool the project is.
+### **CS_project_list**:
+- `constructor`: This will take no arguments and simply prepare the internal list
+  pointers. It will return nothing.
+- `destructor`: This will take no arguments and oversee the deallocation of all
+  dynamic memory. It will return nothing.
+- `add_item`: This will take in an initialized **CS_project** structure. The Function
+  will then attempt to add the structure to it's list, returning **MEM_ALLOC_FAIL** if
+  the node cannot be created, **SUCCESS** otherwise.
+- `display`: This will take in no parameters. It will then attempt to print out the
+  entire list to the user, returning **FAILURE** if the list is empty, **SUCCESS**
+  otherwise.
