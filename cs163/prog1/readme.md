@@ -10,9 +10,9 @@ list that contains all projects of that corresponding priority.
 ![list structure](img/list_structure.png)
 
 ### Classes and structures
-This Will be achieved by creating two classes and 3 structures.
+This will be achieved by creating two classes and 3 structures.
 The first class being the top level manager of the priority list -
-**CS_project_manager**, This will also be the class that the client
+**CS_project_manager**, this will also be the class that the client
 communicates with, all the others will be shielded away. The
 second class being the container fo each list of individual
 projects - **CS_project_list**. To make these two classes work three structures
@@ -59,6 +59,14 @@ by the enum **CS_error**. Those error states being:
   priority level to be removed. The function will then iterate through the list until
   it finds a matching priority, deallocating that node and returning **SUCCESS**, or
   returning **FAILURE** if the node could not be found.
+- `add_project`: This will take in an integer value representing the new projects priority,
+  and a reference to an initialized **CS_project**. The function will then attempt to call
+  the corresponding lists `add_item` function, returning it's return value. This will return
+  **FAILURE** if no matching list is found.
+- `remove_project`: This will take in the name of the project to be removed. It will then
+  incrementally try to remove that item from each list, only stopping if a list successfully removes
+  the item or if none of the lists could remove it. Returns **SUCCESS** if the item was successfully
+  deleted, **FAILURE** otherwise.
 - `display_priority`: This will take in an integer value, that value representing
   the priority level to be displayed to the user. The function then iterates through
   the list until it finds a matching priority. Once a match is found, we call the matching
@@ -76,6 +84,9 @@ by the enum **CS_error**. Those error states being:
 - `add_item`: This will take in an initialized **CS_project** structure. The Function
   will then attempt to add the structure to it's list, returning **MEM_ALLOC_FAIL** if
   the node cannot be created, **SUCCESS** otherwise.
+- `remove_item`: This will take in the name of the project to be deleted. it will then
+  iterate through the list until it finds a matching project, it'll then remove the node
+  returning **SUCCESS**, if no match was found it will return **FAILURE**
 - `display`: This will take in no parameters. It will then attempt to print out the
   entire list to the user, returning **FAILURE** if the list is empty, **SUCCESS**
   otherwise.
