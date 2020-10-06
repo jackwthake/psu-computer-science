@@ -39,7 +39,7 @@ Linked Lists. It will have the following exposed public member functions:
   It'll then call the corresponding lists remove function, returning it's result.
 - **display_priority**: Will take an integer value representing the priority
   levels to display to the user. If that list exists, call it's print
-  function and return true. If the rating does not have an associated
+  function and return true. If the priority does not have an associated
   priority, return false. This process will never allow the caller access to
   any members.
 - **display_all**: Will take no parameters, and will loop through all the member
@@ -93,3 +93,4 @@ individual project. It will hold the following members:
 - **hired workers**: This will contain the name of any workers, or companies
   contracted for the work.
 - **completion date**: The estimated date of completion for the whole project.
+- **coolness rating**: Super objective measure of how cool the project is.
