@@ -1,6 +1,6 @@
 Jack Thake • CS163 • Karla Fant • 10.6.20
 
-# Design Write up for Program One
+# Design Write-up for Program One
 ## Abstract
 This program will contain several classes and structures representing a list of home improvement projects. At the highest level, The manager class (**CS_project_manager**) will contain a linear linked list where each node itself holds a list of all the projects with a corresponding priority.
 
@@ -16,13 +16,13 @@ This will be achieved by creating two classes and three structures. The first cl
 - **CS_project_list_node**: Represents one node in **CS_project_list**'s list. it
   will contain the following data members:
   - **CS_project**: One individual project.
-  - **next**: A pointer to the next node in the list
+  - **next**: A pointer to the next node in the list.
 - **CS_project**: Represents one project in the list. It will contain the following
   data members:
   - **name**: The name of the project.
   - **estimated_cost**: The estimated cost of the whole project.
-  - **project_length**: The projected amount of time for that project to be completed
-  - **workers**: The name of any hired workers or companies, ```NULL``` if there are none.
+  - **project_length**: The projected amount of time for that project to be completed.
+  - **workers**: The name of any hired workers or companies, `NULL` if there are none.
   - **completion_date**: The estimated date of completion.
   - **project_coolness**: A very objective rating out of 5 on how cool the project is, 0
     being pretty lame, 5 being very epic.
