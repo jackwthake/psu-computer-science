@@ -142,8 +142,9 @@ CS_error CS_project_manager::display_all(void) const {
 
   /* traverse through list */
   while (current) {
-    // TODO: Implement full printing
-    cout << current->priority << endl;
+    cout << "----------------------------" << endl;
+    cout << "priority: " << current->priority << endl;
+    current->data.display();
     current = current->next;
   }
 
