@@ -1,5 +1,6 @@
 #include "CS_project_list.h"
 
+#include <cstring>
 #include <iostream>
 using namespace std;
 
