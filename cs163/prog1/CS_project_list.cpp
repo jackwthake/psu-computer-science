@@ -100,7 +100,7 @@ CS_error CS_project_list::display(void) const {
     cout << "=============================" << endl;
     cout << "Name: " << current->data.name << endl;
 
-    if (!curent->data.workers)
+    if (!current->data.workers)
       cout << "Workers: " << "None" << endl;
     else
       cout << "Workers: " << current->data.workers << endl;
