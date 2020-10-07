@@ -1,3 +1,10 @@
+/*
+ * CS_project_list.h
+ * Jack Thake
+ * This file holds the declarations for the CS_project_list class and the
+ * CS_project_list_node struct.
+*/
+
 #ifndef CS_PROJECT_LIST_H
 #define CS_PROJECT_LIST_H
 

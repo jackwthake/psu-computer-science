@@ -1,3 +1,9 @@
+/*
+ * CS_project_list.cpp
+ * Jack Thake
+ * This file holds all the implementation for the CS_project_list class.
+*/
+
 #include "CS_project_list.h"
 
 #include <cstring>
@@ -67,49 +73,63 @@ CS_error CS_project_list::add_item(CS_project &project) {
 }
 
 
+/*
+ * This function attempts to find and remove a project with a given name,
+ * returns FAILURE if none is found, SUCCESS otherwise.
+*/
 CS_error CS_project_list::remove_item(char *name) {
   CS_project_list_node *current = this->head, *previous = this->head;
 
-  while (current) {
-    if (strcmp(name, current->data.name) == 0) {
-      if (current == this->head) {
+  while (current) { /* traverse the list */
+    if (strcmp(name, current->data.name) == 0) { /* check if the current node is a match */
+      if (current == this->head) { /* first node */
         this->head = current->next;
-      } else {
+      } else { /* middle of the list / end of list */
         previous->next = current->next;
       }
 
+      /* delete and return SUCCESS as we've removed the item. */
       delete current;
       return SUCCESS;
     }
 
+    /* prep for next iteration */
     previous = current;
     current = current->next;
   }
 
+  /* if we get this far then we found no match */
   return FAILURE;
 }
 
 
+/*
+ * This function displays all items in a list, if the list is empty - return
+ * FAILURE, otherwise return SUCCESS.
+*/
 CS_error CS_project_list::display(void) const {
   CS_project_list_node *current = this->head;
 
+  /* check for an empty list */
   if (!current)
     return FAILURE;
 
-  while (current) {
+  while (current) { /* traverse */
     cout << "=============================" << endl;
-    cout << "Name: " << current->data.name << endl;
+    cout << "Name: " << current->data.name << endl; /* print name atrib */
 
-    if (!current->data.workers)
+    if (!current->data.workers) /* print workers atrib (if it exists) */
       cout << "Workers: " << "None" << endl;
     else
       cout << "Workers: " << current->data.workers << endl;
 
-    cout << "Estimated cost: " << current->data.estimated_cost << endl;
-    cout << "Project Length: " << current->data.project_length << endl;
-    cout << "Completion date: " << current->data.completion_date << endl;
-    cout << "Project Coolness: " << current->data.project_coolness << endl;
+    cout << "Estimated cost: " << current->data.estimated_cost << endl;  /* print cosr atrib */
+    cout << "Project Length: " << current->data.project_length << endl;  /* print length atrib */
+    cout << "Completion date: " << current->data.completion_date << endl;  /* print date atrib */
+    cout << "Project Coolness: " << current->data.project_coolness << endl;  /* print coolness atrib */
     cout << "=============================" << endl;
+
+    /* prep for next iteration */
     current = current->next;
   }
 
