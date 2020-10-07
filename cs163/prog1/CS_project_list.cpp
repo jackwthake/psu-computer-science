@@ -3,14 +3,30 @@
 #include <iostream>
 using namespace std;
 
+/*
+ * Runs at the start of CS_project_list's life - sets up the head pointer
+*/
 CS_project_list::CS_project_list() {
   this->head = NULL;
 }
 
 
+/*
+ * Runs at the end of CS_project_list's life - deallocates all nodes
+*/
 CS_project_list::~CS_project_list() {
-  // TODO: Implement this
+  CS_project_list_node *current = this->head;
+
+  while (current) { /* traverse through list */
+    CS_project_list_node *temp = current->next;
+
+    delete current;
+    current = temp;
+  }
+
+  this->head = NULL;
 }
+
 
 /*
  * Adds one item to the end of the list, returns the CS_error type defined in
@@ -47,8 +63,25 @@ CS_error CS_project_list::add_item(CS_project &project) {
 
 
 CS_error CS_project_list::remove_item(char *name) {
-  // TODO: Implement this
-  return SUCCESS;
+  CS_project_list_node *current = this->head, *previous = this->head;
+
+  while (current) {
+    if (strcmp(name, current->data.name) == 0) {
+      if (current == this->head) {
+        this->head = current->next;
+      } else {
+        previous->next = current->next;
+      }
+
+      delete current;
+      return SUCCESS;
+    }
+
+    previous = current;
+    current = current->next;
+  }
+
+  return FAILURE;
 }
 
 
@@ -59,8 +92,14 @@ CS_error CS_project_list::display(void) const {
     return FAILURE;
 
   while (current) {
-    // TODO: print project info
-    cout << "Item" << endl;
+    cout << "=============================" << endl;
+    cout << "Name: " << current->data.name << endl;
+    cout << "Workers: " << current->data.workers << endl;
+    cout << "Estimated cost: " << current->data.estimated_cost << endl;
+    cout << "Project Length: " << current->data.project_length << endl;
+    cout << "Completion date: " << current->data.completion_date << endl;
+    cout << "Project Coolness: " << current->data.project_coolness << endl;
+    cout << "=============================" << endl;
     current = current->next;
   }
 
