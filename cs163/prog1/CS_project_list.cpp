@@ -36,6 +36,10 @@ CS_project_list::~CS_project_list() {
 CS_error CS_project_list::add_item(CS_project &project) {
   CS_project_list_node *current = this->head;
 
+  /* every project needs a valid name, reject ones without it. */
+  if (!project.name)
+    return FAILURE;
+
   if (!this->head) { /* empty list */
     this->head = new CS_project_list_node;
     if (!this->head)
@@ -95,7 +99,12 @@ CS_error CS_project_list::display(void) const {
   while (current) {
     cout << "=============================" << endl;
     cout << "Name: " << current->data.name << endl;
-    cout << "Workers: " << current->data.workers << endl;
+
+    if (!curent->data.workers)
+      cout << "Workers: " << "None" << endl;
+    else
+      cout << "Workers: " << current->data.workers << endl;
+
     cout << "Estimated cost: " << current->data.estimated_cost << endl;
     cout << "Project Length: " << current->data.project_length << endl;
     cout << "Completion date: " << current->data.completion_date << endl;
