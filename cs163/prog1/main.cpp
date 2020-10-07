@@ -39,10 +39,15 @@ int main(int argc, char const *argv[]) {
   cout << "display items: " << list.display() << endl;
 
   cout << "Manager Tests" << endl;
-  cout << "Display empty list: " << manager.display_all() << endl;
+  cout << "Display empty list: \n" << manager.display_all() << endl;
   cout << "Add priority: " << manager.add_priority(10) << endl;
+  cout << "Add project to priority 10: " << manager.add_project(10, project) << endl;
   cout << "Add priority: " << manager.add_priority(15) << endl;
+  cout << "Remove priority 15: " << manager.remove_priority(15) << endl;
   cout << "Display populated list: " << endl << manager.display_all() << endl;
+  cout << "Display priority list: " << endl << manager.display_priority(10) << endl;
+  cout << "remove project from priority 10: " << manager.remove_project("name3") << endl;
+  cout << "Display priority list: " << endl << manager.display_priority(10) << endl;
 
   return 0;
 }

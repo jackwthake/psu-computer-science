@@ -13,6 +13,8 @@ CS_project_manager::~CS_project_manager() {
 
   while (current) {
     CS_project_manager_node *temp = current->next;
+    current->data.~CS_project_list();
+
     delete current;
     current = temp;
   }
@@ -56,26 +58,78 @@ CS_error CS_project_manager::add_priority(int priority) {
 
 
 CS_error CS_project_manager::remove_priority(int priority) {
-  // TODO: Implement me! >:(
-  return SUCCESS;
+  CS_project_manager_node *current = this->head, *previous = this->head;
+
+  while (current) {
+    if (current->priority == priority) {
+      if (current == head) {
+        head = current->next;
+      } else {
+        previous->next = current->next;
+      }
+
+      delete current;
+      return SUCCESS;
+    }
+
+    previous = current;
+    current = current->next;
+  }
+
+  return FAILURE;
 }
 
 
 CS_error CS_project_manager::add_project(int priority, CS_project &project) {
-  // TODO: Implement me! >:(
-  return SUCCESS;
+  CS_project_manager_node *current = this->head;
+
+  if (!this->head)
+    return FAILURE;
+
+  while (current) {
+    if (current->priority == priority) {
+      cout << "priority found" << endl;
+      return current->data.add_item(project);
+    }
+
+    current = current->next;
+  }
+
+  return FAILURE;
 }
 
 
 CS_error CS_project_manager::remove_project(const char *name) {
-  // TODO: Implement me! >:(
-  return SUCCESS;
+  CS_project_manager_node *current = this->head;
+
+  if (!this->head)
+    return FAILURE;
+
+  while (current) {
+    if (current->data.remove_item(name) == SUCCESS)
+      return SUCCESS;
+
+    current = current->next;
+  }
+
+  return FAILURE;
 }
 
 
 CS_error CS_project_manager::display_priority(int priority) {
-  // TODO: Implement me! >:(
-  return SUCCESS;
+  CS_project_manager_node *current = this->head;
+
+  if (!this->head)
+    return FAILURE;
+
+  while (current) {
+    if (current->priority == priority)
+      return current->data.display();
+
+    current = current->next;
+  }
+
+  return FAILURE;
 }
 
 
