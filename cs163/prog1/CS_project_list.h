@@ -23,7 +23,7 @@ public:
   ~CS_project_list();
 
   CS_error add_item(CS_project &project); /* add item to list */
-  CS_error remove_item(char *name); /* remove item from list */
+  CS_error remove_item(const char *name); /* remove item from list */
   CS_error display(void) const; /* display list */
 private:
   CS_project_list_node *head;

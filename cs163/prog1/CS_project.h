@@ -16,8 +16,8 @@ typedef enum {
 
 /* one project in a list */
 struct CS_project {
-  char *name;
-  char *workers;
+  const char *name;
+  const char *workers;
   float estimated_cost;
   int project_length;
   int completion_date;

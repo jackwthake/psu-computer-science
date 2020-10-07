@@ -77,7 +77,7 @@ CS_error CS_project_list::add_item(CS_project &project) {
  * This function attempts to find and remove a project with a given name,
  * returns FAILURE if none is found, SUCCESS otherwise.
 */
-CS_error CS_project_list::remove_item(char *name) {
+CS_error CS_project_list::remove_item(const char *name) {
   CS_project_list_node *current = this->head, *previous = this->head;
 
   while (current) { /* traverse the list */
