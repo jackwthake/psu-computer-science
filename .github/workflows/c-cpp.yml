@@ -10,12 +10,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install Valgrind
+      run: sudo apt-get install valgrind
     - name: setup
       run: ./setup.sh
     - name: make
       run: make
     - name: mem_check
-      run python3 ./mem_test.py
+      run: python3 mem_test.py
