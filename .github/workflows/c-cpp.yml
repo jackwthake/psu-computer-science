@@ -17,3 +17,5 @@ jobs:
       run: ./setup.sh
     - name: make
       run: make
+    - name: mem_check
+      run python3 ./mem_test.py
