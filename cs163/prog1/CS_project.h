@@ -18,12 +18,14 @@ typedef enum {
 
 /* one project in a list */
 struct CS_project {
-  const char *name;
-  const char *workers;
+  char *name;
+  char *workers;
   struct tm completion_date;
   float estimated_cost;
   int project_length;
   int project_coolness;
+
+  void operator=(const CS_project& proj);
 };
 
 /* helper functions for dealing with dates */

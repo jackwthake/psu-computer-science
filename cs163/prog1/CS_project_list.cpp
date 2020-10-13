@@ -31,6 +31,27 @@ CS_error get_time_string_from_int(char *date, struct tm *when) {
 }
 
 
+void CS_project::operator=(const CS_project& proj) {
+  /* deallocate old strings if they exist */
+  if (this->name)
+    delete []this->name;
+  if (this->workers)
+    delete []this->workers;
+
+  /* reallocate */
+  this->name = new char[strlen(proj.name)];
+  strcpy(this->name, proj.name);
+  this->workers = new char[strlen(proj.workers)];
+  strcpy(this->workers, proj.workers);
+
+  /* copy over other members */
+  this->completion_date = proj.completion_date;
+  this->estimated_cost = proj.estimated_cost;
+  this->project_length = project_length;
+  this->project_coolness = project_coolness;
+}
+
+
 /*
  * Runs at the start of CS_project_list's life - sets up the head pointer
 */

@@ -15,11 +15,16 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  struct tm when;
+
+  struct tm when = {};
   char date[9];
+  
   get_time_val_from_string("1/18/03", when);
-  get_time_string_from_int(date, &when);
-  cout << date << endl;
+  CS_project p1 { "name", "workers", when, 0.f, 0 };
+  CS_project p2 = p1;
+
+  get_time_string_from_int(date, &p2.completion_date);
+  cout << p2.name << " " << p2.workers << " " << date << endl;
 
 #ifdef USER_TEST
   cout << "-- CS_project_list Project Tests --" << endl;
