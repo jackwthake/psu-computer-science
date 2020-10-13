@@ -32,19 +32,19 @@ endif
 
 # Labs
 162_lab4: cs162/labs/*4/*lab4.cpp
-	$(CC) $(CXXFLAGS) -o bin/162/lab4.out  cs162/labs/*4/*lab4.cpp
+	$(CC) $(CXXFLAGS) -o bin/162/lab/lab4.out  cs162/labs/*4/*lab4.cpp
 
 162_lab6: cs162/labs/*6/*lab6.cpp
-	$(CC) $(CXXFLAGS) -o bin/162/lab6.out  cs162/labs/*6/*.cpp cs162/labs/*6/*.o
+	$(CC) $(CXXFLAGS) -o bin/162/lab/lab6.out  cs162/labs/*6/*.cpp cs162/labs/*6/*.o
 
 162_lab7: cs162/labs/*7/*lab7.cpp
-	$(CC) $(CXXFLAGS) -o bin/162/lab7.out  cs162/labs/*7/*.cpp cs162/labs/*7/*.o
+	$(CC) $(CXXFLAGS) -o bin/162/lab/lab7.out  cs162/labs/*7/*.cpp cs162/labs/*7/*.o
 
 162_lab8: cs162/labs/*8/*.cpp
-	$(CC) $(CXXFLAGS) -o bin/162/lab8.out  cs162/labs/*8/*.cpp cs162/labs/*8/*.o
+	$(CC) $(CXXFLAGS) -o bin/162/lab/lab8.out  cs162/labs/*8/*.cpp cs162/labs/*8/*.o
 
 162_lab10: cs162/labs/*10/*.cpp
-	$(CC) $(CXXFLAGS) -o bin/162/lab10.out  cs162/labs/*10/*.cpp cs162/labs/*10/*.o
+	$(CC) $(CXXFLAGS) -o bin/162/lab/lab10.out  cs162/labs/*10/*.cpp cs162/labs/*10/*.o
 
 ################
 # cs163
@@ -62,7 +62,7 @@ endif
 
 # labs
 163_lab1: cs163/labs/*1/*lab1.cpp
-	$(CC) $(CXXFLAGS) -o bin/163/lab1.out cs163/labs/*1/*.cpp cs163/labs/*1/*.o
+	$(CC) $(CXXFLAGS) -o bin/163/lab/lab1.out cs163/labs/*1/*.cpp cs163/labs/*1/*.o
 
 clean:
 	rm -rf bin/
