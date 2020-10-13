@@ -7,8 +7,29 @@
 #include "CS_project_list.h"
 
 #include <cstring>
+#include <time.h>
 #include <iostream>
 using namespace std;
+
+/* helper function to convert an int to a time string */
+CS_error get_time_val_from_string(const char *t_val, struct tm &when) {
+  if (!strptime(t_val, "%m/%d/%y", &when)) {
+    return FAILURE;
+  }
+
+  return SUCCESS;
+};
+
+
+/* helper function to convert a stringdate to an integer */
+CS_error get_time_string_from_int(char *date, struct tm *when) {
+  if(!strftime(date, 9, "%m/%d/%y", when)) {
+    return FAILURE;
+  }
+
+  return SUCCESS;
+}
+
 
 /*
  * Runs at the start of CS_project_list's life - sets up the head pointer
@@ -115,6 +136,9 @@ CS_error CS_project_list::display(void) const {
     return FAILURE;
 
   while (current) { /* traverse */
+    char *date = new char[7];
+    get_time_string_from_int(date, &current->data.completion_date);
+
     cout << "=============================" << endl;
     cout << "Name: " << current->data.name << endl; /* print name atrib */
 
@@ -125,7 +149,7 @@ CS_error CS_project_list::display(void) const {
 
     cout << "Estimated cost: " << current->data.estimated_cost << endl;  /* print cosr atrib */
     cout << "Project Length: " << current->data.project_length << endl;  /* print length atrib */
-    cout << "Completion date: " << current->data.completion_date << endl;  /* print date atrib */
+    cout << "Completion date: " << date << endl;  /* print date atrib */
     cout << "Project Coolness: " << current->data.project_coolness << endl;  /* print coolness atrib */
     cout << "=============================" << endl;
 

@@ -9,45 +9,26 @@
 #include "CS_project_list.h"
 #include "CS_project.h"
 
+/* if this is defined then the user will need to enter values to test the program. */
+#define USER_TEST
+
 using namespace std;
 
-CS_project project = {
-  "name",
-  "none",
-  0
-};
-
-CS_project project2 = {
-  "name2",
-  "none",
-  0
-};
-
 int main(int argc, char const *argv[]) {
-  CS_project_list list;
-  CS_project_manager manager;
+  struct tm when;
+  char date[9];
+  get_time_val_from_string("1/18/03", when);
+  get_time_string_from_int(date, &when);
+  cout << date << endl;
 
-  cout << "Success = " << SUCCESS << endl;
-  cout << "Failure = " << FAILURE << endl;
-  cout << "Memory allocation failure = " << MEM_ALLOC_FAIL << endl;
+#ifdef USER_TEST
+  cout << "-- CS_project_list Project Tests --" << endl;
+  cout << "-- CS_project_list Display Tests --" << endl;
 
-  cout << "List tests" << endl;
-  cout << "Add item: " << list.add_item(project) << endl;
-  cout << "Add item: " << list.add_item(project2) << endl;
-  cout << "display items: " << list.display() << endl;
-  cout << "Remove item: " << list.remove_item("name2") << endl;
-  cout << "display items: " << list.display() << endl;
-
-  cout << "Manager Tests" << endl;
-  cout << "Display empty list: \n" << manager.display_all() << endl;
-  cout << "Add priority: " << manager.add_priority(10) << endl;
-  cout << "Add project to priority 10: " << manager.add_project(10, project) << endl;
-  cout << "Add project to priority 15: " << manager.add_project(15, project2) << endl;
-  cout << "Add priority: " << manager.add_priority(15) << endl;
-  cout << "Display populated list: " << endl << manager.display_all() << endl;
-  cout << "Display priority list: " << endl << manager.display_priority(10) << endl;
-  cout << "remove project from priority 10: " << manager.remove_project("name3") << endl;
-  cout << "Display priority list: " << endl << manager.display_priority(10) << endl;
-
+  cout << "-- CS_project_manager Priority Tests --" << endl;
+  cout << "-- CS_project_manager Project Tests --" << endl;
+  cout << "-- CS_project_manager Display Tests --" << endl;
+#else
+#endif
   return 0;
 }
