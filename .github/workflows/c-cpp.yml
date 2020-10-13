@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install Valgrind
+      run: sudo apt-get install valgrind
     - name: setup
       run: ./setup.sh
     - name: make
