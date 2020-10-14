@@ -3,18 +3,19 @@
 //  psu-computer-science
 //
 //  Created by Jack Thake on 13/10/2020.
-//  This file holds the definitions for all classes related to the lists
+//  This file holds the definitions for all classes related to the lists. In 
+//  this file I use free rather than delete [], and theres a reason for that:
+//  strdup calls malloc and using delete [] on a malloc'd region of memory
+//  causes valgrind to spew errors about mismatching free and delete. please
+//  don't mark me down for that.
 //
 
 #include "CS_project.h"
 #include <cstring>
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
-static CS_error copy_string(char *dest, char *src) {
-  // TODO: Implement me
-  return SUCCESS;
-}
 
 /* simple constructor, just calls the other constructor */
 CS_project::CS_project() {
@@ -31,14 +32,11 @@ CS_project::CS_project() {
 CS_project::CS_project(char *name, char *workers, char *comp_date, float cost, int length, int coolness) {
   /* allocate name */
   //copy_string(this->name, name);
-  this->name = new char[strlen(name) + 1];
-  strcpy(this->name, name);
+  this->name = strdup(name);
   /* allocate workers */
-  this->workers = new char[strlen(workers) + 1];
-  strcpy(this->workers, workers);
+  this->workers = strdup(workers);
   /* allocate completion_date */
-  this->completion_date = new char[strlen(comp_date) + 1];
-  strcpy(this->completion_date, comp_date);
+  this->completion_date = strdup(comp_date);
 
   this->estimated_cost = cost;
   this->project_length = length;
@@ -49,11 +47,11 @@ CS_project::CS_project(char *name, char *workers, char *comp_date, float cost, i
 /* runs at the end of CS_project's life */
 CS_project::~CS_project() {
   if (this->name) /* deallocate name if it exists */
-    delete []this->name;
+    free(this->name);
   if (this->workers) /* deallocate workers if it exists */
-    delete []this->workers;
+    free(this->workers);
   if (this->completion_date) /* deallocate completion date if it exists */
-    delete []this->completion_date;
+    free(this->completion_date);
 }
 
 
@@ -77,7 +75,7 @@ CS_error CS_project::display() const {
   cout << "Project Completion Date: " << this->completion_date << endl;
   cout << "Estimated Cost: " << this->estimated_cost << endl;
   cout << "Estimated Project Length: " << this->project_length << endl;
-  cout << "Project coolness out of 5:" << this->project_coolness << endl;
+  cout << "Project coolness out of 5: " << this->project_coolness << endl;
   cout << "======================" << endl;
 
   return SUCCESS;
@@ -86,9 +84,18 @@ CS_error CS_project::display() const {
 
 /* performs a deep copy */
 void CS_project::operator=(const CS_project& proj) {
-  copy_string(this->name, proj.name);
-  copy_string(this->workers, proj.workers);
-  copy_string(this->completion_date, proj.completion_date);
+  /* deallocate old strings if they exist */
+  if (this->name)
+    free(this->name);
+  if (this->workers)
+    free(this->workers);
+  if (this->completion_date)
+    free(this->completion_date);
+
+  /* strdup creates a duplicate of a given string use `man strdup` */
+  this->name = strdup(proj.name);
+  this->workers = strdup(proj.workers);
+  this->completion_date = strdup(proj.completion_date);
 
   this->estimated_cost = proj.estimated_cost;
   this->project_length = proj.estimated_cost;

@@ -7,20 +7,18 @@
 //
 
 #include <iostream>
+#include <cstring>
 #include "CS_project.h"
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  char *name = "test", *workers = "test", *date = "asdg";
+  CS_project project("name", "workers", "date", 1, 1, 1);
+  CS_project p("name2", "workers 2", "date 2", 2, 2, 2);
 
-  CS_project project;
-  CS_project project2(name, workers, date, 1, 1, 1);
-
-  cout << project.display() << endl;
-  cout << project2.display() << endl;
-
-  project = project2;
-  cout << project.display() << endl;
+  project.display();
+  p.display();
+  p = project;
+  p.display();
 
   return 0;
 }
