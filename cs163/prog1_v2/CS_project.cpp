@@ -93,10 +93,22 @@ void CS_project::operator=(const CS_project& proj) {
     free(this->completion_date);
 
   /* strdup creates a duplicate of a given string use `man strdup` */
-  this->name = strdup(proj.name);
-  this->workers = strdup(proj.workers);
-  this->completion_date = strdup(proj.completion_date);
+  if (proj.name) /* check to make sure theres a string to copy */
+    this->name = strdup(proj.name);
+  else /* if theres no string to copy, we've already free'd the memory so set to NULL */
+    this->name = NULL;
 
+  if (proj.workers) /* check to make sure theres a string to copy */
+    this->workers = strdup(proj.workers);
+  else /* if theres no string to copy, we've already free'd the memory so set to NULL */
+    this->workers = NULL;
+
+  if (proj.completion_date) /* check to make sure theres a string to copy */
+    this->completion_date = strdup(proj.completion_date);
+  else /* if theres no string to copy, we've already free'd the memory so set to NULL */
+    this->completion_date = NULL;
+
+  /* copy over non dynamic values */
   this->estimated_cost = proj.estimated_cost;
   this->project_length = proj.estimated_cost;
   this->project_coolness = proj.project_coolness;
