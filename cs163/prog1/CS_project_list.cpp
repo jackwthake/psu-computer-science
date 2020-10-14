@@ -47,8 +47,8 @@ void CS_project::operator=(const CS_project& proj) {
   /* copy over other members */
   this->completion_date = proj.completion_date;
   this->estimated_cost = proj.estimated_cost;
-  this->project_length = project_length;
-  this->project_coolness = project_coolness;
+  this->project_length = proj.project_length;
+  this->project_coolness = proj.project_coolness;
 }
 
 

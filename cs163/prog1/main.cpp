@@ -18,9 +18,9 @@ int main(int argc, char const *argv[]) {
 
   struct tm when = {};
   char date[9];
-  
+
   get_time_val_from_string("1/18/03", when);
-  CS_project p1 { "name", "workers", when, 0.f, 0 };
+  CS_project p1 = { "name", "workers", when, 0.f, 0 };
   CS_project p2 = p1;
 
   get_time_string_from_int(date, &p2.completion_date);
