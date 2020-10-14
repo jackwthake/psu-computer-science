@@ -11,8 +11,10 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
+  char *name = "test", *workers = "test", *date = "asdg";
+
   CS_project project;
-  CS_project project2("test", "test", "ads", 1, 1, 1);
+  CS_project project2(name, workers, date, 1, 1, 1);
 
   cout << project.display() << endl;
   cout << project2.display() << endl;

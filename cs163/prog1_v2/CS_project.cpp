@@ -31,13 +31,13 @@ CS_project::CS_project() {
 CS_project::CS_project(char *name, char *workers, char *comp_date, float cost, int length, int coolness) {
   /* allocate name */
   //copy_string(this->name, name);
-  this->name = new char[strlen(name)];
+  this->name = new char[strlen(name) + 1];
   strcpy(this->name, name);
   /* allocate workers */
-  this->workers = new char[strlen(workers)];
+  this->workers = new char[strlen(workers) + 1];
   strcpy(this->workers, workers);
   /* allocate completion_date */
-  this->completion_date = new char[strlen(completion_date)];
+  this->completion_date = new char[strlen(comp_date) + 1];
   strcpy(this->completion_date, comp_date);
 
   this->estimated_cost = cost;
