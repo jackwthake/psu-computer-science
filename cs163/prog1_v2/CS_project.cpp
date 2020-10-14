@@ -17,6 +17,10 @@
 using namespace std;
 
 
+/*********************************
+ * CS_project class functions
+**********************************/
+
 /* simple constructor, just calls the other constructor */
 CS_project::CS_project() {
   this->name = NULL;
@@ -82,6 +86,14 @@ CS_error CS_project::display() const {
 }
 
 
+bool CS_project::is_match(char *test) {
+  if (strcmp(this->name, test) == 0)
+    return true;
+
+  return false;
+}
+
+
 /* performs a deep copy */
 void CS_project::operator=(const CS_project& proj) {
   /* deallocate old strings if they exist */
@@ -113,3 +125,92 @@ void CS_project::operator=(const CS_project& proj) {
   this->project_length = proj.estimated_cost;
   this->project_coolness = proj.project_coolness;
 }
+
+
+
+/*********************************
+ * CS_project_list class functions
+**********************************/
+
+/* sets up head pointer */
+CS_project_list::CS_project_list() {
+  this->head = NULL;
+}
+
+
+/* deallocates all list items, and their projects */
+CS_project_list::~CS_project_list() {
+  while(this->head) {
+    node *tmp = this->head;
+    this->head = this->head->next;
+    delete tmp;
+  }
+}
+
+
+/* add project to list */
+CS_error CS_project_list::add_project(const CS_project &project) {
+  node *tmp = this->head;
+
+  this->head = new node;
+  if (!this->head) { /* if allocation fails, revert back and return MEM_ALLOC_FAIL */
+    this->head = tmp;
+    return MEM_ALLOC_FAIL;
+  }
+
+  /* use the overloaded operator = */
+  this->head->project = project;
+  this->head->next = tmp;
+
+  return SUCCESS;
+}
+
+
+/* remove a project from the list assuming it exists */
+CS_error CS_project_list::remove_project(char *to_remove) {
+  node *current = this->head, *previous = this->head;
+
+  while (current) {
+    if (current->project.is_match(to_remove)) { /* check if we've found a match */
+      if (current == this->head) /* rearrange nodes depends on position in the list */
+        this->head = current->next;
+      else
+        previous->next = current->next;
+
+      /* after we rearrange, we cna delete and return */
+      delete current;
+      return SUCCESS;
+    }
+
+    /* prep for next iteration */
+    current = current->next;
+  }
+
+  /* if we reach out here then we never found a match */
+  return FAILURE;
+}
+
+
+/* lists all items in the list */
+CS_error CS_project_list::display() {
+  node *current = this->head;
+  bool has_failed = false;
+
+  if (!this->head) /* check for an empty list */
+    return FAILURE;
+
+  while (current) {
+    if (!current->project.display()) /* display and error check */
+      has_failed = true;
+
+    /* prep for next line */
+    current = current->next;
+  }
+
+  /* check if an iteration failed */
+  if (has_failed)
+    return FAILURE;
+
+  return SUCCESS;
+}
+
