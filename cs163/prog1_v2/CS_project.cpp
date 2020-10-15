@@ -35,7 +35,6 @@ CS_project::CS_project() {
 /* main constructor, sets everything up */
 CS_project::CS_project(char *name, char *workers, char *comp_date, float cost, int length, int coolness) {
   /* allocate name */
-  //copy_string(this->name, name);
   this->name = strdup(name);
   /* allocate workers */
   this->workers = strdup(workers);
@@ -192,12 +191,14 @@ CS_error CS_project_list::remove_project(char *to_remove) {
 
 
 /* lists all items in the list */
-CS_error CS_project_list::display() {
+CS_error CS_project_list::display() const {
   node *current = this->head;
   bool has_failed = false;
 
-  if (!this->head) /* check for an empty list */
+  if (!this->head) { /* check for an empty list */
+    cout << "Empty List." << endl; 
     return FAILURE;
+  }
 
   while (current) {
     if (!current->project.display()) /* display and error check */
@@ -213,4 +214,174 @@ CS_error CS_project_list::display() {
 
   return SUCCESS;
 }
+
+
+
+/*********************************
+ * CS_project_manager class functions
+**********************************/
+
+/* sets up an empty list */
+CS_project_manager::CS_project_manager() {
+  this->head = NULL;
+}
+
+
+/* deallocates all nodes */
+CS_project_manager::~CS_project_manager() {
+  while(this->head) { /* we can just traverse with hea as we're deleting as we go. */
+    node *tmp = this->head;
+    this->head = this->head->next;
+    delete tmp;
+  }
+}
+
+
+/* add a priority list */
+CS_error CS_project_manager::add_priority(const int &to_add) {
+  node *tmp = this->head;
+
+  /* if the priority already exists, return failure */
+  if (this->does_exist(to_add))
+    return FAILURE;
+
+  /* attempt to add a node, do error checking for allocation */
+  this->head = new node;
+  if (!this->head) {
+    this->head = tmp;
+    return MEM_ALLOC_FAIL;
+  }
+
+  /* 
+   * if we reach here then the node was allocated so we can splice it into the
+   * list 
+  */
+  this->head->priority = to_add;
+  this->head->next = tmp;
+
+  return SUCCESS;
+}
+
+
+/* remove a given priority from the list */
+CS_error CS_project_manager::remove_priority(const int &to_remove) {
+  node *current = this->head, *previous = this->head;
+  while (current) { /* traverse */
+    if (current->priority == to_remove) { /* if we've found a match */
+      if (current == this->head) /* check if we're the first node */
+        this->head = current->next; /* remove node */
+      else /* not the first item */
+        previous->next = current->next; /* remove node */
+
+      /* deallocate and return */
+      delete current;
+      return SUCCESS;
+    }
+
+    /* prep next iteration */
+    previous = current;
+    current = current->next;
+  }
+
+  /* if we reach out here then we didn't find a match */
+  return FAILURE;
+}
+
+
+/* add project to a given priority */
+CS_error CS_project_manager::add_project(const int &priority, const CS_project &project) {
+  node *current = this->head;
+  while (current) { /* traverse */
+    if (current->priority == priority) /* if we've found a match */
+      return current->list.add_project(project); /* attempt to print and return it's return value */
+
+    /* prep next iteration */
+    current = current->next;
+  }
+
+  /* if we reach out here then there wasn't a match */
+  return FAILURE;
+}
+
+
+/* search and remove a project from the lists */
+CS_error CS_project_manager::remove_project(char *to_remove) {
+  node *current = this->head;
+  while (current) { /* traverse */
+    if (current->list.remove_project(to_remove) == SUCCESS) /* if the current list successfully removes then we can return */
+      return SUCCESS;
+
+    /* prep next iteration */
+    current = current->next;
+  }
+
+  /* if we reach out here no item was removed */
+  return FAILURE;
+}
+
+
+/* display all lists  */
+CS_error CS_project_manager::display() const {
+  bool has_failed = false;
+  node *current = this->head;
+
+  if (!this->head) { /* check for an empty list */
+    cout << "No priority lists to display." << endl;
+    return FAILURE;
+  }
+
+  while (current) { /* loop through all lists */
+    cout << "---------------------------" << endl;
+    cout << "Priority: " << current->priority << endl;
+    if (current->list.display() == FAILURE) /* attempt to print, set error flag if it fails */
+      has_failed = true;
+
+    /* prep for next iteration */
+    current = current->next;
+  }
+
+  /* check error flag */
+  if (has_failed)
+    return FAILURE;
+
+  return SUCCESS;
+}
+
+
+/* display specific priority */
+CS_error CS_project_manager::display(const int &priority) const {
+  node *current = this->head;
+
+  while (current) { /* traverse */
+    if (current->priority == priority) { /* if we found a match, print it */
+      cout << "---------------------------" << endl;
+      cout << "Priority: " << current->priority << endl;
+      return current->list.display();
+    }
+
+    /* prep for next iteration */
+    current = current->next;
+  }
+
+  /* if we  reach out here then no match was found */
+  return FAILURE;
+}
+
+
+/* check if a given priority already exists */
+bool CS_project_manager::does_exist(const int &priority) const {
+  node *current = this->head;
+
+  while (current) { /* traverse */
+    if (current->priority == priority) /* if we've found a match, return true */
+      return true;
+
+    /* prep next iteration */
+    current = current->next;
+  }
+
+  /* if we reach out here, no match was found. */
+  return false;
+}
+
 
