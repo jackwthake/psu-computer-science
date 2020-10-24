@@ -1,3 +1,11 @@
+//
+//  test_main.cpp
+//  psu-computer-science
+//
+//  Created by Jack Thake on 13/19/2020.
+//  This file holds the test program for this assignment.
+//
+
 #include "CS_alert.h"
 
 #include <cstring>
@@ -5,6 +13,7 @@
 using namespace std;
 
 
+/* read user input */
 void prompt_user(const char *prompt, const int length, char *response) {
   cout << prompt;
   cin.get(response, length, '\n');
@@ -12,18 +21,20 @@ void prompt_user(const char *prompt, const int length, char *response) {
 }
 
 
+/* read in one alert from the user */
 void read_in_alert(CS_alert &alert) {
   char org[31], date[11], time[11], message[201];
-  
+
   prompt_user("Please enter the organization: ", 31, org);
   prompt_user("Please enter the date (dd/mm/yy): ", 11, date);
-  prompt_user("Please enter the time: (hh/mm AM/PM)", 31, time);
+  prompt_user("Please enter the time: (hh:mm am/pm)", 31, time);
   prompt_user("Please enter the message: ", 201, message);
 
   alert = CS_alert(org, date, time, message);
 }
 
 
+/* starting point */
 int main(int argc, char **argv) {
   bool running = true;
   char resp[4];
@@ -32,6 +43,7 @@ int main(int argc, char **argv) {
   CS_alert temp;
   CS_alert_stack stack;
 
+  /* Welcome grader */
   cout << "Welcome. This should test out my stack data structure, it will attempt to display" <<
           " the contents of the stack at the beggining of every iteration, entering a number" <<
           " from 1 to 3 selects a command for that given iteration, at the end a" <<
@@ -71,7 +83,7 @@ int main(int argc, char **argv) {
           if (ret == SUCCESS)
             temp.display();
         break;
-      default:
+      default: /* non valid command */
         cout << "No command recognized." << endl;
         break;
     }

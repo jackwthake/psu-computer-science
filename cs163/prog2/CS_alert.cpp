@@ -1,3 +1,11 @@
+//
+//  CS_alert.cpp
+//  psu-computer-science
+//
+//  Created by Jack Thake on 13/19/2020.
+//  This file holds all implementations for stack classes.
+//
+
 #include "CS_alert.h"
 #include <cstring>
 #include <stdlib.h>
@@ -28,10 +36,10 @@ CS_alert::CS_alert(const char *organization, const char *date, const char *time,
 
 /* deallocates internal strings */
 CS_alert::~CS_alert() {
-  /* 
+  /*
    * check if each string is deallocated, if not then deallocate.
    * we are using free becuase strdup uses malloc rather than new, and mixing
-   * delete and free causes an error in valgrind 
+   * delete and free causes an error in valgrind
   */
   if (this->organization)
     free(this->organization);
@@ -55,31 +63,31 @@ CS_error CS_alert::display() const {
 
 /* overloaded assignment operator, performs a deep copy */
 void CS_alert::operator=(const CS_alert &copy) {
-  /* 
+  /*
    * we call our own destructor to minimise code duplication, it'll just
-   * deallocate our strings, and then we'll replace them with the copy 
+   * deallocate our strings, and then we'll replace them with the copy
   */
   this->~CS_alert();
 
   /* duplicate the passed strings into our memory */
   if (copy.organization)
     this->organization = strdup(copy.organization);
-  else 
+  else
     this->organization = NULL;
 
   if (copy.date)
     this->date = strdup(copy.date);
-  else 
+  else
     this->date = NULL;
 
   if (copy.time)
     this->time = strdup(copy.time);
-  else 
+  else
     this->time = NULL;
 
   if (copy.msg)
     this->msg = strdup(copy.msg);
-  else 
+  else
     this->msg = NULL;
 }
 
@@ -105,7 +113,7 @@ bool CS_alert::operator==(const CS_alert &test) const {
 
 /*
  * create the stack, we initialize it with one node rather than just setting
- * head to NULL 
+ * head to NULL
 */
 CS_alert_stack::CS_alert_stack() {
   /* set top index */
@@ -162,7 +170,12 @@ CS_error CS_alert_stack::push(const CS_alert &to_add) {
 }
 
 
-/* removes the top of the stack */
+/* removes the top of the stack, unless the list would be empty, we just
+ * decrement the top pointer, this means that yes the data technically still
+ * exists in the array but the ADT has no functionality to retrieve from the top
+ * index or above it, so the data is effectively marked as empty and
+ * overwriteable.
+*/
 CS_error CS_alert_stack::pop(void) {
   if (this->top == 0) /* nothing to pop */
     return FAILURE;
@@ -172,7 +185,7 @@ CS_error CS_alert_stack::pop(void) {
       node *temp = this->head;
       this->head = this->head->next;
       this->top = SIZE;
-      
+
       delete []temp->data;
       delete temp;
     } else { /* this runs if there's only one node in the list, just leave the node empty. */
@@ -202,8 +215,8 @@ CS_error CS_alert_stack::peak(CS_alert &to_add) const {
 CS_error CS_alert_stack::display(void) const {
   node *current = this->head;
 
-  if (this->top == 0) /* this will only be true if the stack is fully empty */ 
-   return FAILURE; 
+  if (this->top == 0) /* this will only be true if the stack is fully empty */
+   return FAILURE;
 
   while (current) { /* traverse */
     if (current == head) { /* if we're at the top of the stack */
@@ -224,4 +237,3 @@ CS_error CS_alert_stack::display(void) const {
 
   return SUCCESS;
 }
-

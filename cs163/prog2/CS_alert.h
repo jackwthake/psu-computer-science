@@ -3,12 +3,13 @@
 //  psu-computer-science
 //
 //  Created by Jack Thake on 13/19/2020.
-//  This file holds all declaration for stack class
+//  This file holds all declaration for stack classes
 //
 
 #ifndef CS_ALERT_H
 #define CS_ALERT_H
 
+/* used for node array length */
 const int SIZE = 2;
 
 /* denote error or success */
@@ -55,4 +56,3 @@ class CS_alert_stack {
 };
 
 #endif
-
