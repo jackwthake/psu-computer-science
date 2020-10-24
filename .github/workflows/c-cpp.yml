@@ -16,11 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install Valgrind
-      run: sudo apt-get install valgrind
     - name: setup
       run: ./setup.sh
     - name: make
       run: make
-    - name: mem_check
-      run: python3 mem_test.py
