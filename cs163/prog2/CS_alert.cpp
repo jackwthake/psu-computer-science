@@ -162,7 +162,26 @@ CS_error CS_alert_stack::push(const CS_alert &to_add) {
 }
 
 
+/* removes the top of the stack */
 CS_error CS_alert_stack::pop(void) {
+  if (this->top == 0) /* nothing to pop */
+    return FAILURE;
+
+  if (this->top == 1) { /* the pop will result in an empty node */
+    if (this->head->next) { /* if there are other node, we delete this one */
+      node *temp = this->head;
+      this->head = this->head->next;
+      this->top = SIZE;
+      
+      delete []temp->data;
+      delete temp;
+    } else { /* this runs if there's only one node in the list, just leave the node empty. */
+      --this->top; /* by decrementing we mark the old top of the list as open, we only overwrite it when there's something to be added. */
+    }
+  } else { /* not reached the end of the current array, just decrement top */
+    --this->top;
+  }
+
   return SUCCESS;
 }
 
