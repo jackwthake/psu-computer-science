@@ -91,7 +91,7 @@ static void CS_project_list_tests() {
   cout << endl << endl << "Display unpopulated list - should fail" << endl;
   if (list.display() == FAILURE)
     cout << "Print Failed, Test successful." << endl;
-  else 
+  else
     cout << "Print Succeeded, Test Failed" << endl;
 
   cout << endl << endl << "Now attempting to add projects to the list, enter the prompted values." << endl;
@@ -129,7 +129,7 @@ static void CS_project_list_tests() {
   prompt_user("Enter the name of a non existing object to try and remove - should fail: ", 21, name);
   if (list.remove_project(name) == FAILURE)
     cout << "Removal Failed, Test successful." << endl;
-  else 
+  else
     cout << "Removal Succeeded, Test Failed" << endl;
 }
 
@@ -143,13 +143,13 @@ static void CS_project_manager_tests() {
   cout << endl << endl << "Attempting to display all priorities in an empty list - should fail" << endl;
   if (manager.display() == FAILURE)
     cout << "Print Failed, Test successful." << endl;
-  else 
+  else
     cout << "Print Succeeded, Test Failed" << endl;
 
   cout << endl << endl << "Attempting to display non-existing priority - should fail" << endl;
   if (manager.display(0) == FAILURE)
     cout << "Print Failed, Test successful." << endl;
-  else 
+  else
     cout << "Print Succeeded, Test Failed" << endl;
 
   cout << endl << endl << "Now add priority lists, entering more than one of the same priority should fail." << endl;
@@ -158,9 +158,9 @@ static void CS_project_manager_tests() {
     cin >> priority;
     cin.ignore(100, '\n');
 
-   if (manager.add_priority(priority) == SUCCESS) 
+   if (manager.add_priority(priority) == SUCCESS)
      cout << "Priority added successfully." << endl;
-   else 
+   else
      cout << "Priority failed to be added." << endl;
 
     cout << "Are there more priorities to add? (y/n): ";
@@ -176,20 +176,20 @@ static void CS_project_manager_tests() {
     cin.ignore(100, '\n');
     read_in_project(project);
 
-   if (manager.add_project(priority, project) == SUCCESS) 
+   if (manager.add_project(priority, project) == SUCCESS)
      cout << "Project added successfully." << endl;
-   else 
+   else
      cout << "Project failed to be added." << endl;
 
     cout << "Are there more projects to add? (y/n): ";
     cin >> conf;
     cin.ignore(100, '\n');
   } while (tolower(conf) != 'n');
-  
+
   cout << endl << endl << "Attempting to display all priorities, when (atleast) one list is unpopulated - should fail" << endl;
   if (manager.display() == FAILURE)
     cout << "Print Failed, Test successful." << endl;
-  else 
+  else
     cout << "Print Succeeded, Test Failed" << endl;
 
 
@@ -197,9 +197,9 @@ static void CS_project_manager_tests() {
   do {
     prompt_user("Please enter the name of a project to remove: ", 21, name);
 
-   if (manager.remove_project(name) == SUCCESS) 
+   if (manager.remove_project(name) == SUCCESS)
      cout << "Project removed successfully." << endl;
-   else 
+   else
      cout << "Project failed to be removed." << endl;
 
     cout << "Are there more projects to remove? (y/n): ";
@@ -210,7 +210,7 @@ static void CS_project_manager_tests() {
   cout << endl << endl << "Attempting to display all priorities, when (atleast) one list is unpopulated - should fail" << endl;
   if (manager.display() == FAILURE)
     cout << "Print Failed, Test successful." << endl;
-  else 
+  else
     cout << "Print Succeeded, Test Failed" << endl;
 
 
@@ -220,20 +220,20 @@ static void CS_project_manager_tests() {
     cin >> priority;
     cin.ignore(100, '\n');
 
-   if (manager.remove_priority(priority) == SUCCESS) 
+   if (manager.remove_priority(priority) == SUCCESS)
      cout << "Priority removed successfully." << endl;
-   else 
+   else
      cout << "Priority failed to be removed." << endl;
 
     cout << "Are there more priorities to remove? (y/n): ";
     cin >> conf;
     cin.ignore(100, '\n');
   } while (tolower(conf) != 'n');
-  
+
   cout << endl << endl << "Attempting to display all priorities, with all lists populated - should succeed" << endl;
   if (manager.display() == FAILURE)
     cout << "Print Succeeded, Test successful." << endl;
-  else 
+  else
     cout << "Print Failed, Test Failed" << endl;
 
   cout << endl << endl << "Lastly enter one existing priority to display: ";
@@ -243,13 +243,12 @@ static void CS_project_manager_tests() {
 }
 
 int main(int argc, char const *argv[]) {
-#if 0 /* including this in the github ci build will cause it to fail. */
   cout << "CS_project class tests" << endl;
   CS_project_tests();
   cout << endl << endl << "CS_project_list class tests" << endl;
   CS_project_list_tests();
   cout << endl << endl << "CS_project_manager class tests" << endl;
   CS_project_manager_tests();
-#endif
+
   return 0;
 }
