@@ -1,5 +1,6 @@
-# psu-computer-science
+# Portland State Computer Science
 ![C/C++ CI](https://github.com/Rocketbuney/psu-computer-science/workflows/C/C++%20CI/badge.svg)
+![CodeQL](https://github.com/Rocketbuney/psu-computer-science/workflows/CodeQL/badge.svg)
 <a href="https://gitmoji.carloscuesta.me">
   <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji">
 </a>
