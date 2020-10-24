@@ -167,12 +167,19 @@ CS_error CS_alert_stack::pop(void) {
 }
 
 
+/* sets the passed object to the alert at the top of the stack */
 CS_error CS_alert_stack::peak(CS_alert &to_add) const {
+  if (this->top == 0) /* empty list */
+    return FAILURE;
+
+  /* set the data equal to the top of the stack */
+  to_add = this->head->data[this->top - 1];
+
   return SUCCESS;
 }
 
 
-/* this function displays the entire stack */
+/* this function displays the entire stack with the most recent printed first */
 CS_error CS_alert_stack::display(void) const {
   node *current = this->head;
 
@@ -181,12 +188,12 @@ CS_error CS_alert_stack::display(void) const {
 
   while (current) { /* traverse */
     if (current == head) { /* if we're at the top of the stack */
-      for (int i = 0; i < this->top; ++i) { /* only loop to our top index as the rest of the array isnt in use. */
+      for (int i = this->top - 1; i >= 0; --i) {
         current->data[i].display(); /* display the alert */
         cout << endl; /* padding */
       }
     } else { /* if we're not the head node than we're guarrenteed to be filled so we loop to SIZE */
-      for (int i = 0; i < SIZE; ++i) {
+      for (int i = SIZE - 1; i >= 0; --i) {
         current->data[i].display(); /* display alert */
         cout << endl; /* padding */
       }
