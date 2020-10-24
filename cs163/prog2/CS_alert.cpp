@@ -4,6 +4,9 @@
 #include <iostream>
 using namespace std;
 
+
+/* CS_alert class */
+
 /* creates an empty object */
 CS_alert::CS_alert() {
   this->organization = NULL;
@@ -95,5 +98,104 @@ bool CS_alert::operator==(const CS_alert &test) const {
   }
 
   return false;
+}
+
+
+/* CS_alert Class */
+
+/*
+ * create the stack, we initialize it with one node rather than just setting
+ * head to NULL 
+*/
+CS_alert_stack::CS_alert_stack() {
+  /* set top index */
+  this->top = 0;
+
+  /*  create first node */
+  this->head = new node;
+  this->head->data = new CS_alert[SIZE];
+  this->head->next = NULL;
+}
+
+
+/* deallocate all dynamic memory */
+CS_alert_stack::~CS_alert_stack() {
+  while (this->head) { /* we traverse with head because we delete as we go, no need for a current pointer. */
+    node *temp = this->head; /* grab a pointer to the current node */
+    this->head = this->head->next; /* set head to next node to not cause any problems with dereferncing NULL pointers */
+
+    /* delete temps data and then the node itself */
+    delete []temp->data;
+    delete temp;
+  }
+}
+
+
+/* push a new alert to the stack, creating a new node if needed */
+CS_error CS_alert_stack::push(const CS_alert &to_add) {
+  if (top == SIZE) { /* if we've filled the current node */
+    node *temp = this->head; /* get a temporary pointer to the old node */
+
+    this->head = new node; /* create the new top of the stack, error checking */
+    if (!this->head) { /* if new fails, we return MEM_ALLOC_ERROR and revert to the old stack */
+      this->head = temp;
+      return MEM_ALLOC_ERROR;
+    }
+
+    this->head->data = new CS_alert[SIZE]; /* create new array for the current stack node */
+    if (!this->head->data) /* error check allocation */
+      return MEM_ALLOC_ERROR;
+
+    /* move the old top node to the second in the list */
+    this->head->next = temp;
+
+    /* reset our top index and set our new data */
+    this->top = 0;
+    this->head->data[this->top] = to_add;
+    ++this->top;
+  } else { /* there is space in the current node */
+    this->head->data[this->top] = to_add; /* bring in new data */
+    ++this->top; /* increment our top index */
+  }
+
+  return SUCCESS;
+}
+
+
+CS_error CS_alert_stack::pop(void) {
+  return SUCCESS;
+}
+
+
+CS_error CS_alert_stack::peak(CS_alert &to_add) const {
+  return SUCCESS;
+}
+
+
+/* this function displays the entire stack */
+CS_error CS_alert_stack::display(void) const {
+  node *current = this->head;
+
+  if (this->top == 0) /* this will only be true if the stack is fully empty */ 
+   return FAILURE; 
+
+  while (current) { /* traverse */
+    if (current == head) { /* if we're at the top of the stack */
+      for (int i = 0; i < this->top; ++i) { /* only loop to our top index as the rest of the array isnt in use. */
+        current->data[i].display(); /* display the alert */
+        cout << endl; /* padding */
+      }
+    } else { /* if we're not the head node than we're guarrenteed to be filled so we loop to SIZE */
+      for (int i = 0; i < SIZE; ++i) {
+        current->data[i].display(); /* display alert */
+        cout << endl; /* padding */
+      }
+    }
+
+    /* prep for next iteration */
+    current = current->next;
+  }
+
+  return SUCCESS;
 }
 

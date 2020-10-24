@@ -9,6 +9,8 @@
 #ifndef CS_ALERT_H
 #define CS_ALERT_H
 
+const int SIZE = 2;
+
 /* denote error or success */
 typedef enum {
   SUCCESS,
@@ -29,6 +31,27 @@ class CS_alert {
     bool operator==(const CS_alert &test) const;
   private:
     char *organization, *date, *time, *msg;
+};
+
+
+/* holds a stack of alerts */
+class CS_alert_stack {
+  public:
+    CS_alert_stack();
+    ~CS_alert_stack();
+
+    CS_error push(const CS_alert &to_add);
+    CS_error pop(void);
+    CS_error peak(CS_alert &to_add) const;
+    CS_error display(void) const;
+  private:
+    struct node {
+      CS_alert *data;
+      node *next;
+    };
+
+    int top;
+    node *head;
 };
 
 #endif
