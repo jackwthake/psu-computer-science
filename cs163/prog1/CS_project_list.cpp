@@ -39,9 +39,9 @@ void CS_project::operator=(const CS_project& proj) {
     delete []this->workers;
 
   /* reallocate */
-  this->name = new char[strlen(proj.name)];
+  this->name = new char[strlen(proj.name) + 1];
   strcpy(this->name, proj.name);
-  this->workers = new char[strlen(proj.workers)];
+  this->workers = new char[strlen(proj.workers) + 1];
   strcpy(this->workers, proj.workers);
 
   /* copy over other members */
