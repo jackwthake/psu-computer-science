@@ -28,6 +28,11 @@ CS_item_info::~CS_item_info() {
     free(this->location);
   if (this->hints)
     free(this->hints);
+
+  this->name = NULL;
+  this->location = NULL;
+  this->hints = NULL;
+  this->rating = 0;
 }
 
 
@@ -43,9 +48,27 @@ bool CS_item_info::print() const {
 }
 
 
+void CS_item_info::operator=(const CS_item_info &to_copy) {
+  this->~CS_item_info();
+  if (to_copy.name)
+    this->name = strdup(to_copy.name);
+  if (to_copy.name)
+    this->location = strdup(to_copy.location);
+  if (to_copy.name)
+    this->hints = strdup(to_copy.hints);
+  
+  this->rating = to_copy.rating;
+}
+
+
 bool CS_item_info::operator==(const CS_item_info &test) const {
-  if (strcmp(this->name, test.name) == 0)
+  if (!this->name && !test.name)
     return true;
+
+  if (this->name && test.name) {
+    if (strcmp(this->name, test.name) == 0)
+      return true;
+  }
 
   return false;
 }
