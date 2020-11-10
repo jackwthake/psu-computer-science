@@ -51,9 +51,9 @@ endif
 ################
 
 ifeq ($(UNAME_S),Darwin)
-cs163: 163_program1 163_program1_v2 163_program2 # We don't compile labs, because the .o files aren't compatible
+cs163: 163_program1 163_program1_v2 163_program2 163_program3 # We don't compile labs, because the .o files aren't compatible
 else
-cs163: 163_program1 163_program1_v2 163_program2 163_lab1
+cs163: 163_program1 163_program1_v2 163_program2 163_program3 163_lab1
 endif
 
 # programs
@@ -65,6 +65,9 @@ endif
 
 163_program2: cs163/*g2/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/163/prog2.out cs163/*g2/*.cpp
+
+163_program3: cs163/*g3/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/163/prog3.out cs163/*g3/*.cpp
 
 # labs
 163_lab1: cs163/labs/*1/*lab1.cpp
