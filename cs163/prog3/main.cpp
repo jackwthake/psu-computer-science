@@ -1,3 +1,11 @@
+//
+//  main.cpp
+//  psu-computer-science
+//
+//  Created by Jack Thake on 11/10/2020.
+//  This file holds the test program
+//
+
 #include "CS_item_info.h"
 
 #include <iostream>

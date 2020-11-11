@@ -1,3 +1,11 @@
+//
+//  CS_item_info.cpp
+//  psu-computer-science
+//
+//  Created by Jack Thake on 11/10/2020.
+//  This file holds all definitions for CS_item_info class.
+//
+
 #include "CS_item_info.h"
 #include <cstring>
 #include <cstdlib>
@@ -5,6 +13,7 @@
 using namespace std;
 
 
+/* construct empty item */
 CS_item_info::CS_item_info() {
   this->name = NULL;
   this->location = NULL;
@@ -13,15 +22,21 @@ CS_item_info::CS_item_info() {
 }
 
 
+/* construct complete item */
 CS_item_info::CS_item_info(const char *name, const char *location, const char *hints, const int rating) {
-  this->name = strdup(name);
+  this->name = strdup(name); /* duplicate the strings over */
   this->location = strdup(location);
   this->hints = strdup(hints);
   this->rating = rating;
 }
 
 
+/* delete allocated memory */
 CS_item_info::~CS_item_info() {
+  /* 
+   * I use free rather than delete here because, strdup calls malloc
+   * and deleting a malloc region in memory gives an error in Valgrind 
+  */
   if (this->name)
     free(this->name);
   if (this->location)
@@ -36,6 +51,7 @@ CS_item_info::~CS_item_info() {
 }
 
 
+/* print out a formatted version of the item */
 bool CS_item_info::print() const {
   if (this->name && this->location && this->hints) {
     cout << this->name << "   Rating: " << this->rating << endl;
@@ -48,8 +64,12 @@ bool CS_item_info::print() const {
 }
 
 
+/* overloaded assignment operator */
 void CS_item_info::operator=(const CS_item_info &to_copy) {
+  /* deallocate our previous memory */
   this->~CS_item_info();
+
+  /* copy each string if they exist */
   if (to_copy.name)
     this->name = strdup(to_copy.name);
   if (to_copy.name)
@@ -57,19 +77,24 @@ void CS_item_info::operator=(const CS_item_info &to_copy) {
   if (to_copy.name)
     this->hints = strdup(to_copy.hints);
   
+  /* bring the rating over */
   this->rating = to_copy.rating;
 }
 
 
+/* overloaded equality operator */
 bool CS_item_info::operator==(const CS_item_info &test) const {
+  /* if both are NULL, strcmp won't work but they'll be equal */
   if (!this->name && !test.name)
     return true;
 
+  /* only call strcmp if both are allocated */
   if (this->name && test.name) {
     if (strcmp(this->name, test.name) == 0)
       return true;
   }
 
+  /* if we reach here, they are'nt the same */
   return false;
 }
 
