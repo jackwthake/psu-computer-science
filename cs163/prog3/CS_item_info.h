@@ -16,10 +16,12 @@ class CS_item_info {
     ~CS_item_info(); /* deallocate */
 
     bool print() const; /* print */
+    const char *get_name() const;
 
     /* overloaded operators */
     void operator=(const CS_item_info &to_copy);
     bool operator==(const CS_item_info &test) const;
+    bool operator==(const char *) const;
   private:
     char *name, *location, *hints;
     int rating;

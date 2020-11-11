@@ -17,12 +17,18 @@ int main(void) {
   CS_item_info info3;
   CS_item_queue queue;
 
+  if (queue.is_empty())
+    cout << "test" << endl;
+
   queue.enqueue(info);
   queue.enqueue(info);
   queue.enqueue(info2);
   queue.display();
   queue.dequeue(info3);
   queue.display();
+
+  if (!queue.is_empty())
+    cout << "test" << endl;
 
   return 0;
 }

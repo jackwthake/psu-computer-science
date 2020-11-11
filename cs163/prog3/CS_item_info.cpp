@@ -98,3 +98,20 @@ bool CS_item_info::operator==(const CS_item_info &test) const {
   return false;
 }
 
+    
+/* overloaded equality operator for comparing names */
+bool CS_item_info::operator==(const char *comp) const {
+  if (this->name) {
+    if (strcmp(this->name, comp) == 0)
+      return true;
+  }
+
+  return false;
+}
+
+
+/* return a duplicate copy of the item's name */
+const char *CS_item_info::get_name() const {
+  return strdup(this->name);
+}
+
