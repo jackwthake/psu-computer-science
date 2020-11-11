@@ -7,18 +7,22 @@
 //
 
 #include "CS_item_info.h"
+#include "CS_item_queue.h"
 
 #include <iostream>
 using namespace std;
 
 int main(void) {
-  CS_item_info info("test", "location", "hint", 5), info2;
-  info.print();
+  CS_item_info info("test", "location", "hint", 5), info2("tes2t", "location2", "hint2", 2);
+  CS_item_info info3;
+  CS_item_queue queue;
 
-  info = info2;
-
-  if (info == info2)
-    cout << "works" << endl;
+  queue.enqueue(info);
+  queue.enqueue(info);
+  queue.enqueue(info2);
+  queue.display();
+  queue.dequeue(info3);
+  queue.display();
 
   return 0;
 }
