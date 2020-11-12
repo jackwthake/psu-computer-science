@@ -19,17 +19,21 @@ CS_item_queue::CS_item_queue() {
 
 /* deallocate */
 CS_item_queue::~CS_item_queue() {
-  /* uncircularise the list - makes it easier to deallocate */
+  if (!this->qptr) /* empty list */
+    return;
+
   node *head = this->qptr->next;
-  this->qptr->next = NULL;
 
   /* deallocate as if it were a LLL */
-  while (head) {
+  while (head != this->qptr) {
     node *temp = head;
     head = head->next;
 
     delete temp;
   }
+
+  delete this->qptr;
+  this->qptr = NULL;
 }
 
 
