@@ -16,7 +16,7 @@ class CS_item_info {
     ~CS_item_info(); /* deallocate */
 
     bool print() const; /* print */
-    const char *get_name() const;
+    char *get_name() const;
 
     /* overloaded operators */
     void operator=(const CS_item_info &to_copy);

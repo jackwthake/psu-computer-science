@@ -111,7 +111,7 @@ bool CS_item_info::operator==(const char *comp) const {
 
 
 /* return a duplicate copy of the item's name */
-const char *CS_item_info::get_name() const {
+char *CS_item_info::get_name() const {
   return strdup(this->name);
 }
 

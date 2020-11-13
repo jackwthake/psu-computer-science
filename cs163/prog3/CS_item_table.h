@@ -17,7 +17,7 @@ class CS_item_table {
     CS_error retrieve(const char *key, CS_item_info &) const;
     CS_error display_all(void) const;
   private:
-    unsigned hash_function(const char *);
+    unsigned hash_function(const char *) const;
   private:
     struct node {
       CS_item_info data;

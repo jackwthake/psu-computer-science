@@ -8,27 +8,24 @@
 
 #include "CS_item_info.h"
 #include "CS_item_queue.h"
+#include "CS_item_table.h"
 
 #include <iostream>
 using namespace std;
 
 int main(void) {
   CS_item_info info("test", "location", "hint", 5), info2("tes2t", "location2", "hint2", 2);
-  CS_item_info info3;
+  CS_item_info info3("hello", "there", "hint boy", 4);
   CS_item_queue queue;
-
-  if (queue.is_empty())
-    cout << "test" << endl;
-
-  queue.enqueue(info);
+  CS_item_table table(8);
+  
   queue.enqueue(info);
   queue.enqueue(info2);
-  queue.display();
-  queue.dequeue(info3);
-  queue.display();
-
-  if (!queue.is_empty())
-    cout << "test" << endl;
+  table.add_item(info);
+  table.add_item(info2);
+  table.add_item(info3);
+  table.display_all();
+  table.remove_item("test");
 
   return 0;
 }
