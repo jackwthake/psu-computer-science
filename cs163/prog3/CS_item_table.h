@@ -1,3 +1,11 @@
+//
+//  CS_item_table.h
+//  psu-computer-science
+//
+//  Created by Jack Thake on 11/12/2020.
+//  This file holds the declarations for the CS_item_table class
+//
+
 #ifndef CS_ITEM_TABLE_H
 #define CS_ITEM_TABLE_H
 
