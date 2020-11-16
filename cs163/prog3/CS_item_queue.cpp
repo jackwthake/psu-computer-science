@@ -12,8 +12,15 @@
 using namespace std;
 
 /* initialise queue */
-CS_item_queue::CS_item_queue() {
+CS_item_queue::CS_item_queue(ifstream &stream) {
   this->qptr = NULL;
+  
+  if (stream) {
+    while (!stream.eof()) {
+      CS_item_info tmp(stream);
+      this->enqueue(tmp);
+    }  
+  }
 }
 
 

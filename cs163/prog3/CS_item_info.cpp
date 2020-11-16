@@ -26,7 +26,6 @@ CS_item_info::CS_item_info(ifstream &stream) {
   char *buf = new char[64];
 
   stream.get(buf, 64, '|');
-  cout << buf << endl;
   stream.ignore(100, '|');
   this->name = strdup(buf);
   

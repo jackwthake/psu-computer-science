@@ -9,12 +9,15 @@
 #ifndef CS_ITEM_QUEUE
 #define CS_ITEM_QUEUE
 
+#include <fstream>
+
 #include "CS_item_info.h"
 #include "CS_error.h"
+using namespace std;
 
 class CS_item_queue {
   public:
-    CS_item_queue(); /* construct qeue */
+    CS_item_queue(ifstream &stream); /* construct qeue */
     ~CS_item_queue(); /* deallocate */
 
     CS_error enqueue(const CS_item_info &); /* add to queue */

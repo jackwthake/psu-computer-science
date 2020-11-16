@@ -17,8 +17,8 @@ using namespace std;
 int main(void) {
   ifstream file;
   file.open("items.dat");
-  CS_item_table table(file);
-  table.display_all();
+  CS_item_queue table(file);
+  table.display();
 
   file.close();
 
