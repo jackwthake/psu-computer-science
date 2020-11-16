@@ -22,6 +22,29 @@ CS_item_info::CS_item_info() {
 }
 
 
+CS_item_info::CS_item_info(ifstream &stream) {
+  char *buf = new char[64];
+
+  stream.get(buf, 64, '|');
+  cout << buf << endl;
+  stream.ignore(100, '|');
+  this->name = strdup(buf);
+  
+  stream.get(buf, 64, '|');
+  stream.ignore(100, '|');
+  this->location = strdup(buf);
+
+  stream.get(buf, 64, '|');
+  stream.ignore(100, '|');
+  this->hints = strdup(buf);
+
+  stream >> this->rating;
+  stream.ignore(100, '\n');
+
+  delete []buf;
+}
+
+
 /* construct complete item */
 CS_item_info::CS_item_info(const char *name, const char *location, const char *hints, const int rating) {
   this->name = strdup(name); /* duplicate the strings over */

@@ -9,9 +9,13 @@
 #ifndef CS_ITEM_INFO_H
 #define CS_ITEM_INFO_H
 
+#include <fstream>
+using namespace std;
+
 class CS_item_info {
   public:
     CS_item_info(); /* construct empty item */
+    CS_item_info(ifstream &stream); /* construct from file */
     CS_item_info(const char *name, const char *location, const char *hints, const int rating); /* construct populated item */
     ~CS_item_info(); /* deallocate */
 

@@ -17,12 +17,19 @@ using namespace std;
 
 
 /* construct a hash table */
-CS_item_table::CS_item_table(size_t length) {
+CS_item_table::CS_item_table(ifstream &stream, size_t length) {
   this->length = length;
   this->table = new node*[length];
 
   for (size_t i = 0; i < length; ++i)
     *(this->table + i) = NULL;
+
+  if (stream) {
+    while (!stream.eof()) {
+      CS_item_info tmp(stream);
+      this->add_item(tmp);
+    }  
+  }
 }
 
 

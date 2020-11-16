@@ -10,12 +10,15 @@
 #define CS_ITEM_TABLE_H
 
 #include <cstddef>
+#include <fstream>
+
 #include "CS_item_info.h"
 #include "CS_error.h"
+using namespace std;
 
 class CS_item_table {
   public:
-    CS_item_table(size_t length = 13);
+    CS_item_table(ifstream &stream, size_t length = 13);
     ~CS_item_table();
 
     CS_error add_item(const CS_item_info &);
