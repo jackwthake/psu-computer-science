@@ -2,6 +2,7 @@
 #include "CS_item_info.h"
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 using namespace std;
 
@@ -24,7 +25,15 @@ void main_loop(CS_item_queue &queue) {
 
 
 int main(void) {
-  CS_item_info info();
+  ifstream data;
+  data.open("items.dat");
+  
+  CS_item_info info(data), info2;
+  data.close();
+  
+  info.print();
+  info2 = info;
+
   CS_item_queue queue("items.dat");
   main_loop(queue);
   return 0;
