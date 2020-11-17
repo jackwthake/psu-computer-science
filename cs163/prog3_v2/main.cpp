@@ -1,4 +1,5 @@
 #include "CS_item_queue.h"
+#include "CS_item_info.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -23,6 +24,7 @@ void main_loop(CS_item_queue &queue) {
 
 
 int main(void) {
+  CS_item_info info();
   CS_item_queue queue("items.dat");
   main_loop(queue);
   return 0;
