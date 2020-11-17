@@ -90,7 +90,7 @@ CS_error CS_item_queue::dequeue(void) {
     node *temp = this->ptr->next->next; /* grab the new front of queue */
   
     if (this->ptr->next->data)
-      free(this->ptr->next->data); /* free data */
+      delete []this->ptr->next->data; /* free data */
   
     delete this->ptr->next; /* remove */
     this->ptr->next = temp; /* move the front */
