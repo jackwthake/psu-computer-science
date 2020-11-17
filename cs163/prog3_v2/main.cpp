@@ -5,14 +5,8 @@
 using namespace std;
 
 int main(void) {
-  CS_item_queue queue;
-
-  queue.enqueue("test");
-  char *res = queue.peak();
-  queue.dequeue();
-
-  cout << res << endl;
-  delete []res; 
+  CS_item_queue queue("items.dat");
+  queue.print_all();
 
   return 0;
 }

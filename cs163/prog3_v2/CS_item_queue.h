@@ -13,11 +13,12 @@
 
 
 #include "CS_error.h"
+#include <cstddef>
 
 /* queue class */
 class CS_item_queue {
   public:
-    CS_item_queue(void); /* create queue */
+    CS_item_queue(const char *path = NULL); /* create queue */
     ~CS_item_queue(void); /* destroy queue */
 
     CS_error enqueue(const char *); /* add to queue */
@@ -33,7 +34,7 @@ class CS_item_queue {
       node *next;
     };
 
-    int print_all_recurs(node *) const; /* recursive print function */
+    int print_all_recurs(node *, node *, int) const; /* recursive print function */
     node *ptr;
 };
 

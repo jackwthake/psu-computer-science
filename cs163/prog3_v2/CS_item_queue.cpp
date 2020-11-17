@@ -2,10 +2,30 @@
 
 #include <cstring>
 #include <cstdlib>
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 /* create queue */
-CS_item_queue::CS_item_queue(void) {
+CS_item_queue::CS_item_queue(const char *path) {
   this->ptr = NULL;
+  char *buf = new char[51];
+
+  ifstream fp;
+  fp.open(path);
+  if (!fp)
+    return;
+
+  do {
+    fp.getline(buf, 51, '|'); /* get only the name attribute from the data file */
+    fp.ignore(100, '\n');
+
+    if (*buf) /* only add if its a valid string */
+      this->enqueue(buf);
+  } while (!fp.eof());
+
+  fp.close();
+  delete []buf;
 }
 
 
@@ -93,4 +113,28 @@ char *CS_item_queue::peak(void) const {
 }
 
 
-//int CS_item_queue::print_all(void) const; /* print entire list, handler function for recursive call */
+/* print entire list, handler function for recursive call */
+int CS_item_queue::print_all(void) const {
+  if (!this->ptr) 
+    return 0;
+
+  int count = 1;
+  count += this->print_all_recurs(this->ptr->next, this->ptr, count);
+
+  return count;
+}
+
+
+/* recursive print function */
+int CS_item_queue::print_all_recurs(node *head, node *start, int count) const {
+  if (!head)
+    return 0;
+  if (head == start) {
+    cout << count << " | " << head->data << endl;
+    return 1;
+  }
+
+  cout << count << " | " << head->data << endl;
+  return 1 + this->print_all_recurs(head->next, start, count + 1);
+}
+
