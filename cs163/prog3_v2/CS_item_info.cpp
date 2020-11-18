@@ -65,8 +65,9 @@ CS_error CS_item_info::print(void) const {
 }
 
 
+/* returns a copy of the item's name */
 char *CS_item_info::get_name() const {
-  return strdup(this->name);
+  return strdup(this->name); /* duplicate and return */
 }
 
 

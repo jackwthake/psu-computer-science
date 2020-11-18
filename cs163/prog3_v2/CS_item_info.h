@@ -17,7 +17,7 @@ class CS_item_info {
     CS_item_info(ifstream &); /* read item from an already open file stream */
     ~CS_item_info(void); /* deallocate */
 
-    char *get_name() const;
+    char *get_name() const; /* returns a copy of the item's name */
     CS_error print(void) const; /* print info */
     inline bool is_valid() const { return *this->name; }; /* helper for if object is valid */
 
