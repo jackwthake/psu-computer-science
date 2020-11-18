@@ -1,3 +1,7 @@
+/*
+ * This file holds the test program for program 3
+*/
+
 #include "CS_item_queue.h"
 #include "CS_item_table.h"
 #include "CS_item_info.h"
@@ -24,7 +28,7 @@ void main_loop(CS_item_queue &queue, CS_item_table &table) {
 
     cout << "Lookup current front of queue? (y/n): ";
     cin >> conf;
-    
+
     if (tolower(conf) == 'y') {
       CS_item_info tmp;
 
@@ -44,7 +48,7 @@ void main_loop(CS_item_queue &queue, CS_item_table &table) {
       queue.dequeue();
       delete []key;
     }
-  } while (!queue.is_empty()); 
+  } while (!queue.is_empty());
 }
 
 
@@ -55,4 +59,3 @@ int main(void) {
   main_loop(queue, table);
   return 0;
 }
-

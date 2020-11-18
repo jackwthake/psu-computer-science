@@ -1,3 +1,7 @@
+/*
+ * This file holds all implementations for the CS_item_queue class.
+*/
+
 #include "CS_item_queue.h"
 
 #include <cstring>
@@ -48,7 +52,7 @@ CS_item_queue::~CS_item_queue(void) {
   /* clear final node */
   delete this->ptr;
   this->ptr = NULL;
-} 
+}
 
 
 /* add to queue */
@@ -88,10 +92,10 @@ CS_error CS_item_queue::dequeue(void) {
     return SUCCESS;
   } else {
     node *temp = this->ptr->next->next; /* grab the new front of queue */
-  
+
     if (this->ptr->next->data)
       delete []this->ptr->next->data; /* free data */
-  
+
     delete this->ptr->next; /* remove */
     this->ptr->next = temp; /* move the front */
 
@@ -115,7 +119,7 @@ char *CS_item_queue::peak(void) const {
 
 /* print entire list, handler function for recursive call */
 int CS_item_queue::print_all(void) const {
-  if (!this->ptr) 
+  if (!this->ptr)
     return 0;
 
   int count = 1;
@@ -137,4 +141,3 @@ int CS_item_queue::print_all_recurs(node *head, node *start, int count) const {
   cout << count << " | " << head->data << endl;
   return 1 + this->print_all_recurs(head->next, start, count + 1);
 }
-
