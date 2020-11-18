@@ -65,6 +65,11 @@ CS_error CS_item_info::print(void) const {
 }
 
 
+char *CS_item_info::get_name() const {
+  return strdup(this->name);
+}
+
+
 /* overloaded assignment operator */
 void CS_item_info::operator=(const CS_item_info &to_copy) {
   /* deallocate all old members */
