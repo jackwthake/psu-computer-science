@@ -3,6 +3,7 @@
 
 /*
  *
+ * Jack Thake, Program 3, Karla Fant
  * This File holds the declaration for the CS_item_queue class, this class 
  * represents a queue of the items to find. the queue just holds the name of the
  * items because I think it defeats the point of then needing to look the items 

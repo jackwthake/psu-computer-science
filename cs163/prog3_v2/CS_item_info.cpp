@@ -1,4 +1,5 @@
 /*
+ * Jack Thake, Program 3, Karla Fant
  * This file holds all implementations for the CS_item_info class, and one static
  * helper function. 
 */

@@ -1,4 +1,5 @@
 /*
+ * Jack Thake, Program 3, Karla Fant
  * This file holds the definition of the typedef-ed typye used for error
  * checking
 */

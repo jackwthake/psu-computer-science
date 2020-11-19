@@ -1,4 +1,5 @@
 /*
+ * Jack Thake, Program 3, Karla Fant
  * This file holds the test program for program 3
 */
 

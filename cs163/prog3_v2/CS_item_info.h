@@ -1,4 +1,5 @@
 /*
+ * Jack Thake, Program 3, Karla Fant
  * This file holds the declaration for the CS_item_info class, this class holds
  * one item for the scavenger hunt and manages it's members
 */

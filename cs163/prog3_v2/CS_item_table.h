@@ -1,4 +1,5 @@
 /*
+ * Jack Thake, Program 3, Karla Fant
  * This file holds the declaration for the CS_item_table class, this class
  * implements a hash table, and loads it's contents from a file
 */
