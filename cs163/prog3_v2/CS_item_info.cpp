@@ -24,6 +24,14 @@ CS_item_info::CS_item_info(void) {
 }
 
 
+/* create and object with all info passed in */
+CS_item_info::CS_item_info(char *name, char *location, char *hint) {
+  this->name = strdup(name);
+  this->location = strdup(location);
+  this->hints = strdup(hint);
+}
+
+
 /* read from an already opened input stream */
 CS_item_info::CS_item_info(ifstream &stream) {
   char *buf = new char[64]; /* used for each attribute */

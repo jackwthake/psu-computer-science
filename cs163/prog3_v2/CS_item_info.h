@@ -15,6 +15,7 @@ class CS_item_info {
   public:
     CS_item_info(void); /* create empty item */
     CS_item_info(ifstream &); /* read item from an already open file stream */
+    CS_item_info(char *, char *, char*);
     ~CS_item_info(void); /* deallocate */
 
     char *get_name() const; /* returns a copy of the item's name */
