@@ -69,9 +69,9 @@ CS_error CS_item_table::remove_item(const char *key) {
   if (!current)
     return FAILURE;
   else if (current->data == key) { /* first item in chain is a match */
-    node *temp = current;
-    current = current->next;
-    delete temp;
+    node *temp = current->next;
+    delete this->table[hash];
+    this->table[hash] = temp;
 
     return SUCCESS;
   }

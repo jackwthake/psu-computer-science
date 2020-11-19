@@ -14,7 +14,10 @@ using namespace std;
 
 /* read in one item */
 void read_in_item(CS_item_info &res) {
-  char name[51], location[51], hints[51];
+  char *name = new char[51];
+  char *location = new char[51];
+  char *hints = new char[51];
+  
   cout << "Please enter the name of the item: ";
   cin.get(name, 51, '\n');
   cin.ignore(100, '\n');
@@ -26,6 +29,9 @@ void read_in_item(CS_item_info &res) {
   cin.ignore(100, '\n');
 
   res = CS_item_info(name, location, hints);
+  delete []name;
+  delete []location;
+  delete []hints;
 }
 
 
@@ -82,9 +88,9 @@ int main(void) {
   CS_item_info tmp;
   read_in_item(tmp);
 
-  table.add_item(tmp);
   char *tmp_name = tmp.get_name();
   queue.enqueue(tmp_name);
+  table.add_item(tmp);
   delete []tmp_name;
 
   main_loop(queue, table);
