@@ -74,7 +74,7 @@ endif
 	$(CC) $(CXXFLAGS) -o bin/163/pro3_v2.out cs163/*3_v2/*.cpp
 	cp *3/*g3_v2/items.dat bin/163/items.dat
 
-163_program4: cs164/*g4/*.cpp
+163_program4: cs163/*g4/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/163/prog4.out cs163/*g4/*.cpp
 
 # labs
