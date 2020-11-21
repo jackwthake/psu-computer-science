@@ -8,7 +8,7 @@ class video_entry {
     ~video_entry();
 
     int print(void) const;
-    inline bool is_valid(void) const { return *class_name; }
+    inline bool is_valid(void) const { return class_name; }
     
     void operator=(const video_entry &);
     bool operator==(const video_entry &);

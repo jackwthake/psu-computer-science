@@ -5,6 +5,7 @@ using namespace std;
 
 video_entry::video_entry() {
   this->class_name = this->media_name = this->desc = this->next = NULL;
+  this->len = 0;
 }
 
 
