@@ -11,7 +11,9 @@ class video_entry {
     inline bool is_valid(void) const { return class_name; }
     
     void operator=(const video_entry &);
-    bool operator==(const video_entry &);
+    bool operator==(const video_entry &) const;
+    bool operator<(const video_entry &) const;
+    bool operator>=(const video_entry &) const;
   private:
     char *class_name, *media_name, *desc, *next; 
     int len;

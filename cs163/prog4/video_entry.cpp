@@ -88,7 +88,7 @@ void video_entry::operator=(const video_entry &b) {
 }
 
 
-bool video_entry::operator==(const video_entry &b) {
+bool video_entry::operator==(const video_entry &b) const {
   if (!this->is_valid() && !b.is_valid())
     return false;
   if (this->is_valid() && b.is_valid()) {
@@ -99,3 +99,18 @@ bool video_entry::operator==(const video_entry &b) {
   return false;
 }
 
+
+bool video_entry::operator<(const video_entry &b) const {
+  if (strcmp(this->media_name, b.media_name) < 0)
+    return true;
+
+  return false;
+}
+
+
+bool video_entry::operator>=(const video_entry &b) const {
+  if (strcmp(this->media_name, b.media_name) >= 0)
+    return true;
+
+  return false;
+}
