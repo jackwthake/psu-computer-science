@@ -11,6 +11,8 @@ int main(void) {
   tree.insert(entry);
   tree.insert(entry);
   tree.insert(entry);
+  cout << tree.get_height() << endl;
+  tree.display_all();
 
   return 0;
 }

@@ -1,13 +1,14 @@
 #include "video_tree.h"
 #include <cstddef>
+#include <iostream>
 
+using namespace std;
 
-video_tree::video_tree() {
-  this->root = NULL;
-}
+//
+/// Static recursive functions here - 
+//
 
-
-int remove_all_recurs(node * &root) {
+static int remove_all_recurs(node * &root) {
   if (!root)
     return 0;
 
@@ -23,12 +24,7 @@ int remove_all_recurs(node * &root) {
 }
 
 
-video_tree::~video_tree() {
-  remove_all_recurs(this->root);
-}
-
-
-int insert_recurs(node * &root, const video_entry &to_add) {
+static int insert_recurs(node * &root, const video_entry &to_add) {
   if (!root) {
     root = new node;
     if (!root)
@@ -48,6 +44,53 @@ int insert_recurs(node * &root, const video_entry &to_add) {
 }
 
 
+static int display_all_recurs(node *root) {
+  if (!root)
+    return 0;
+
+  int ret = display_all_recurs(root->left);
+
+  cout << endl;
+  root->data.print();
+  ++ret;
+
+  ret += display_all_recurs(root->right);
+
+  return ret;
+}
+
+
+static int get_height_recurs(node *root) {
+  if (!root)
+    return 0;
+  if (!root->left && !root->right)
+    return 1;
+
+  int left_dist = 1 + get_height_recurs(root->left);
+  int right_dist = 1 + get_height_recurs(root->right);
+
+  if (right_dist  >= left_dist)
+    return right_dist;
+
+  return left_dist;
+
+}
+
+
+//
+/// video_tree member functions here -
+//
+
+video_tree::video_tree() {
+  this->root = NULL;
+}
+
+
+video_tree::~video_tree() {
+  remove_all_recurs(this->root);
+}
+
+
 int video_tree::insert(const video_entry &to_add) {
   if (!this->root) {
     this->root = new node;
@@ -64,5 +107,15 @@ int video_tree::insert(const video_entry &to_add) {
 }
 
 
-//int get_height_recurs(node *root);
-//int video_tree::get_height(void) const;
+int video_tree::display_all(void) const {
+  if (!this->root)
+    return -1;
+
+  return display_all_recurs(this->root);
+}
+
+
+int video_tree::get_height(void) const {
+  return get_height_recurs(this->root);
+}
+

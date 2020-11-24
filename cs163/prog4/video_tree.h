@@ -14,14 +14,13 @@ class video_tree {
     ~video_tree();
 
     int insert(const video_entry &);
+    int search(const char *, video_tree *, int &);
+
+    int display_all(void) const;
     int get_height(void) const;
   private:
 
     node *root;
-
-    friend int insert_recurs(node * &root, const video_entry &);
-    friend int remove_all_recurs(node * &root);
-    friend int get_height_recurs(node *root);
 };
 
 #endif
