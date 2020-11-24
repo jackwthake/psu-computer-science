@@ -108,9 +108,18 @@ bool video_entry::operator<(const video_entry &b) const {
 }
 
 
-bool video_entry::operator>=(const video_entry &b) const {
-  if (strcmp(this->media_name, b.media_name) >= 0)
+bool video_entry::operator<(const char *b) const {
+  if (strcmp(this->media_name, b) < 0)
     return true;
 
   return false;
 }
+
+
+bool video_entry::operator==(const char *b) const {
+  if (strcmp(this->media_name, b) == 0)
+    return true;
+
+  return false;
+}
+

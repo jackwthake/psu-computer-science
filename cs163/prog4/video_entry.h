@@ -13,7 +13,8 @@ class video_entry {
     void operator=(const video_entry &);
     bool operator==(const video_entry &) const;
     bool operator<(const video_entry &) const;
-    bool operator>=(const video_entry &) const;
+    bool operator<(const char *) const;
+    bool operator==(const char *) const;
   private:
     char *class_name, *media_name, *desc, *next; 
     int len;
