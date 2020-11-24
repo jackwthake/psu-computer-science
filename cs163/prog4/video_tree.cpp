@@ -60,6 +60,22 @@ static int display_all_recurs(node *root) {
 }
 
 
+static int display_course_recurs(node *root, const char *course) {
+  if (!root)
+    return 0;
+
+  int ret = display_course_recurs(root->left, course);
+
+  if (root->data.is_same_course(course)) {
+    cout << endl;
+    root->data.print();
+    ++ret;
+  }
+
+  return ret + display_course_recurs(root->right, course);
+}
+
+
 static int get_height_recurs(node *root) {
   if (!root)
     return 0;
@@ -112,6 +128,14 @@ int video_tree::display_all(void) const {
     return -1;
 
   return display_all_recurs(this->root);
+}
+
+
+int video_tree::display_course(const char *course) const {
+  if (!this->root)
+    return -1;
+
+  return display_course_recurs(this->root, course);
 }
 
 

@@ -17,9 +17,9 @@ class video_tree {
     int search(const char *, video_tree *, int &);
 
     int display_all(void) const;
+    int display_course(const char *) const;
     int get_height(void) const;
   private:
-
     node *root;
 };
 
