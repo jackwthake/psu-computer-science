@@ -11,9 +11,19 @@ int main(void) {
 
   tree.insert(entry2);
   tree.insert(entry);
+  tree.insert(entry2);
+  tree.insert(entry2);
+  
+  video_entry *arr = NULL;
+  int len = 0;
+  tree.search("def", arr, len);
+
+  for (int i = 0; i < len; ++i) {
+    arr[i].print();
+  }
+
   cout << tree.get_height() << endl;
-  tree.display_course("class");
-  tree.display_all();
+  delete []arr;
 
   return 0;
 }

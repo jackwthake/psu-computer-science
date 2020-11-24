@@ -44,6 +44,44 @@ static int insert_recurs(node * &root, const video_entry &to_add) {
 }
 
 
+static int search_recurs(node *root, const char *key, video_entry * &res, int &length) {
+  bool is_match = false;
+  int idx = 0;
+
+  /* empty node */
+  if (!root) return 0;
+
+  /* check for matching data */
+  if (root->data == key) {
+    ++length;
+    is_match = true;
+  }
+
+  /* if we're a child create array and start unraveling stack frames */
+  if (!root->left && !root->right) {
+    res = new video_entry[length];
+    res[0] = root->data;
+
+    return 1;
+  }
+
+
+  /* still traversal left to do */
+  if (root->data < key) /* move left */
+    idx += search_recurs(root->left, key, res, length);
+  else /* move right */
+    idx += search_recurs(root->right, key, res, length);
+
+  /* add ourselves to the result array if we match */
+  if (is_match) {
+    res[idx] = root->data;
+    return ++idx;
+  }
+
+  return idx;
+}
+
+
 static int display_all_recurs(node *root) {
   if (!root)
     return 0;
@@ -97,6 +135,7 @@ static int get_height_recurs(node *root) {
 /// video_tree member functions here -
 //
 
+
 video_tree::video_tree() {
   this->root = NULL;
 }
@@ -120,6 +159,14 @@ int video_tree::insert(const video_entry &to_add) {
   }
 
   return insert_recurs(this->root, to_add);
+}
+
+
+int video_tree::search(const char *key, video_entry * &res, int &length) {
+  if (!this->root && !key)
+    return -1;
+
+  return search_recurs(this->root, key, res, length);
 }
 
 

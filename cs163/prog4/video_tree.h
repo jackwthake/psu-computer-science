@@ -14,7 +14,7 @@ class video_tree {
     ~video_tree();
 
     int insert(const video_entry &);
-    int search(const char *, video_tree *, int &);
+    int search(const char *, video_entry *&, int &);
 
     int display_all(void) const;
     int display_course(const char *) const;
