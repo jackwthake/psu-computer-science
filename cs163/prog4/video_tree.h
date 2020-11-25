@@ -1,3 +1,8 @@
+/*
+ * Jack Thake, CS163, Karla Fant
+ * This file holds all declarations for the video_tree class
+*/
+
 #ifndef VIDEO_TREE_H
 #define VIDEO_TREE_H
 
