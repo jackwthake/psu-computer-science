@@ -137,16 +137,14 @@ static int remove_media_recurs(node * &root, const char *key) {
     } 
     
     if ((root->left || root->right) && !(root->left && root->right)) { /* node only has one child */
-      /* remove node */
-      if (root->left) {
-        node *tmp = root->left;
-        delete root;
-        root = tmp;
-      } else {
-        node *tmp = root->right;
-        delete root;
-        root = tmp;
-      }
+      node *tmp;
+      if (root->left)
+        tmp = root->left;
+      else
+        tmp = root->right;
+
+      delete root;
+      root = tmp;
     } else { /* node has two children */
       /* find ios */
       video_entry ios;
@@ -160,6 +158,43 @@ static int remove_media_recurs(node * &root, const char *key) {
     count += remove_media_recurs(root->right, key);
   else /* move right */
     count += remove_media_recurs(root->left, key);
+
+  return count;
+}
+
+
+/* remove all nodes matching a specific course */
+static int remove_course_recurs(node * &root, const char *key) {
+  if (!root) /* no node to check */
+    return 0;
+
+  /* post order */
+  int count = remove_course_recurs(root->left, key);
+  count += remove_course_recurs(root->right, key);
+
+  /* if root has a matching course */
+  if (root->data.is_same_course(key)) {
+    ++count;
+
+    /* if root is a leaf */
+    if (!root->left && !root->right) {
+      delete root;
+      root = NULL;
+    } else if ((root->left || root->right) && !(root->left && root->right)) { /* if root has one child */
+      node *tmp;
+      if (root->left)
+        tmp = root->left;
+      else
+        tmp = root->right;
+
+      delete root;
+      root = tmp;
+    } else { /* if root has two children */
+      video_entry ios;
+      get_ios_and_delete_recurs(root->right, ios);
+      root->data = ios;
+    }
+  }
 
   return count;
 }
@@ -278,6 +313,14 @@ int video_tree::remove(const char *key) {
   return remove_media_recurs(this->root, key);
 }
 
+
+/* remove all matching a specific course */
+int video_tree::remove_course(const char *key) {
+  if (!this->root)
+    return -1;
+
+  return remove_course_recurs(this->root, key);
+}
 
 /* display tree */
 int video_tree::display_all(void) const {

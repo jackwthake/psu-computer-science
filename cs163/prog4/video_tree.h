@@ -23,6 +23,7 @@ class video_tree {
     int insert(const video_entry &); /* insert to tree */
     int search(const char *, video_entry *&, int &); /* video lookup */
     int remove(const char *); /* remove matching media name's */
+    int remove_course(const char *); /* remove all videos in a matching course */
 
     int display_all(void) const; /* display everything */
     int display_course(const char *) const; /* display all with in a course */
