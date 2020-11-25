@@ -61,6 +61,19 @@ int video_entry::print(void) const {
 }
 
 
+bool video_entry::is_valid(void) const {
+  if (this->class_name)
+    return true;
+
+  return false; 
+}
+
+
+bool video_entry::is_same_course(const char *b) const { 
+  return !strcmp(this->class_name, b);
+}
+
+
 void video_entry::operator=(const video_entry &b) {
   this->~video_entry();
   
