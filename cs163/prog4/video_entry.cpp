@@ -37,24 +37,26 @@ video_entry::video_entry(char *class_name, char *media_name, char *desc, int len
 /* deallocate all memory */
 video_entry::~video_entry() {
   /* deallocate members if they exist */
-  if (this->class_name)
-    delete []this->class_name;
+  if (this) {
+    if (this->class_name)
+      delete []this->class_name;
 
-  if (this->media_name)
-    delete []this->media_name;
+    if (this->media_name)
+      delete []this->media_name;
 
-  if (this->desc)
-    delete []this->desc;
+    if (this->desc)
+      delete []this->desc;
 
-  if (this->next)
-    delete []this->next;
+    if (this->next)
+      delete []this->next;
 
-  /* 0 things out */
-  this->class_name = NULL;
-  this->media_name = NULL;
-  this->desc = NULL;
-  this->next = NULL;
-  this->len = 0;
+    /* 0 things out */
+    this->class_name = NULL;
+    this->media_name = NULL;
+    this->desc = NULL;
+    this->next = NULL;
+    this->len = 0;
+  }
 }
 
 
