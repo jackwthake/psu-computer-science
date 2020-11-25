@@ -82,6 +82,66 @@ static int search_recurs(node *root, const char *key, video_entry * &res, int &l
 }
 
 
+static void get_ios_and_delete_recurs(node * &root, video_entry &res) {
+  if (!root)
+    return;
+  else if (!root->left) {
+    res = root->data;
+
+    node *tmp = root->right;
+    delete root;
+    root = tmp;
+
+    return;
+  }
+
+  return get_ios_and_delete_recurs(root->left, res);
+}
+
+
+static int remove_media_recurs(node * &root, const char *key) {
+  int count = 0;
+
+  if (!root)
+    return 0;
+
+  if (root->data == key) {
+    ++count;
+
+    if (!root->left && !root->right) { /* node is a leaf */
+      delete root;
+      root = NULL; 
+
+      return count;
+    } 
+    
+    if ((root->left || root->right) && !(root->left && root->right)) { /* node only has one child */
+      if (root->left) {
+        node *tmp = root->left;
+        delete root;
+        root = tmp;
+      } else {
+        node *tmp = root->right;
+        delete root;
+        root = tmp;
+      }
+    } else { /* node has two children */
+      video_entry ios;
+      get_ios_and_delete_recurs(root->right, ios);
+      root->data = ios;
+    }
+  }
+
+  /* still traversal left to do */
+  if (root->data < key) /* move left */
+    count += remove_media_recurs(root->right, key);
+  else /* move right */
+    count += remove_media_recurs(root->left, key);
+
+  return count;
+}
+
+
 static int display_all_recurs(node *root) {
   if (!root)
     return 0;
@@ -167,6 +227,14 @@ int video_tree::search(const char *key, video_entry * &res, int &length) {
     return -1;
 
   return search_recurs(this->root, key, res, length);
+}
+
+
+int video_tree::remove(const char *key) {
+  if (!this->root)
+    return -1;
+
+  return remove_media_recurs(this->root, key);
 }
 
 

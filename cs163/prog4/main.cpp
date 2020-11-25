@@ -4,26 +4,20 @@
 using namespace std;
 
 int main(void) {
-  video_entry entry("class", "abc", "discription", 5, "next");
-  video_entry entry2("CLASS", "def", "discription", 5, "next");
+  video_entry entry("class", "5", "discription", 5, "next");
+  video_entry entry2("CLASS", "2", "discription", 5, "next");
+  video_entry entry3("CLASS", "8", "discription", 5, "next");
+  video_entry entry4("CLASS", "6", "discription", 5, "next");
   video_tree tree;
 
 
-  tree.insert(entry2);
   tree.insert(entry);
   tree.insert(entry2);
-  tree.insert(entry2);
-  
-  video_entry *arr = NULL;
-  int len = 0;
-  tree.search("def", arr, len);
+  tree.insert(entry3);
+  tree.insert(entry4);
 
-  for (int i = 0; i < len; ++i) {
-    arr[i].print();
-  }
-
-  cout << tree.get_height() << endl;
-  delete []arr;
+  tree.remove("5");
+  tree.display_all();
 
   return 0;
 }
