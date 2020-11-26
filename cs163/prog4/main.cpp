@@ -49,12 +49,37 @@ int main(void) {
   tree.display_all();
   cout << "Tree Height: " << tree.get_height() << endl;
 
-  cout << "Start of display" << endl;
+  cout << "Start of search" << endl;
 
   do {
     char search_name[51];
     video_entry *arr = NULL;
-    int length = 0;
+    int len = 0;
+
+    read_in_field("Please enter a course name: ", search_name, 51);
+    tree.search(search_name, arr, len);
+
+    if (arr) {
+      cout << "Printing search results: " << endl;
+      for (int i = 0; i < len; ++i) {
+        cout << endl;
+        arr[i].print();
+      }
+    } else {
+      cout << "No matches found." << endl;
+    }
+
+    cout << "More to search? (y/n): ";
+    cin >> conf; 
+    cin.ignore(100, '\n');
+
+    delete []arr;
+  } while (tolower(conf) != 'n');
+
+  cout << "Start of display" << endl;
+
+  do {
+    char search_name[51];
 
     read_in_field("Please enter a course name: ", search_name, 51);
     tree.display_course(search_name);

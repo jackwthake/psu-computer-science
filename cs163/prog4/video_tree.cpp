@@ -75,11 +75,12 @@ static int search_recurs(node *root, const char *key, video_entry * &res, int &l
   /* if we're a child create array and start unraveling stack frames */
   if (!root->left && !root->right) {
     res = new video_entry[length];
-    res[0] = root->data;
+
+    if (is_match) /* only add if the leaf is a match */
+      res[0] = root->data;
 
     return 1;
   }
-
 
   /* still traversal left to do */
   if (root->data < key) /* move left */
@@ -88,7 +89,7 @@ static int search_recurs(node *root, const char *key, video_entry * &res, int &l
     idx += search_recurs(root->right, key, res, length);
 
   /* add ourselves to the result array if we match */
-  if (is_match) {
+  if (is_match && res) {
     res[idx] = root->data;
     return ++idx;
   }
