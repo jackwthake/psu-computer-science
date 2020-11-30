@@ -9,7 +9,7 @@ default: cs162 cs163
 ################
 
 ifeq ($(UNAME_S),Darwin)
-cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4 162_lab4 # We don't compile lab 6 and 7, because the .o files aren't compatible
+cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4 # We don't compile lab 6 and 7, because the .o files aren't compatible
 else
 cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4 162_lab4 162_lab6 162_lab7 162_lab8 162_lab10
 endif
