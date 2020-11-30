@@ -60,38 +60,36 @@ static int insert_recurs(node * &root, const video_entry &to_add) {
 
 /* search through tree populating array with matches */
 static int search_recurs(node *root, const char *key, video_entry * &res, int &length) {
-  bool is_match = false;
-  int idx = 0;
+  int idx = 0; /* used to keep track of the current index */
+  bool is_match = false; /* used for tracking if a node has matched */
 
-  /* empty node */
-  if (!root) return 0;
-
-  /* check for matching data */
-  if (root->data == key) {
-    ++length;
-    is_match = true;
+  if (!root) { return 0; } /* empty node */
+  else if (root->data.is_valid()) { /* only compare if node is valid */
+    if (root->data == key) { /* compare using overloaded operator */
+      is_match = true; 
+      ++length; /* increase array length */
+    }
   }
 
-  /* if we're a child create array and start unraveling stack frames */
+  /* if we're at a leaf, we know how long our result list is */
   if (!root->left && !root->right) {
-    res = new video_entry[length];
-
-    if (is_match) /* only add if the leaf is a match */
-      res[0] = root->data;
-
-    return 1;
+    if (length > 0) { /* only allocate if items were found */
+      res = new video_entry[length];
+    }
   }
 
-  /* still traversal left to do */
-  if (root->data < key) /* move left */
-    idx += search_recurs(root->left, key, res, length);
-  else /* move right */
-    idx += search_recurs(root->right, key, res, length);
+  /* move to next node */
+  /* if the root's data is less than the key (key is greator than or equal to root's data), go right. */
+  if (root->data < key) { /* using overloaded operator to compare strings */
+    idx += search_recurs(root->right, key, res, length); /* next recursive call, update index. */
+  } else { /* if the root's data is greator than the key (key is less than root's data), go left. */
+    idx += search_recurs(root->left, key, res, length); /* next recursive call, update index. */
+  }
 
-  /* add ourselves to the result array if we match */
+  /* now the stack is unwinding, check if this recursive call was a match */
   if (is_match && res) {
-    res[idx] = root->data;
-    return ++idx;
+    res[idx] = root->data; /* add to results */
+    ++idx; /* increment index for previous stack frame */
   }
 
   return idx;
