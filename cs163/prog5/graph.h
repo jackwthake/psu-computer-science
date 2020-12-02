@@ -36,8 +36,10 @@ class graph {
 
   private:
     int get_location(const char *to_find); /* returns an index to the matching vertex */
-
+    void display_recurs(vertex *current, bool is_first);
+    
     vertex *adjacency_list;
+    bool *visited;
     size_t len;
 };
 

@@ -44,6 +44,8 @@ int main (void) {
     cin.ignore(100, '\n');
   } while (tolower(conf) != 'n');
 
+  test.display("cs162");
+
   return 0;
 }
 

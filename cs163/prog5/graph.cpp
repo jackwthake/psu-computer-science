@@ -5,6 +5,9 @@
 
 #include "graph.h"
 #include <cstring>
+#include <iostream>
+
+using namespace std;
 
 #define UNUSED(x) (void)(x)
 
@@ -19,9 +22,11 @@ static void add_to_LLL_recurs(node * &head, vertex *to_add) {
     head = new node; /* add in new node */
     head->adj = to_add; /* bring over data */
     head->next = NULL;
-  } else { /* more traversal to be done */
-    add_to_LLL_recurs(head->next, to_add);
+
+    return;
   }
+
+  add_to_LLL_recurs(head->next, to_add);
 }
 
 
@@ -37,6 +42,26 @@ static void delete_LLL_recurs(node * &head) {
 };
 
 
+/* display all connections */
+void graph::display_recurs(vertex *current, bool is_first) {
+  if (!current) return;
+
+  int location = this->get_location(current->data);
+
+  if (!this->visited[location]) {
+    this->visited[location] = true;
+    if (!is_first)
+      cout << "Class: " << current->data << endl;
+
+    node *curr = current->head;
+    while (curr) {
+      display_recurs(curr->adj, false);
+      curr = curr->next;
+    }
+  }
+}
+
+
 /*
  * Member functions
 */
@@ -48,11 +73,13 @@ graph::graph(size_t size) {
 
   /* allocate */
   this->adjacency_list = new vertex[this->len];
+  this->visited = new bool[this->len];
 
   /* zero out array */
   for (size_t i = 0; i < this->len; ++i) {
     adjacency_list[i].data = NULL;
     adjacency_list[i].head = NULL;
+    visited[i] = false;
   }
 }
 
@@ -90,24 +117,32 @@ int graph::insert_edge(const char *current, const char *connect) {
   int target_idx = this->get_location(connect);
 
   if (current_idx < 0 || target_idx < 0) /* only continue if both vertices exist */
-    return -1;
+    return 0;
 
   /* grab vertices from the list */
-  vertex curr = this->adjacency_list[current_idx];
-  vertex targ = this->adjacency_list[target_idx];
+  vertex *curr = &this->adjacency_list[current_idx];
+  vertex *targ = &this->adjacency_list[target_idx];
 
   /* add targ to the end of curr's LLL */
-  add_to_LLL_recurs(curr.head, &targ);
+  add_to_LLL_recurs(curr->head, targ);
 
-  return 0;
+  return 1;
 }
 
 
 /* display all connections from a specific vertex */
 int graph::display(const char *current) {
-  UNUSED(current);
+  int current_idx = this->get_location(current);
+  if (current_idx < 0)
+    return 0;
 
-  return 0;
+  for (size_t i = 0; i < this->len; ++i)
+    this->visited[i] = false;
+
+  cout << "Courses available after " << current << ":" << endl;
+  display_recurs(&this->adjacency_list[current_idx], true);
+
+  return 1;
 }
 
 
