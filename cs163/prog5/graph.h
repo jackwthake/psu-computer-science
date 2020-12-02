@@ -11,7 +11,7 @@
 
 /* one vertex */
 struct vertex {
-  const char *data; /* vertex's data */
+  char *data; /* vertex's data */
   struct node *head; /* adjacency list */
 };
 

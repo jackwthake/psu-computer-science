@@ -11,7 +11,7 @@ int main (void) {
   do {
     cout << "Please enter course name: ";
     cin.getline(temp, 51, '\n');
-    cin.ignore(100);
+    cin.ignore(100, '\n');
 
     test.insert_course(temp);
 

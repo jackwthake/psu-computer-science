@@ -4,6 +4,7 @@
 */
 
 #include "graph.h"
+#include <cstring>
 
 #define UNUSED(x) (void)(x)
 
@@ -45,9 +46,22 @@ graph::~graph(void) {
 
 /* insert course to graph */
 int graph::insert_course(const char *to_add) {
-  UNUSED(to_add);
+  size_t acc = 0;
+  vertex *curr = this->adjacency_list;
 
-  return 0;
+  /* loop until we reach an empty vertex or, we run out of space */
+  while (curr->data != NULL && acc < this->len)
+    ++curr;
+
+  /* if we have an empty vertex */
+  if (curr->data)
+    return 0;
+
+  /* copy over, now we kknow the curr pointer is pointing to an empty vertex. */
+  curr->data = new char[strlen(to_add) + 1]; 
+  strcpy(curr->data, to_add);
+
+  return 1;
 }
 
 
