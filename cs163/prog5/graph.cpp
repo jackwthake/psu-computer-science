@@ -87,10 +87,11 @@ int graph::destroy_all(void) {
 
       /* deallocate LLL */
       delete_LLL_recurs(current->head);
-
-      delete current;
     }
   }
+
+  /* lastly deallocate array itself */
+  delete []this->adjacency_list;
 
   return 1;
 }
