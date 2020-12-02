@@ -22,6 +22,9 @@ static void add_to_LLL_recurs(node * &head, vertex *to_add) {
     head->next = NULL;
 
     return;
+  } else {
+    if (head->adj == to_add) /* don't have duplicate edges */
+      return;
   }
 
   add_to_LLL_recurs(head->next, to_add);
@@ -97,8 +100,12 @@ int graph::insert_course(const char *to_add) {
   vertex *curr = this->adjacency_list;
 
   /* loop until we reach an empty vertex or, we run out of space */
-  while (curr->data != NULL && acc < this->len)
+  while (curr->data != NULL && acc < this->len) {
+    if (strcmp(curr->data, to_add) == 0) /* don't add twice */
+      return -1;
+
     ++curr;
+  }
 
   /* if we have an empty vertex */
   if (curr->data)

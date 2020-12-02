@@ -44,8 +44,21 @@ int main (void) {
     cin.ignore(100, '\n');
   } while (tolower(conf) != 'n');
 
-  test.display("cs162");
+  cout << "Folow the prompts, entering in course names you already added to the program, the program will then print all courses you can take after completing the entered course." << endl;
 
+  do {
+    cout << "Please enter course name: ";
+    cin.get(temp, 51, '\n');
+    cin.ignore(100, '\n');
+
+    test.display(temp);
+
+    cout << endl << "More to display? (y/n): ";
+    cin >> conf;
+    cin.ignore(100, '\n');
+  } while (tolower(conf) != 'n');
+
+  cout << "Now destroying the graph, using the destructor." << endl;
   return 0;
 }
 
