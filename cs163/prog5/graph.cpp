@@ -15,11 +15,11 @@
 
 /* add to the end of a linear linked list */
 static void add_to_LLL_recurs(node * &head, vertex *to_add) {
-  if (!head) {
-    head = new node;
-    head->adj = to_add;
+  if (!head) { /* using pass by reference mechanism */
+    head = new node; /* add in new node */
+    head->adj = to_add; /* bring over data */
     head->next = NULL;
-  } else {
+  } else { /* more traversal to be done */
     add_to_LLL_recurs(head->next, to_add);
   }
 }
@@ -27,10 +27,12 @@ static void add_to_LLL_recurs(node * &head, vertex *to_add) {
 
 /* deallocate linear linked list */
 static void delete_LLL_recurs(node * &head) {
-  if (!head) return;
+  if (!head) return; /* base case */
 
+  /* move to the end of the list */
   delete_LLL_recurs(head->next);
 
+  /* delete as we unwind stack frame */
   delete head;
 };
 
@@ -39,11 +41,15 @@ static void delete_LLL_recurs(node * &head) {
  * Member functions
 */
 
+
 /* constructor */
 graph::graph(size_t size) {
   this->len = size;
+
+  /* allocate */
   this->adjacency_list = new vertex[this->len];
 
+  /* zero out array */
   for (size_t i = 0; i < this->len; ++i) {
     adjacency_list[i].data = NULL;
     adjacency_list[i].head = NULL;
@@ -109,9 +115,9 @@ int graph::display(const char *current) {
 int graph::destroy_all(void) {
   /* 
    * data to deallocate:  
-   * 1. each node
-   * 2. each node's string
-   * 3. each node's LLL
+   * 1. each vertex's string
+   * 2. each vertex's LLL
+   * 3. the array itself
   */
 
   vertex *current;
@@ -137,9 +143,9 @@ int graph::destroy_all(void) {
 /* returns the location of a piece of data if it exists */
 int graph::get_location(const char *to_find) {
   for (size_t i = 0; i < this->len; ++i) {
-    if (this->adjacency_list[i].data) {
+    if (this->adjacency_list[i].data) { /* only compare if the current string exists */
       if (strcmp(to_find, this->adjacency_list[i].data) == 0)
-        return i;
+        return i; /* return index */
     }
   }
 
