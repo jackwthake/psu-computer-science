@@ -91,6 +91,7 @@ graph::graph(size_t size) {
 /* deconstructor */
 graph::~graph(void) {
   this->destroy_all();
+  delete []this->visited;
 }
 
 
