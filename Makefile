@@ -77,6 +77,9 @@ endif
 163_program4: cs163/*g4/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/163/prog4.out cs163/*g4/*.cpp
 
+163_program5: cs163/*g5/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/163/prog5.out cs163/*g5/*.cpp
+
 # labs
 163_lab1: cs163/labs/*1/*lab1.cpp
 	$(CC) $(CXXFLAGS) -o bin/163/lab/lab1.out cs163/labs/*1/*.cpp cs163/labs/*1/*.o
