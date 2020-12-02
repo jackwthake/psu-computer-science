@@ -35,6 +35,8 @@ class graph {
     int destroy_all(void); /* deallocate */
 
   private:
+    int get_location(const char *to_find); /* returns an index to the matching vertex */
+
     vertex *adjacency_list;
     size_t len;
 };
