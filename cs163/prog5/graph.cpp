@@ -9,8 +9,6 @@
 
 using namespace std;
 
-#define UNUSED(x) (void)(x)
-
 /*
  * Static recursive functions
 */
@@ -42,17 +40,20 @@ static void delete_LLL_recurs(node * &head) {
 };
 
 
-/* display all connections */
+/* display all connections, depth first algorithm too, pretty snazzy... atleast I'm pretty sure its depth first */
 void graph::display_recurs(vertex *current, bool is_first) {
-  if (!current) return;
+  if (!current) return; /* base case */
 
+  /* get the location of this vertex in the array */
   int location = this->get_location(current->data);
 
+  /* check if we've already visited here */
   if (!this->visited[location]) {
-    this->visited[location] = true;
-    if (!is_first)
+    this->visited[location] = true; /* set this vertex as visited */
+    if (!is_first) /* don't print calling vertex */
       cout << "Class: " << current->data << endl;
 
+    /* traverse through adjacent nodes */
     node *curr = current->head;
     while (curr) {
       display_recurs(curr->adj, false);
