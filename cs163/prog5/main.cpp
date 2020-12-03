@@ -1,9 +1,15 @@
+/*
+ * Jack Thake, Karla Fant, CS163
+ * This file holds the test program.
+*/
+
 #include <cstring>
 #include <iostream>
 #include "graph.h"
 
 using namespace std;
 
+/* entry point */
 int main (void) {
   char conf = '\0', temp[51], temp2[51];
   graph test;

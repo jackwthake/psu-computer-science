@@ -11,7 +11,11 @@
 
 /* one vertex */
 struct vertex {
-  char *data; /* vertex's data */
+  /* 
+   * vertex's data, it does not say in the assignment exactly how much data per course we need, 
+   * I just went with the course's name.
+  */
+  char *data; 
   struct node *head; /* adjacency list */
 };
 
