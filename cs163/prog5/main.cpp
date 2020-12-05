@@ -12,9 +12,15 @@ using namespace std;
 /* entry point */
 int main (void) {
   char conf = '\0', temp[51], temp2[51];
-  graph test;
+  int len = 0;
 
   cout << "Follow prompts to add courses to the graph" << endl << endl;
+  
+  cout << "Please enter the desired length of the graph: ";
+  cin >> len;
+  cin.ignore(100, '\n');
+
+  graph test(len);
 
   do {
     cout << "Please enter course name: ";
