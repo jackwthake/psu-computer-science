@@ -2,14 +2,14 @@ CC=g++
 CXXFLAGS=-Wall -ansi
 UNAME_S := $(shell uname -s)
 
-default: cs162 cs163
+default: cs162 cs163 cs202
 
 ################
 # cs162
 ################
 
 ifeq ($(UNAME_S),Darwin)
-cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4 # We don't compile lab 6 and 7, because the .o files aren't compatible
+cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4  # We don't compile lab 6 and 7, because the .o files aren't compatible
 else
 cs162: 162_program1 162_program2 162_program3 162_program3-v2 162_program4 162_lab4 162_lab6 162_lab7 162_lab8 162_lab10
 endif
@@ -83,6 +83,15 @@ endif
 # labs
 163_lab1: cs163/labs/*1/*lab1.cpp
 	$(CC) $(CXXFLAGS) -o bin/163/lab/lab1.out cs163/labs/*1/*.cpp cs163/labs/*1/*.o
+
+#############
+# cs202
+#############
+
+cs202 : 202_program1
+
+202_program1: cs202/*1/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog1.out cs202/*1/*.cpp
 
 clean:
 	rm -rf bin/
