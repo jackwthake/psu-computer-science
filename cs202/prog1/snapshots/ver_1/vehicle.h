@@ -12,7 +12,9 @@
 #define __VEHICLE_H__
 
 #include "location.h"
-#include "gate.h"
+
+/* this is here solely to stop recursive including */
+class gate;
 
 /* vehicle class
  * Represents one vehicle at the airport.
