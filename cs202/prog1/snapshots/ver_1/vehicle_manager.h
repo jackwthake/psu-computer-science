@@ -48,7 +48,7 @@ class vehicle_manager {
     bool clear_pool(); // clear out both the busy vector and the CLL
 
     /* need to request and release vehicles, transfering them from the CLL, and the vector */
-    bool request_vehicles(gate &dest_gate, vehicle_type *arr, size_t length);
+    bool request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length);
     bool release_vehicles(gate &cur_gate);
 
   private:
