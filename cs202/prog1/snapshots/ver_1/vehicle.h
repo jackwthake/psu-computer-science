@@ -25,10 +25,13 @@ class vehicle : public location {
     vehicle(gate &); // normal constructor
 
     // we don't need a destructor as this class does not manage any dynamic memory.
+    
+    /* overloaded equality operator */
+    bool operator==(const location &rhs) const;
   protected:
     /* get and set the destination gate for a given vehicle */
     void set_dest_gate(gate &);
-    void get_dest_gate(gate &);
+    void get_dest_gate(gate &) const;
 
   private:
     gate *dest_gate;

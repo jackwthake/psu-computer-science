@@ -25,7 +25,7 @@ class location {
     ~location();
 
     /* Overloaded equality operator, basically becomes the compare function */
-    virtual bool operator==(const location &rhs);
+    virtual bool operator==(const location &rhs) const;
   protected:
     // get and set the location
     float get_longitude();

@@ -4,7 +4,7 @@
  * CS 202
  * vehicle_manager.h
  *
- * This file contains all the definitions for both the vehicle manager class and vehicle manager's node class
+ * This file contains all the definitions for both the vehicle manager class and vehicle manager's v_node class
 */
 
 #ifndef __VEHICLE_MANAGER_H__
@@ -16,16 +16,16 @@
 /*
  * represents one node in the vehicle manager's pool (CLL)
 */
-class node : public ground_vehicle {
+class v_node : public ground_vehicle {
   public:
-    node();
-    node(const ground_vehicle &data);
+    v_node();
+    v_node(const ground_vehicle &data);
 
-    node *get_next();
-    void set_next(node *);
+    v_node *get_next();
+    void set_next(v_node *);
 
   private:
-    node *next;
+    v_node *next;
 };
 
 
@@ -44,6 +44,7 @@ class vehicle_manager {
     /* functions to interact with the CLL Pool */
     bool add_to_pool(ground_vehicle &veh); // add to the CLL
     bool remove_from_pool(const ground_vehicle &veh); // remove a vehicle from both the busy vector or the CLL
+    const ground_vehicle &get_vehicle_from_pool(const ground_vehicle &veh) const; // retrieve a vehicle from either the busy vector or the CLL
     bool clear_pool(); // clear out both the busy vector and the CLL
 
     /* need to request and release vehicles, transfering them from the CLL, and the vector */
@@ -51,7 +52,10 @@ class vehicle_manager {
     bool release_vehicles(gate &cur_gate);
 
   private:
-    node *rear; // free vehicle CLL
+    /* recursively retrieve a vehicle from the class's CLL with matching information */
+   const ground_vehicle &get_vehicle_from_pool(const ground_vehicle &veh, v_node *head);  
+
+    v_node *rear; // free vehicle CLL
     std::vector<ground_vehicle> busy_vehicles; // collection of busy vehicles
 };
 

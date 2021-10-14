@@ -22,10 +22,11 @@ class plane : public vehicle {
     plane(); // default constructor
     plane(gate &dest_gate, std::string dep_from, int flight_num, int num_passengers, bool landed=false); // normal constructor
 
-    bool is_landed(); // check if flight is landed
+    bool is_landed() const; // check if flight is landed
 
     // the land function will populate an array with the required vehicle types needed to service the plane when it arrives.
     void land(int *req_vehicles, int &arr_length); 
+    void get_flight_info(std::string &departed_from, int &flight_num, int &num_passengers) const; // get the flights information
   private:
     std::string dep_from;
     int flight_num, num_passengers;

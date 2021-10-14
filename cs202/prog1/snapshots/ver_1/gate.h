@@ -4,28 +4,29 @@
  * CS 202
  * gate.h
  *
- * This file contains the definitions for the node class and the gate class
+ * This file contains the definitions for the p_node class and the gate class
 */
 #ifndef __GATE_H__
 #define __GATE_H__
 
 #include "location.h"
 #include "plane.h"
+#include "vehicle_manager.h"
 
 
 /* 
  * represents one node in the gate's qeue (LLL)
 */
-class node : public plane {
+class p_node : public plane {
   public:
-    node(); /* default constructor */
-    node(const plane &data); /* normal constructor */
+    p_node(); /* default constructor */
+    p_node(const plane &data); /* normal constructor */
 
-    node *get_next(); /* get the next node in the list */
-    void set_next(node *); /* set the next node in the list */
+    p_node *get_next(); /* get the next p_node in the list */
+    void set_next(p_node *); /* set the next p_node in the list */
 
   private:
-    node *next;
+    p_node *next;
 };
 
 
@@ -47,9 +48,12 @@ class gate : public location {
 
     const plane &get_flight_info(int flight_id) const; // retrieve a flight from the list
   private:
-    void upon_landing(); // handler function for when a plane lands
+    void upon_landing(const vehicle_manager &); // handler function for when a plane lands
 
-    node *head;
+    /* recursive fucntion to find a given flight in the qeue */
+    const plane &get_flight_info(int flight_id, p_node *head);
+
+    p_node *head;
 };
 
 #endif
