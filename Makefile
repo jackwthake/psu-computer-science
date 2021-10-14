@@ -90,10 +90,13 @@ endif
 
 cs202 : 202_program1
 
-202_program1: 202_program1_snapshot1
+202_program1: 202_program1_snapshot1 202_program1_snapshot2
 
 202_program1_snapshot1: cs202/*1/snapshots/*1/*.h
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*1/snapshots/*1/*.h 
+
+202_program1_snapshot2: cs202/*1/snapshots/*2/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog1.out cs202/*g1/snapshots/*2/*.cpp
 
 clean:
 	rm -rf bin/
