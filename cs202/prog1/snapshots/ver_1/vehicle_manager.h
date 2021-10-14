@@ -11,6 +11,7 @@
 #define  __VEHICLE_MANAGER_H__
 
 #include <vector>
+#include <cstddef>
 #include "ground_vehicle.h"
 
 /*
@@ -60,5 +61,4 @@ class vehicle_manager {
 };
 
 #endif
-
 
