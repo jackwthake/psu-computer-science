@@ -22,7 +22,7 @@ class location {
     location(const location &); // copy constructor
     location(float longitude, float latitude); // normal constructor
 
-    ~location();
+    virtual ~location();
 
     /* Overloaded equality operator, basically becomes the compare function */
     virtual bool operator==(const location &rhs) const;

@@ -35,8 +35,6 @@ class ground_vehicle : public vehicle {
     vehicle_type get_type() const; // get the vehicle's type
     bool request(gate &dest); // request this vehicle, to go to a given gate
     bool release(); // release a vehicle from a given gate 
-
-    bool operator==(const gate &rhs) const;
   private:
     vehicle_type type;
     bool busy;

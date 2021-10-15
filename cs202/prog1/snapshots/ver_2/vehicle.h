@@ -23,8 +23,6 @@ class vehicle : public location {
   public:
     vehicle(); // default constructor
     vehicle(gate &); // normal constructor
-
-    // we don't need a destructor as this class does not manage any dynamic memory.
     
     /* overloaded equality operator */
     bool operator==(const location &rhs) const;

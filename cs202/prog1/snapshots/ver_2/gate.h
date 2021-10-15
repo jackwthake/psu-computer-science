@@ -40,8 +40,6 @@ class gate : public location {
     gate(char *identifier); // normal constructor
     gate(const gate &); // copy constructor
 
-    ~gate();
-
     bool enqeue_flight(const plane &); // add a flight to the qeue
     bool deqeue_flight(int flight_id); // remove a flight from the qeue
     bool clear_flight_qeue(); // clear list
