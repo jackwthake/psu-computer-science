@@ -23,7 +23,7 @@ ground_vehicle::ground_vehicle() : ground_vehicle(unknown) {
 /*
  * normal constructor
 */
-ground_vehicle::ground_vehicle(vehicle_type type, float longitude, float latitude, bool busy) : vehicle(nullptr, longitude, latitude) {
+ground_vehicle::ground_vehicle(vehicle_type type, float longitude, float latitude, bool busy) : vehicle(0, longitude, latitude) {
   this->type = type;
   this->busy = false;
 }
