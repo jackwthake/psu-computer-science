@@ -2,10 +2,11 @@
  * Jack Thake
  * Karla Fant
  * CS 202
- * vehicle.h
+ * vehicle.cpp
  *
- * This file holds the definition for the vehicle class, which inherits from the location class
- * and is the parent to the plane and ground vehicle classes.
+ * This file contains the definitions for the vehicle class. THe vehicle class is responsible
+ * for holding and maintaining a vehicles destination. A vehicle is a child of a the location
+ * class, and is the parent of both the plane and ground vehicle class.
 */
 
 #ifndef __VEHICLE_H__
@@ -22,13 +23,14 @@ class gate;
 class vehicle : public location {
   public:
     vehicle(); // default constructor
-    vehicle(gate &); // normal constructor
+    vehicle(gate *, float longitude = 0.0f, float latitude = 0.0f); // normal constructor
+
+    // this class manages no dynamic memory, when it goes out of scope - location's deconstructor is automatically invoked.
     
-    /* overloaded equality operator */
-    bool operator==(const location &rhs) const;
+    bool operator==(const vehicle &rhs) const;
   protected:
     /* get and set the destination gate for a given vehicle */
-    void set_dest_gate(gate &);
+    void set_dest_gate(gate *);
     void get_dest_gate(gate &) const;
 
   private:

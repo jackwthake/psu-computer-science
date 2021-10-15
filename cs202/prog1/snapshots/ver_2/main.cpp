@@ -8,6 +8,7 @@
 
 int main(void) {
   location l1, l2(45.9, 43.2);
+  vehicle v1;
 
   return 1;
 }
