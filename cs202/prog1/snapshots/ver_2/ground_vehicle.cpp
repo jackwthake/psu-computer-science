@@ -65,7 +65,7 @@ bool ground_vehicle::request(gate *dest) {
 */
 bool ground_vehicle::release() {
   if (this->busy) {
-    this->set_dest_gate(nullptr);
+    this->set_dest_gate(0);
     this->busy = false;
 
     return false;
