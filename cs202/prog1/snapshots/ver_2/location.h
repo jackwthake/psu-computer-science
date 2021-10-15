@@ -2,10 +2,11 @@
  * Jack Thake
  * Karla Fant
  * CS 202
- * location.h
+ * location.cpp
  *
- * This file contains the declarations for the location base class, this class will be the parent/ancestor
- * of nearly all of the classes in this program.
+ * This file contains the declarations for the location class. this class holds and manages a pair
+ * of GPS coordinates which are dynamically allocated. This class is the base class for almost
+ * all classes in this program.
 */
 
 #ifndef __LOCATION_H__
