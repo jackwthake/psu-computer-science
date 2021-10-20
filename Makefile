@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-std=c++11 -Wall -ansi
+CXXFLAGS= -Wall -ansi -std=c++11
 UNAME_S := $(shell uname -s)
 
 default: cs162 cs163 cs202
@@ -90,13 +90,16 @@ endif
 
 cs202 : 202_program1
 
-202_program1: 202_program1_snapshot1 202_program1_snapshot2
+202_program1: 202_program1_snapshot1 202_program1_snapshot2 202_program1_snapshot3
 
 202_program1_snapshot1: cs202/*1/snapshots/*1/*.h
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*1/snapshots/*1/*.h 
 
 202_program1_snapshot2: cs202/*1/snapshots/*2/*.cpp
-	$(CC) $(CXXFLAGS) -o bin/202/prog1.out cs202/*g1/snapshots/*2/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog1_v1.out cs202/*g1/snapshots/*2/*.cpp
+
+202_program1_snapshot3: cs202/*1/snapshots/*3/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog1_v2.out cs202/*g1/snapshots/*3/*.cpp
 
 clean:
 	rm -rf bin/
