@@ -20,7 +20,7 @@
 class plane : public vehicle {
   public:
     plane(); // default constructor
-    plane(gate &dest_gate, std::string dep_from, int flight_num, int num_passengers, bool landed=false); // normal constructor
+    plane(gate *dest_gate, std::string dep_from, int flight_num, int num_passengers, bool landed=false); // normal constructor
 
     bool is_landed() const; // check if flight is landed
 
