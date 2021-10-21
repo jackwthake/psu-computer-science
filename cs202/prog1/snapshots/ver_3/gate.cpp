@@ -12,6 +12,7 @@
 
 
 #include "gate.h"
+#include <cstring>
 
 /*
  * Node class implementation
