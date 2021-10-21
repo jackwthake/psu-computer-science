@@ -21,6 +21,7 @@ class p_node : public plane {
   public:
     p_node(); /* default constructor */
     p_node(const plane &data); /* normal constructor */
+    p_node(const p_node &src); /* copy constructor */
 
     p_node *get_next(); /* get the next p_node in the list */
     void set_next(p_node *); /* set the next p_node in the list */
@@ -37,12 +38,14 @@ class p_node : public plane {
 class gate : public location {
   public:
     gate(); // default constructor
-    gate(char *identifier); // normal constructor
+    gate(char *identifier, float longitude = 0.f, float latitudei = 0.f); // normal constructor
     gate(const gate &); // copy constructor
+
+    ~gate();
 
     bool enqeue_flight(const plane &); // add a flight to the qeue
     bool deqeue_flight(int flight_id); // remove a flight from the qeue
-    bool clear_flight_qeue(); // clear list
+    bool clear_flight_queue(); // clear list
 
     const plane &get_flight_info(int flight_id) const; // retrieve a flight from the list
   private:
@@ -50,7 +53,9 @@ class gate : public location {
 
     /* recursive fucntion to find a given flight in the qeue */
     const plane &get_flight_info(int flight_id, p_node *head);
+    p_node *copy_list(p_node *head, p_node *src);
 
+    char *identifier;
     p_node *head;
 };
 
