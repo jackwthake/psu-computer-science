@@ -121,7 +121,7 @@ gate::~gate() {
  * add a flight to the queue
 */
 bool gate::enqeue_flight(const plane &) {
-
+  return false;
 }
 
 
@@ -129,7 +129,7 @@ bool gate::enqeue_flight(const plane &) {
  * remove a flight from the queue
 */
 bool gate::deqeue_flight(int flight_id) {
-
+  return false;
 }
 
 
@@ -137,7 +137,7 @@ bool gate::deqeue_flight(int flight_id) {
  * clear the flight queue
 */
 bool gate::clear_flight_queue() {
-
+  return false;
 }
 
 
@@ -150,10 +150,7 @@ bool gate::clear_flight_queue() {
  * recursively copy the queue
 */
 p_node *gate::copy_list(p_node *head, p_node *src) {
-  if (!src)
-    return nullptr;
-
-
+  return nullptr;
 }
 
 
@@ -161,6 +158,6 @@ p_node *gate::copy_list(p_node *head, p_node *src) {
  * recursively get a plane from the queue
 */
 const plane &gate::get_flight_info(int flight_id) const {
-
+   return plane();
 }
 
