@@ -43,7 +43,7 @@ class gate : public location {
 
     ~gate();
 
-    bool enqeue_flight(const plane &); // add a flight to the qeue
+    bool enqueue_flight(const plane &); // add a flight to the qeue
     bool deqeue_flight(int flight_id); // remove a flight from the qeue
     bool clear_flight_queue(); // clear list
 
@@ -51,9 +51,11 @@ class gate : public location {
   private:
     void upon_landing(const vehicle_manager &); // handler function for when a plane lands
 
-    /* recursive fucntion to find a given flight in the qeue */
-    const plane &get_flight_info(int flight_id, p_node *head);
-    p_node *copy_list(p_node *head, p_node *src);
+    // recursive functions
+    bool append_flight(p_node *head, const plane &src); // add a node to the end of the list
+    bool clear_list(); // clear and deallocate all of the list
+    bool copy_list(p_node *dest, p_node *src); // copy a list recursively
+
 
     char *identifier;
     p_node *head;

@@ -13,5 +13,13 @@ int main(void) {
   plane p1(nullptr, "PDX", 972, 400), p2(p1);
   gate g1("E5"); //g2(g1); <-- at the moment the copy constructor causes a runtime fault
 
+  g1.enqueue_flight(p1);
+  g1.enqueue_flight(p2);
+  g1.enqueue_flight(p2);
+  g1.enqueue_flight(p2);
+  g1.enqueue_flight(p2);
+  g1.enqueue_flight(p2);
+
+
   return 1;
 }

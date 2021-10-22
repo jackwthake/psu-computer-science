@@ -103,7 +103,7 @@ gate::gate(const gate &src) {
   }
 
   // perform a recursive copy of the lll
-  this->head = copy_list(this->head, src.head);
+  copy_list(this->head, src.head);
 }
 
 
@@ -111,8 +111,10 @@ gate::gate(const gate &src) {
  * deallocate memory
 */
 gate::~gate() {
+  // clear queue
   clear_flight_queue();
 
+  // deallocate identifier
   if (this->identifier)
     delete []this->identifier;
 }
@@ -121,7 +123,16 @@ gate::~gate() {
 /*
  * add a flight to the queue
 */
-bool gate::enqeue_flight(const plane &) {
+bool gate::enqueue_flight(const plane &src) {
+  if (!this->head) { // if the list is empty, just set head to a new node
+    this->head = new p_node(src);
+
+    return true;
+  } else { // otherwise recursively traverse to the end of the list
+    /* recursively append onto end of LLL */
+    return append_flight(this->head, src);
+  }
+
   return false;
 }
 
@@ -138,7 +149,7 @@ bool gate::deqeue_flight(int flight_id) {
  * clear the flight queue
 */
 bool gate::clear_flight_queue() {
-  return false;
+  return clear_list();
 }
 
 
@@ -148,17 +159,42 @@ bool gate::clear_flight_queue() {
 
 
 /*
- * recursively copy the queue
+ * recursively append a flight onto the queue
 */
-p_node *gate::copy_list(p_node *head, p_node *src) {
-  return nullptr;
+bool gate::append_flight(p_node *head, const plane &src) {
+  if (!head) return false; // base case
+  if (!head->get_next()) { // last list node
+    head->set_next(new p_node(src)); // append a new node
+
+    return true; 
+  }
+
+  return append_flight(head->get_next(), src);
 }
 
 
 /*
- * recursively get a plane from the queue
+ * Recursively clear the list
 */
-const plane &gate::get_flight_info(int flight_id) const {
-   return plane();
+bool gate::clear_list() {
+  if (!this->head) return true; // base case
+
+  // grab a temporary
+  p_node *tmp = this->head;
+  // advance the head pointer
+  this->head = this->head->get_next();
+
+  // delete the old head
+  delete tmp;
+
+  return this->clear_list();
+}
+
+
+/*
+ * Recursively copy one LLL to another
+*/
+bool gate::copy_list(p_node *dest, p_node *src) {
+  return false;
 }
 
