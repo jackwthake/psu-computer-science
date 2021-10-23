@@ -28,10 +28,10 @@ class vehicle : public location {
     // this class manages no dynamic memory, when it goes out of scope - location's deconstructor is automatically invoked.
     
     bool operator==(const vehicle &rhs) const;
+    gate *get_dest_gate() const;
   protected:
-    /* get and set the destination gate for a given vehicle */
+    /* set the destination gate for a given vehicle */
     void set_dest_gate(gate *);
-    void get_dest_gate(gate &) const;
 
   private:
     gate *dest_gate;

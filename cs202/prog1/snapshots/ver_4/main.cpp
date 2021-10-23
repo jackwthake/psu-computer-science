@@ -43,6 +43,7 @@ int main(void) {
   };
 
   vm.request_vehicles(&g1, arr, 2);
+  vm.release_vehicles(&g1);
 
   vm.remove_from_pool(gv1);
   vm.remove_from_pool(gv2);

@@ -62,7 +62,7 @@ void vehicle::set_dest_gate(gate *dest) {
 }
 
 
-void vehicle::get_dest_gate(gate &res) const {
-  // TODO: implement after gate class
+gate *vehicle::get_dest_gate() const {
+  return this->dest_gate;
 }
 

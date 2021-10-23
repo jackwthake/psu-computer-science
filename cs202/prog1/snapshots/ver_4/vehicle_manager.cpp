@@ -164,13 +164,20 @@ bool vehicle_manager::request_vehicles(gate *dest_gate, vehicle_type *arr, std::
     }
   }
 
-  return false;
+  return true;
 }
 
 
-bool vehicle_manager::release_vehicles(gate &cur_gate) {
+bool vehicle_manager::release_vehicles(gate *cur_gate) {
+  for (ground_vehicle veh : this->busy_vehicles) {
+    if (veh.get_dest_gate() == cur_gate) {
+      veh.release();
+      this->add_to_pool(veh);
+      this->busy_vehicles.erase(std::remove(this->busy_vehicles.begin(), this->busy_vehicles.end(), veh), this->busy_vehicles.end());
+    }
+  }
 
-  return false;
+  return true;
 }
 
 
