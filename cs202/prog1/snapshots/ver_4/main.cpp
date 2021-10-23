@@ -37,6 +37,13 @@ int main(void) {
 
   const ground_vehicle *gv = vm.get_vehicle_from_pool(refueler);
 
+  vehicle_type arr[2] = {
+    refueler,
+    unknown
+  };
+
+  vm.request_vehicles(&g1, arr, 2);
+
   vm.remove_from_pool(gv1);
   vm.remove_from_pool(gv2);
   vm.remove_from_pool(gv3);

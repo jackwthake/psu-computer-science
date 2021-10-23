@@ -46,16 +46,16 @@ class vehicle_manager {
     /* functions to interact with the CLL Pool */
     bool add_to_pool(ground_vehicle &veh); // add to the CLL
     bool remove_from_pool(const ground_vehicle &veh); // remove a vehicle from both the busy vector or the CLL
-    const ground_vehicle *get_vehicle_from_pool(vehicle_type type) const; // retrieve a vehicle from either the busy vector or the CLL
+    ground_vehicle *get_vehicle_from_pool(vehicle_type type); // retrieve a vehicle from either the busy vector or the CLL
     bool clear_pool(); // clear out both the busy vector and the CLL
 
     /* need to request and release vehicles, transfering them from the CLL, and the vector */
-    bool request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length);
+    bool request_vehicles(gate *dest_gate, vehicle_type *arr, std::size_t length);
     bool release_vehicles(gate &cur_gate);
 
   private:
     /* recursively retrieve a vehicle from the class's CLL with matching information */
-   const ground_vehicle *get_vehicle_from_pool(vehicle_type type, v_node *head) const;
+   ground_vehicle *get_vehicle_from_pool(vehicle_type type, v_node *head);
    v_node *remove_vehicle(v_node * &head, const ground_vehicle &);
    bool clear_list();
 

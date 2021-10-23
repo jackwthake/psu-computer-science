@@ -55,14 +55,6 @@ vehicle_manager::vehicle_manager() {
 
 
 /*
- * copy constyructor
-*/
-vehicle_manager::vehicle_manager(const vehicle_manager &) {
-  // TODO: implement me
-}
-
-
-/*
  * deallocate memory
 */
 vehicle_manager::~vehicle_manager() {
@@ -94,13 +86,6 @@ bool vehicle_manager::add_to_pool(ground_vehicle &veh) {
  * depending on the ground vehicle instance
 */
 bool vehicle_manager::remove_from_pool(const ground_vehicle &veh) {
-  /* check if the vehicle is busy */
-  if (veh.is_busy()) {
-    this->busy_vehicles.erase(std::remove(this->busy_vehicles.begin(), this->busy_vehicles.end(), veh), this->busy_vehicles.end());
-
-    return true;
-  }
-
   /* if we reach out here then the vehicle should be in the CLL */
   /* check to see if there is just one node in the list */
   if (this->rear == this->rear->get_next()) {
@@ -137,7 +122,7 @@ bool vehicle_manager::remove_from_pool(const ground_vehicle &veh) {
 /*
  * recursively retrieves a vehicle of a given type from the pool
 */
-const ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type) const {
+ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type) {
   if (!this->rear) return nullptr;
   if (this->rear->get_type() == type)
     return this->rear;
@@ -163,10 +148,19 @@ bool vehicle_manager::clear_pool() {
 /*
  * Request vehicles for a given gate
 */
-bool vehicle_manager::request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length) {
+bool vehicle_manager::request_vehicles(gate *dest_gate, vehicle_type *arr, std::size_t length) {
   if (arr) {
     for (int i = 0; i < length; ++i) {
+      ground_vehicle *veh = get_vehicle_from_pool(*(arr + i));
       
+      if (!veh)
+        return false;
+
+      if (!veh->request(dest_gate))
+        return false;
+
+      this->busy_vehicles.push_back(*veh);
+      this->remove_from_pool(*veh);  
     }
   }
 
@@ -175,6 +169,7 @@ bool vehicle_manager::request_vehicles(gate &dest_gate, vehicle_type *arr, std::
 
 
 bool vehicle_manager::release_vehicles(gate &cur_gate) {
+
   return false;
 }
 
@@ -187,7 +182,7 @@ bool vehicle_manager::release_vehicles(gate &cur_gate) {
 /*
  * recursive function to retrieve a vehicle from the CLL
 */
-const ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type, v_node *head) const {
+ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type, v_node *head) {
   if (!head) return nullptr;
   if (head == this->rear) return nullptr;
 
