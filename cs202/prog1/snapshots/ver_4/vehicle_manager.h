@@ -2,15 +2,17 @@
  * Jack Thake
  * Karla Fant
  * CS 202
- * vehicle_manager.h
+ * vehicle_manager.cpp
  *
- * This file contains all the definitions for both the vehicle manager class and vehicle manager's v_node class
+ * This file contains the definition for both the v_node class and the vehicle manager class.
+ * The v_node class represents one node in the vehicle manager;s circular linked list of
+ * ground vehicles. v_node is derived from ground_vehicle. the ground vehicle class manages
+ * a CLL of ground vehicles, that gates can request and release.
 */
 
 #ifndef __VEHICLE_MANAGER_H__
 #define  __VEHICLE_MANAGER_H__
 
-#include <vector>
 #include <cstddef>
 #include "ground_vehicle.h"
 
@@ -32,11 +34,8 @@ class v_node : public ground_vehicle {
 
 /* 
  * this class manages all ground vehicles, and interacts with both the ground vehicles
- * anf the airport gates. Available vehiles live in the CLL, once requested the requested
- * vehicles get moved to the busy_vehicle vector and live there until the gate releases them
- * using vehicle_manager's release_vehicles method, which just moves all vehicles in the vector
- * that have the same dest_gate object as is passed to the method.
- */
+ * and the airport gates. Available and busy vehicles live in the CLL
+*/
 class vehicle_manager {
   public:
     vehicle_manager();
@@ -56,10 +55,10 @@ class vehicle_manager {
     /* recursively retrieve a vehicle from the class's CLL with matching information */
    ground_vehicle *get_vehicle_from_pool(vehicle_type type, v_node *head);
    v_node *remove_vehicle(v_node * &head, const ground_vehicle &);
+   void release_vehicles(v_node *head, const gate *);
    bool clear_list();
 
    v_node *rear; // free vehicle CLL
-   std::vector<ground_vehicle> busy_vehicles; // collection of busy vehicles
 };
 
 #endif

@@ -38,7 +38,7 @@ class location {
     virtual void display();
   private:
     /* dynamically allocated to fit program requirements */
-    float *longitude, *latitude;
+    float longitude, latitude;
 };
 
 #endif

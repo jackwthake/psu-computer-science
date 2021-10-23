@@ -1,6 +1,16 @@
-#include "vehicle_manager.h"
+/*
+ * Jack Thake
+ * Karla Fant
+ * CS 202
+ * vehicle_manager.cpp
+ *
+ * This file contains the definition for both the v_node class and the vehicle manager class.
+ * The v_node class represents one node in the vehicle manager;s circular linked list of
+ * ground vehicles. v_node is derived from ground_vehicle. the ground vehicle class manages
+ * a CLL of ground vehicles, that gates can request and release.
+*/
 
-#include <algorithm>
+#include "vehicle_manager.h"
 
 
 /*
@@ -50,7 +60,6 @@ void v_node::set_next(v_node *next) {
 */
 vehicle_manager::vehicle_manager() {
   this->rear = nullptr;
-  this->busy_vehicles = std::vector<ground_vehicle>();  
 }
 
 
@@ -158,9 +167,6 @@ bool vehicle_manager::request_vehicles(gate *dest_gate, vehicle_type *arr, std::
 
       if (!veh->request(dest_gate))
         return false;
-
-      this->busy_vehicles.push_back(*veh);
-      this->remove_from_pool(*veh);  
     }
   }
 
@@ -168,14 +174,14 @@ bool vehicle_manager::request_vehicles(gate *dest_gate, vehicle_type *arr, std::
 }
 
 
+/*
+ * Wrapper function to recursively release any vehicles at a given gate
+*/
 bool vehicle_manager::release_vehicles(gate *cur_gate) {
-  for (ground_vehicle veh : this->busy_vehicles) {
-    if (veh.get_dest_gate() == cur_gate) {
-      veh.release();
-      this->add_to_pool(veh);
-      this->busy_vehicles.erase(std::remove(this->busy_vehicles.begin(), this->busy_vehicles.end(), veh), this->busy_vehicles.end());
-    }
-  }
+  if (rear->get_dest_gate() == cur_gate)
+    rear->release();
+
+  this->release_vehicles(rear->get_next(), cur_gate);
 
   return true;
 }
@@ -224,6 +230,24 @@ v_node *vehicle_manager::remove_vehicle(v_node * &head, const ground_vehicle &ve
 }
 
 
+/*
+ * Recursively releases busy vehicles at a given gate
+*/
+void vehicle_manager::release_vehicles(v_node *head, const gate *cur_gate) {
+  if (!head) return;
+  if (head == this->rear) return;
+
+  if (head->get_dest_gate() == cur_gate) {
+    head->release();
+  }
+
+  this->release_vehicles(head->get_next(), cur_gate);
+}
+
+
+/*
+ * clear the CLL
+*/
 bool vehicle_manager::clear_list() {
   if (!this->rear) return true;
 
