@@ -118,7 +118,9 @@ bool gate::enqueue_flight(const plane &src) {
 
 
 /* 
- * remove a flight from the queue
+ * this functions acts as a deqeue or removal function for the LLL,
+ * once a plane is removed, itll wait until the flight is ready to depart
+ * and then destroy the plane object.
 */
 bool gate::land_flight() {
   if (!this->head)
@@ -143,6 +145,19 @@ bool gate::land_flight() {
 bool gate::clear_flight_queue() {
   return clear_list();
 }
+
+
+/*
+ * return the first flight with a matching flight number
+*/
+const plane gate::get_flight_info(int flight_id) const {
+  const plane *res = this->get_flight_info(this->head, flight_id);
+
+  if (!res)
+    return plane();
+
+  return *res;
+};
 
 
 /*
@@ -180,5 +195,20 @@ bool gate::clear_list() {
   delete tmp;
 
   return this->clear_list();
+}
+
+
+const plane *gate::get_flight_info(p_node *head, int flight_id) const {
+  if (!head) return nullptr;
+
+  std::string dep;
+  int flight_num, passengers;
+
+  head->get_flight_info(dep, flight_num, passengers);
+  if (flight_num == flight_id) {
+    return head;
+  }
+
+  return get_flight_info(head->get_next(), flight_id);
 }
 

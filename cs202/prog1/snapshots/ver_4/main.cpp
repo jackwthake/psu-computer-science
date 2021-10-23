@@ -20,6 +20,8 @@ int main(void) {
   g1.enqueue_flight(p2);
   g1.enqueue_flight(p2);
 
+  plane test = g1.get_flight_info(972);
+
   g1.land_flight();
   g1.land_flight();
   g1.land_flight();

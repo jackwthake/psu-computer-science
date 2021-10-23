@@ -47,13 +47,14 @@ class gate : public location {
     bool land_flight(); // remove the next flight from the queue
     bool clear_flight_queue(); // clear list
 
-    const plane &get_flight_info(int flight_id) const; // retrieve a flight from the list
+    const plane get_flight_info(int flight_id) const; // retrieve a flight from the list
   private:
     void upon_landing(const vehicle_manager &); // handler function for when a plane lands
 
     // recursive functions
     bool append_flight(p_node *head, const plane &src); // add a node to the end of the list
     bool clear_list(); // clear and deallocate all of the list
+    const plane *get_flight_info(p_node *head, int flight_id) const;
 
     char *identifier;
     p_node *head;
