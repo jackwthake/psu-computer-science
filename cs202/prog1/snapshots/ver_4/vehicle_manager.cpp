@@ -134,11 +134,21 @@ bool vehicle_manager::remove_from_pool(const ground_vehicle &veh) {
 }
 
 
-const ground_vehicle &vehicle_manager::get_vehicle_from_pool(const ground_vehicle &veh) const {
+/*
+ * recursively retrieves a vehicle of a given type from the pool
+*/
+const ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type) const {
+  if (!this->rear) return nullptr;
+  if (this->rear->get_type() == type)
+    return this->rear;
 
+  return get_vehicle_from_pool(type, this->rear->get_next()); 
 }
 
 
+/*
+ * Recursively clear the pool
+*/
 bool vehicle_manager::clear_pool() {
   if (!this->rear) return false;
 
@@ -150,19 +160,43 @@ bool vehicle_manager::clear_pool() {
 }
 
 
+/*
+ * Request vehicles for a given gate
+*/
 bool vehicle_manager::request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length) {
+  if (arr) {
+    for (int i = 0; i < length; ++i) {
+      
+    }
+  }
 
+  return false;
 }
 
 
 bool vehicle_manager::release_vehicles(gate &cur_gate) {
-
+  return false;
 }
 
 
 /*
  * Recursive functions
 */
+
+
+/*
+ * recursive function to retrieve a vehicle from the CLL
+*/
+const ground_vehicle *vehicle_manager::get_vehicle_from_pool(vehicle_type type, v_node *head) const {
+  if (!head) return nullptr;
+  if (head == this->rear) return nullptr;
+
+  if (head->get_type() == type) {
+    return head;
+  }
+
+  return this->get_vehicle_from_pool(type, head->get_next());
+}
 
 
 /*

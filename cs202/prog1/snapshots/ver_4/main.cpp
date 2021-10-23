@@ -35,6 +35,8 @@ int main(void) {
   vm.add_to_pool(gv2);
   vm.add_to_pool(gv3);
 
+  const ground_vehicle *gv = vm.get_vehicle_from_pool(refueler);
+
   vm.remove_from_pool(gv1);
   vm.remove_from_pool(gv2);
   vm.remove_from_pool(gv3);
