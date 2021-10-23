@@ -22,7 +22,7 @@ class v_node : public ground_vehicle {
     v_node();
     v_node(const ground_vehicle &data);
 
-    v_node *get_next();
+    v_node * &get_next();
     void set_next(v_node *);
 
   private:
@@ -55,8 +55,8 @@ class vehicle_manager {
 
   private:
     /* recursively retrieve a vehicle from the class's CLL with matching information */
-   const ground_vehicle &get_vehicle_from_pool(const ground_vehicle &veh, v_node *head);  
-   bool remove_vehicle(v_node *rear, v_node *prev, v_node *current, const ground_vehicle &);
+   const ground_vehicle &get_vehicle_from_pool(const ground_vehicle &veh, v_node *head);
+   v_node *remove_vehicle(v_node * &head, const ground_vehicle &veh);
    bool clear_list();
 
     v_node *rear; // free vehicle CLL

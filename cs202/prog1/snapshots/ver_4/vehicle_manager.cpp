@@ -27,7 +27,7 @@ v_node::v_node(const ground_vehicle &data) : ground_vehicle(data) {
 /*
  * get the next node in the chain
 */
-v_node *v_node::get_next() {
+v_node * &v_node::get_next() {
   return this->next;
 }
 
@@ -89,19 +89,56 @@ bool vehicle_manager::add_to_pool(ground_vehicle &veh) {
 }
 
 
+/*
+ * removes a vehicle from wither the busy vector or the CLL
+ * depending on the ground vehicle instance
+*/
 bool vehicle_manager::remove_from_pool(const ground_vehicle &veh) {
+  /* check if the vehicle is busy */
   if (veh.is_busy()) {
     this->busy_vehicles.erase(std::remove(this->busy_vehicles.begin(), this->busy_vehicles.end(), veh), this->busy_vehicles.end());
 
     return true;
   }
 
-//  return 
-//  TODO: implement recursive remove function
+  /* if we reach out here then the vehicle should be in the CLL */
+  /* check to see if there is just one node in the list */
+  if (this->rear == this->rear->get_next()) {
+    if (*rear == veh) {
+      delete rear;
+      rear = nullptr;
+
+      return true;
+    }
+  }
+
+  /* check if rear is the matching node */
+  v_node *prev = this->rear;
+  this->rear = this->rear->get_next();
+  if (*this->rear == veh) {
+    /* grab a temporaroy of the matching node */
+    v_node *tmp = this->rear;
+
+    /* unlink the matching node from the list */
+    this->rear = this->rear->get_next();
+    prev->set_next(this->rear);
+
+    /* deallocate and return */
+    delete tmp;
+    return true;
+  }
+
+  /* otherwise the node is in the middle of the CLL, call the recursive function */
+  this->rear = remove_vehicle(this->rear->get_next(), veh);
+  return true;
 }
 
 
-const ground_vehicle &vehicle_manager::get_vehicle_from_pool(const ground_vehicle &veh) const { }
+const ground_vehicle &vehicle_manager::get_vehicle_from_pool(const ground_vehicle &veh) const {
+
+}
+
+
 bool vehicle_manager::clear_pool() {
   if (!this->rear) return false;
 
@@ -112,8 +149,15 @@ bool vehicle_manager::clear_pool() {
   return this->clear_list();
 }
 
-bool vehicle_manager::request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length) { }
-bool vehicle_manager::release_vehicles(gate &cur_gate) { }
+
+bool vehicle_manager::request_vehicles(gate &dest_gate, vehicle_type *arr, std::size_t length) {
+
+}
+
+
+bool vehicle_manager::release_vehicles(gate &cur_gate) {
+
+}
 
 
 /*
@@ -121,15 +165,26 @@ bool vehicle_manager::release_vehicles(gate &cur_gate) { }
 */
 
 
-bool vehicle_manager::remove_vehicle(v_node *rear, v_node *prev, v_node *current, const ground_vehicle &veh) {
-  if (!rear || current == rear) return false;
+/*
+ * Recursively remove a matching object from the middle of a CLL
+*/
+v_node *vehicle_manager::remove_vehicle(v_node * &head, const ground_vehicle &veh) {
+  if (!head || !rear) return nullptr; // no list to check
+  if (head == this->rear) return this->rear; // this is the main stopping condition
 
-  if (*current == veh) {
-    v_node *tmp = current;
-    prev->set_next(current->get_next()); 
+  /* use tail recursion */
+  head->set_next(this->remove_vehicle(head->get_next(), veh));
 
-    // TODO implement me
-  }
+  /* if we are the matching node */
+  if (*head == veh) {
+    /* unlink from list */
+    v_node *tmp = head;
+    head = head->get_next();
+
+    /* deallocate */
+    delete tmp;
+    return head;
+  } 
 }
 
 
@@ -142,3 +197,4 @@ bool vehicle_manager::clear_list() {
   delete tmp;
   return this->clear_list();
 }
+
