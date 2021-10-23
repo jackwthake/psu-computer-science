@@ -25,7 +25,7 @@ class plane : public vehicle {
     bool is_landed() const; // check if flight is landed
 
     // the land function will populate an array with the required vehicle types needed to service the plane when it arrives.
-    void land(int *req_vehicles, int &arr_length); 
+    void land(); 
     void get_flight_info(std::string &departed_from, int &flight_num, int &num_passengers) const; // get the flights information
   private:
     std::string dep_from;

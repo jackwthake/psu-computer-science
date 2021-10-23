@@ -88,26 +88,6 @@ gate::gate(char *identifier, float longitude, float latitude) : location(longitu
 
 
 /*
- * copy constructor
-*/
-gate::gate(const gate &src) {
-  // copy over the gate identifier, reallocating if necessary.
-  if (this->identifier) {
-    delete []this->identifier;
-    this->identifier = nullptr;
-  }
-
-  if (src.identifier) {
-    this->identifier = new char[strlen(src.identifier)];
-    strcpy(this->identifier, src.identifier);
-  }
-
-  // perform a recursive copy of the lll
-  copy_list(this->head, src.head);
-}
-
-
-/*
  * deallocate memory
 */
 gate::~gate() {
@@ -140,8 +120,20 @@ bool gate::enqueue_flight(const plane &src) {
 /* 
  * remove a flight from the queue
 */
-bool gate::deqeue_flight(int flight_id) {
-  return false;
+bool gate::land_flight() {
+  if (!this->head)
+    return false;
+
+  p_node *tmp = this->head;
+  this->head = this->head->get_next();
+
+  tmp->land();
+
+  // TODO: read in numer of vehicles needed
+  // TODO: wait for plane to leave
+  
+  delete tmp;
+  return true;
 }
 
 
@@ -188,13 +180,5 @@ bool gate::clear_list() {
   delete tmp;
 
   return this->clear_list();
-}
-
-
-/*
- * Recursively copy one LLL to another
-*/
-bool gate::copy_list(p_node *dest, p_node *src) {
-  return false;
 }
 

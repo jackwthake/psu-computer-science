@@ -41,9 +41,8 @@ bool plane::is_landed() const {
 
 /* 
  * Lands the plane
- * TODO: Implement fully after the gate class
 */
-void plane::land(int *req_vehicles, int &arr_length) {
+void plane::land() {
   this->landed = true;
 }
 

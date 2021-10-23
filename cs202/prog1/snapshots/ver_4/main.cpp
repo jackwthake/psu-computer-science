@@ -20,6 +20,14 @@ int main(void) {
   g1.enqueue_flight(p2);
   g1.enqueue_flight(p2);
 
+  g1.land_flight();
+  g1.land_flight();
+  g1.land_flight();
+  g1.land_flight();
+  g1.land_flight();
+  g1.land_flight();
+  g1.land_flight();
+
 
   return 1;
 }
