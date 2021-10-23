@@ -40,6 +40,7 @@ class v_node : public ground_vehicle {
 class vehicle_manager {
   public:
     vehicle_manager();
+    vehicle_manager(const vehicle_manager &);
     ~vehicle_manager();
 
     /* functions to interact with the CLL Pool */
@@ -55,6 +56,8 @@ class vehicle_manager {
   private:
     /* recursively retrieve a vehicle from the class's CLL with matching information */
    const ground_vehicle &get_vehicle_from_pool(const ground_vehicle &veh, v_node *head);  
+   bool remove_vehicle(v_node *rear, v_node *prev, v_node *current, const ground_vehicle &);
+   bool clear_list();
 
     v_node *rear; // free vehicle CLL
     std::vector<ground_vehicle> busy_vehicles; // collection of busy vehicles

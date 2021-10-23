@@ -82,3 +82,8 @@ vehicle_type ground_vehicle::get_type() const {
   return this->type;
 }
 
+
+
+bool ground_vehicle::is_busy() const {
+  return this->busy;
+}
