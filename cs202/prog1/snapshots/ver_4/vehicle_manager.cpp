@@ -1,5 +1,7 @@
 #include "vehicle_manager.h"
 
+#include <algorithm>
+
 
 /*
  * v_node class implementation
