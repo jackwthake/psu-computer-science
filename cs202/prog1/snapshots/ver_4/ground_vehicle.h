@@ -41,6 +41,8 @@ class ground_vehicle : public vehicle {
     bool release(); // release a vehicle from a given gate 
 
     bool is_busy() const;
+
+    void display() const;
   private:
     vehicle_type type;
     bool busy;

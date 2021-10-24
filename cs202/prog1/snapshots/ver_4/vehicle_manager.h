@@ -51,12 +51,14 @@ class vehicle_manager {
     bool request_vehicles(gate *dest_gate, vehicle_type *arr, std::size_t length);
     bool release_vehicles(gate *cur_gate);
 
+    void display();
   private:
     /* recursively retrieve a vehicle from the class's CLL with matching information */
    ground_vehicle *get_vehicle_from_pool(vehicle_type type, v_node *head);
    v_node *remove_vehicle(v_node * &head, const ground_vehicle &);
    void release_vehicles(v_node *head, const gate *);
    bool clear_list();
+   void display(v_node *head);
 
    v_node *rear; // free vehicle CLL
 };

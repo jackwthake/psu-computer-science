@@ -10,6 +10,8 @@
  */
 
 #include "ground_vehicle.h"
+#include <iostream>
+#include "gate.h"
 
 
 /*
@@ -83,7 +85,33 @@ vehicle_type ground_vehicle::get_type() const {
 }
 
 
-
+/*
+ * Returns if this vehicles is busy or not
+*/
 bool ground_vehicle::is_busy() const {
   return this->busy;
 }
+
+
+/*
+ * prints out the vehicles information
+*/
+void ground_vehicle::display() const {
+  std::cout << "Vehicle Type: ";
+  
+  if (this->type == refueler)
+    std::cout << "refueler" << std::endl;  
+  else if (this->type == lavatory)
+    std::cout << "lavatory" << std::endl;  
+  else if (this->type == air_starter)
+    std::cout << "air starter" << std::endl;
+  else
+   std::cout << "unknown" << std::endl;
+
+  if (this->get_dest_gate()) {
+    std::cout << "At gate: " << this->get_dest_gate()->get_identifier() << std::endl; 
+  } else {
+    std::cout << "Not at a gate" << std::endl;
+  }
+}
+

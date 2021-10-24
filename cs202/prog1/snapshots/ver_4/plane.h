@@ -27,6 +27,8 @@ class plane : public vehicle {
     // the land function will populate an array with the required vehicle types needed to service the plane when it arrives.
     void land(); 
     void get_flight_info(std::string &departed_from, int &flight_num, int &num_passengers) const; // get the flights information
+    
+    void display();
   private:
     std::string dep_from;
     int flight_num, num_passengers;

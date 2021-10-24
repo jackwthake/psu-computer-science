@@ -10,6 +10,7 @@
 */
 
 #include "plane.h"
+#include <iostream>
 
 
 /*
@@ -54,5 +55,13 @@ void plane::get_flight_info(std::string &departed_from, int &flight_num, int &nu
   departed_from = this->dep_from;
   flight_num = this->flight_num;
   num_passengers = this->num_passengers;
+}
+
+
+/*
+ * print the flights infor mation
+*/
+void plane::display() {
+  std::cout << "Flight " << this->flight_num << " departed from: " << this->dep_from << " with " << this->num_passengers << " passengers." << std::endl; 
 }
 

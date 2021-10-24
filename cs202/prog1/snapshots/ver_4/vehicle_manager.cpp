@@ -11,6 +11,7 @@
 */
 
 #include "vehicle_manager.h"
+#include <iostream>
 
 
 /*
@@ -187,6 +188,17 @@ bool vehicle_manager::release_vehicles(gate *cur_gate) {
 }
 
 
+void vehicle_manager::display() {
+  std::cout << "Vehicles in pool:" << std::endl;
+  std::cout << "=========================" << std::endl;
+  if (this->rear) {
+    this->rear->display();
+  
+    this->display(this->rear->get_next());
+  }
+}
+
+
 /*
  * Recursive functions
 */
@@ -227,6 +239,8 @@ v_node *vehicle_manager::remove_vehicle(v_node * &head, const ground_vehicle &ve
     delete tmp;
     return head;
   } 
+
+  return head;
 }
 
 
@@ -258,3 +272,15 @@ bool vehicle_manager::clear_list() {
   return this->clear_list();
 }
 
+
+/*
+ * recursively print the CLL
+*/
+void vehicle_manager::display(v_node *head) {
+  if (!head) return;
+  if (head == this->rear) return;
+
+  head->display();
+  std::cout << "=========================" << std::endl;
+  this->display(head->get_next());
+}

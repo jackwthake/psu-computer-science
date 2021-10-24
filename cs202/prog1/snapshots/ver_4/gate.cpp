@@ -12,6 +12,7 @@
 
 
 #include "gate.h"
+#include <iostream>
 #include <cstring>
 
 /*
@@ -122,7 +123,7 @@ bool gate::enqueue_flight(const plane &src) {
  * once a plane is removed, itll wait until the flight is ready to depart
  * and then destroy the plane object.
 */
-bool gate::land_flight() {
+bool gate::land_flight(vehicle_manager &manager) {
   if (!this->head)
     return false;
 
@@ -130,9 +131,15 @@ bool gate::land_flight() {
   this->head = this->head->get_next();
 
   tmp->land();
+  tmp->display();
+  std::cout << "Flight Landed, requesting 1 Refueler, 1 Air starter" << std::endl;
+  vehicle_type req[2] = {refueler, air_starter};
 
-  // TODO: read in numer of vehicles needed
-  // TODO: wait for plane to leave
+  if (manager.request_vehicles(this, req, 2)) {
+    std::cout << "Vehicles arrived" << std::endl;
+  } else {
+    std::cout << "Vehicle Request failed" << std::endl;
+  }
   
   delete tmp;
   return true;
@@ -158,6 +165,29 @@ const plane gate::get_flight_info(int flight_id) const {
 
   return *res;
 };
+
+
+/*
+ * returns the gates identifier string
+*/
+char *gate::get_identifier() const {
+  return this->identifier;
+}
+
+
+/*
+ * recursively_display the flight_queue
+*/
+void gate::display() {
+  std::cout << "Gate " << this->identifier << std::endl;
+  std::cout << "---" << std::endl;
+  if (!this->head) {
+    std::cout << "Empty Flight Queue" << std::endl;
+    return;
+  }
+
+  display(this->head);
+}
 
 
 /*
@@ -198,6 +228,9 @@ bool gate::clear_list() {
 }
 
 
+/*
+ * Get a flights info recursively
+*/
 const plane *gate::get_flight_info(p_node *head, int flight_id) const {
   if (!head) return nullptr;
 
@@ -211,4 +244,13 @@ const plane *gate::get_flight_info(p_node *head, int flight_id) const {
 
   return get_flight_info(head->get_next(), flight_id);
 }
+
+
+void gate::display(p_node *head) {
+  if (!head) return;
+
+  head->display();
+  std::cout << "---" << std::endl;
+}
+
 
