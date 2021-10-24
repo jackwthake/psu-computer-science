@@ -8,9 +8,9 @@
 
 /* read user input */
 void prompt_user(const char *prompt, const int length, char *response) {
-  cout << prompt;
-  cin.get(response, length, '\n');
-  cin.ignore(100, '\n');
+  std::cout << prompt;
+  std::cin.get(response, length, '\n');
+  std::cin.ignore(100, '\n');
 }
 
 
