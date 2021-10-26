@@ -20,11 +20,11 @@
 */
 class in_person_class : public psu_activity {
   public:
-    in_person_class(); // default constructor
+    in_person_class(void); // default constructor
     in_person_class(const char *course_name, const char *teacher, int course_number, int hours_spent, int priority = 1); // normal constructor
     in_person_class(const in_person_class &); // copy constructor
 
-    ~in_person_class(); // deconstructor
+    ~in_person_class(void); // deconstructor
 
     /* overridden pure virtual functions from the ABT */
     void display(void) const override;

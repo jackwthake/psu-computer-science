@@ -31,11 +31,11 @@ class psu_activity {
     int get_time_spent(void) const;
   protected:
     /* protected constructors + destructor, the client should never need to instantiate this class. */
-    psu_activity();
+    psu_activity(void);
     psu_activity(const char *name, int priority, int time_spent);
     psu_activity(const psu_activity &);
 
-    ~psu_activity();
+    ~psu_activity(void);
 
     /* setters will only be callable by our children */
     void set_name(const char *);
