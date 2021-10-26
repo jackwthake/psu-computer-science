@@ -88,8 +88,11 @@ endif
 # cs202
 #############
 
-cs202 : 202_program1
+cs202 : 202_program1 202_program2
 
+#############
+# cs202 program 1
+#############
 202_program1: 202_program1_snapshot1 202_program1_snapshot2 202_program1_snapshot3 202_program1_snapshot4
 
 202_program1_snapshot1: cs202/*1/snapshots/*1/*.h
@@ -103,6 +106,14 @@ cs202 : 202_program1
 
 202_program1_snapshot4: cs202/*1/snapshots/*4/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog1_final.out cs202/*g1/snapshots/*4/*.cpp
+
+#############
+# cs202 program 2
+#############
+202_program2: 202_program2_snapshot1
+
+202_program2_snapshot1: cs202/*2/snapshots/*2/*.h
+	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*2/snapshots/*1/*.h 
 
 clean:
 	rm -rf bin/
