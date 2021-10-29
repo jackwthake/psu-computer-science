@@ -22,10 +22,7 @@ psu_activity::psu_activity(const char *name, int priority, int time_spent) : nam
 
 
 psu_activity::psu_activity(const psu_activity &src) {
-  if (this->name) {
-    delete []this->name;
-    this->name = NULL;
-  }
+  this->name = NULL;
 
   if (src.name) {
     this->name = new char[strlen(src.name) + 1];
