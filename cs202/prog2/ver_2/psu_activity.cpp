@@ -40,10 +40,37 @@ psu_activity::~psu_activity(void) {
 }
 
 
-const char *psu_activity::get_name(void) const { }
-int psu_activity::get_priority(void) const { }
-int psu_activity::get_time_spent(void) const { }
+const char *psu_activity::get_name(void) const {
+  return this->name;
+}
 
-void psu_activity::set_name(const char *) { }
-void psu_activity::set_priority(int) { }
-void psu_activity::set_time_spent(int) { }
+
+int psu_activity::get_priority(void) const {
+  return this->priority;
+}
+
+
+int psu_activity::get_time_spent(void) const {
+  return this->time_spent;
+}
+
+
+void psu_activity::set_name(const char *name) {
+  if (this->name) {
+    delete []this->name;
+  }
+
+  this->name = new char[strlen(name) + 1];
+  strcpy(this->name, name);
+}
+
+
+void psu_activity::set_priority(int priority) {
+  this->priority = priority; 
+}
+
+
+void psu_activity::set_time_spent(int time_spent) {
+  this->time_spent = time_spent;
+}
+
