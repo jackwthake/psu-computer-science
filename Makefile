@@ -113,7 +113,7 @@ cs202 : 202_program1 202_program2
 202_program2: 202_program2_snapshot1 202_program2_snapshot2
 
 202_program2_snapshot1: cs202/*2/*1/*.h
-	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*2/*2/*.h 
+	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*2/*1/*.h 
 
 202_program2_snapshot2: cs202/*2/*2/*.cpp
 	$(CC) $(CXXFLAGS) cs202/*2/*2/*.cpp 
