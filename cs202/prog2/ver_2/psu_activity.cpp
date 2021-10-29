@@ -22,8 +22,10 @@ psu_activity::psu_activity(const char *name, int priority, int time_spent) {
 }
 
 
-psu_activity::psu_activity(const psu_activity &src) : psu_activity(src.name, src.priority, src.time_spent) {
-  // not needed 
+psu_activity::psu_activity(const psu_activity &src) {
+  delete []this->name;
+
+  psu_activity(src.name, src.priority, src.time_spent);
 }
 
 
