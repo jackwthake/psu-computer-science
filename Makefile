@@ -95,16 +95,16 @@ cs202 : 202_program1 202_program2
 #############
 202_program1: 202_program1_snapshot1 202_program1_snapshot2 202_program1_snapshot3 202_program1_snapshot4
 
-202_program1_snapshot1: cs202/*1/g/*1/*.h
+202_program1_snapshot1: cs202/*1/*1/*.h
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*1/*1/*.h 
 
-202_program1_snapshot2: cs202/*1/g/*2/*.cpp
+202_program1_snapshot2: cs202/*1/*2/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog1_v1.out cs202/*g1/*2/*.cpp
 
-202_program1_snapshot3: cs202/*1/g/*3/*.cpp
+202_program1_snapshot3: cs202/*1/*3/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog1_v2.out cs202/*g1/*3/*.cpp
 
-202_program1_snapshot4: cs202/*1/g/*4/*.cpp
+202_program1_snapshot4: cs202/*1/*4/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog1_final.out cs202/*g1/*4/*.cpp
 
 #############
