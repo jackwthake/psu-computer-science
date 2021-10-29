@@ -1,7 +1,7 @@
-#include "in_person_class.h"
-#include "assignment.h"
-#include "remote_assistance.h"
+#include "psu_activity.h"
 
 int main(void) {
+  psu_activity act("test name", 1, 2), act2(act), act3;
+
   return 0;
 };
