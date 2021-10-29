@@ -35,7 +35,7 @@ class remote_assistance : public psu_activity {
     bool reschedule_meeting_time(std::string new_time);
 
     // comparison operator
-    bool operator==(const remote_assistence &rhs);
+    bool operator==(const remote_assistance &rhs);
   private:
     std::string meeting_time;
 };
