@@ -10,11 +10,10 @@ psu_activity::psu_activity(void) {
 }
 
 
-psu_activity::psu_activity(const char *name, int priority, int time_spent) {
+psu_activity::psu_activity(const char *name, int priority, int time_spent) : name(NULL) {
   if (name) {
     this->name = new char[strlen(name) + 1];
-  } else {
-    this->name = NULL;
+    strcpy(this->name, name);
   }
 
   this->priority = priority;
@@ -23,13 +22,14 @@ psu_activity::psu_activity(const char *name, int priority, int time_spent) {
 
 
 psu_activity::psu_activity(const psu_activity &src) {
-  if (this->name)
+  if (this->name) {
     delete []this->name;
+    this->name = NULL;
+  }
 
   if (src.name) {
     this->name = new char[strlen(src.name) + 1];
-  } else {
-    this->name = NULL;
+    strcpy(this->name, src.name);
   }
 
   this->priority = src.priority;
