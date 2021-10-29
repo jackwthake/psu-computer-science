@@ -116,7 +116,7 @@ cs202 : 202_program1 202_program2
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*2/*1/*.h 
 
 202_program2_snapshot2: cs202/*2/*2/*.cpp
-	$(CC) $(CXXFLAGS) cs202/*2/*2/*.cpp 
+	$(CC) $(CXXFLAGS) -o bin/202/prog2_v1.out cs202/*2/*2/*.cpp 
 
 clean:
 	rm -rf bin/
