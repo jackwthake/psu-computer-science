@@ -21,17 +21,17 @@
 class psu_activity {
   public:
     /* pure virtual functions for children */
-//    virtual void display(void) const = 0;
-//    virtual void prepare(void) = 0;
-//    virtual void input(void)  = 0;
-//    virtual void attend(void) = 0;
+    virtual void display(void) const = 0;
+    virtual void prepare(void) = 0;
+    virtual void input(void)  = 0;
+    virtual void attend(void) = 0;
     
     
     /* getters will be public */
     const char *get_name(void) const;
     int get_priority(void) const;
     int get_time_spent(void) const;
-//  protected:
+  protected:
     /* protected constructors + destructor, the client should never need to instantiate this class. */
     psu_activity(void);
     psu_activity(const char *name, int priority, int time_spent);
