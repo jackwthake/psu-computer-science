@@ -29,8 +29,6 @@ class assignment : public psu_activity {
     void attend(void) override;
     void prepare(void) override;
 
-    void finish(void);
-
     // we only need getters, there should be no reason to modify an assignment
     std::string get_due_date(void) const;
     bool is_finished(void) const;
