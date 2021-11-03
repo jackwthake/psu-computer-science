@@ -31,6 +31,8 @@ class psu_activity {
     const char *get_name(void) const;
     int get_priority(void) const;
     int get_time_spent(void) const;
+
+    bool operator==(const psu_activity &rhs) const;
   protected:
     /* protected constructors + destructor, the client should never need to instantiate this class. */
     psu_activity(void);

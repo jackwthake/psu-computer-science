@@ -119,3 +119,17 @@ void psu_activity::set_time_spent(int time_spent) {
   this->time_spent = time_spent;
 }
 
+
+/*
+ * Overloaded equaltiy operator
+*/
+bool psu_activity::operator==(const psu_activity &rhs) const {
+  if (strcmp(this->name, rhs.name) == 0) {
+    if (this->priority == rhs.priority && this->time_spent == rhs.time_spent) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
