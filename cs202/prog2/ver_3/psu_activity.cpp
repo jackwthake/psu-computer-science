@@ -18,6 +18,8 @@
 #include <cstring>
 #include <cstddef>
 
+#include "input.h"
+
 
 /*
  * Default constructor
@@ -117,6 +119,24 @@ void psu_activity::set_priority(int priority) {
 */
 void psu_activity::set_time_spent(int time_spent) {
   this->time_spent = time_spent;
+}
+
+
+/*
+ * Input general information about an activity
+*/
+void psu_activity::input(void) {
+  char buf[61];
+
+  /* read in activity name */
+  get_input_phrase("Please enter the name of the activity: ", buf, 61);
+  /* read in activity priority */
+  get_input_int("Please enter the activity's priority (1-10 with 1 being most important): ", this->priority);
+  /* read in amount of time */
+  get_input_int("Please enter the amount of hours spent per week on this activity: ", this->time_spent);  
+
+  /* set name */
+  this->set_name(buf);
 }
 
 
