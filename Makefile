@@ -110,13 +110,16 @@ cs202 : 202_program1 202_program2
 #############
 # cs202 program 2
 #############
-202_program2: 202_program2_snapshot1 202_program2_snapshot2
+202_program2: 202_program2_snapshot1 202_program2_snapshot2 202_program2_snapshot3
 
 202_program2_snapshot1: cs202/*2/*1/*.h
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*2/*1/*.h 
 
 202_program2_snapshot2: cs202/*2/*2/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog2_v1.out cs202/*2/*2/*.cpp 
+
+202_program2_snapshot3: cs202/*2/*3/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog2_v2.out cs202/*2/*3/*.cpp 
 
 clean:
 	rm -rf bin/
