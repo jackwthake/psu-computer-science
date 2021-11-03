@@ -123,6 +123,14 @@ void psu_activity::set_time_spent(int time_spent) {
 
 
 /*
+ * Output basic info about an activity
+*/
+void psu_activity::display() {
+  cout << "Activity with name, " << this->name << " and a priority of " << this->priority << " takes " << this->time_spent << "per week" << endl; 
+}
+
+
+/*
  * Input general information about an activity
 */
 void psu_activity::input(void) {
