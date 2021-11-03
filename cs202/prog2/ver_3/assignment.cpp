@@ -12,6 +12,8 @@
 #include "assignment.h"
 #include <iostream>
 
+#include "input.h"
+
 
 /*
  * Default Constructor
@@ -47,7 +49,11 @@ void assignment::display(void) const {
  * Input info into the class
 */
 void assignment::input(void) {
-  // TODO: Implement me
+  psu_activity::input();
+  char buf[21];
+
+  get_input_phrase("Please enter the assignment's due date (mm/dd/yy): ", buf, 21);
+  this->due_date = buf; 
 }
 
 
@@ -90,8 +96,12 @@ bool assignment::is_finished(void) const {
 bool assignment::operator==(const assignment &rhs) {
   if (this->due_date == rhs.due_date) {
     if (this->finished == rhs.finished) {
-      return true;
+      if (psu_activity::operator==(rhs)) {
+        return true;
+      }
     }
   }
+
+  return false;
 }
 
