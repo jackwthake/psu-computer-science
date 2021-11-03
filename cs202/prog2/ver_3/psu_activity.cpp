@@ -17,9 +17,11 @@
 
 #include <cstring>
 #include <cstddef>
+#include <iostream>
 
 #include "input.h"
 
+using namespace std;
 
 /*
  * Default constructor
@@ -125,7 +127,7 @@ void psu_activity::set_time_spent(int time_spent) {
 /*
  * Output basic info about an activity
 */
-void psu_activity::display() {
+void psu_activity::display() const {
   cout << "Activity with name, " << this->name << " and a priority of " << this->priority << " takes " << this->time_spent << "per week" << endl; 
 }
 
