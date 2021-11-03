@@ -16,7 +16,7 @@ using namespace std;
 void get_input_int(const char *prompt, int &value) {
   cout << prompt;
   cin >> value;
-  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  cin.ignore(100, '\n');
 }
 
 
@@ -24,6 +24,6 @@ void get_input_int(const char *prompt, int &value) {
 void get_input_phrase(const char *prompt, char *value, int length) {
   cout << prompt;
   cin.get(value, length, '\n');
-  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  cin.ignore(100, '\n');
 }
 
