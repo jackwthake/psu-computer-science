@@ -13,6 +13,7 @@
 #include "remote_assistance.h"
 
 #include <iostream>
+#include <cstring>
 
 #include "input.h"
 
