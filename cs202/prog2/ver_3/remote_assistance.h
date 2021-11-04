@@ -22,7 +22,7 @@
 class remote_assistance : public psu_activity {
   public:
     remote_assistance(void); // default constructor
-    remote_assistance(std::string meeting_time, const char *name, int time_spent, int priority = 1); // normal constructor
+    remote_assistance(std::string meeting_time, std::string meeting_day, const char *name, int time_spent, int priority = 1); // normal constructor
 
     // overriden virtual functions
     void display(void) const override;
@@ -32,12 +32,14 @@ class remote_assistance : public psu_activity {
 
     // unique functions for RTTI
     std::string get_meeting_time(void) const;
-    bool reschedule_meeting_time(std::string new_time);
+    std::string get_meeting_day(void) const;
+    bool reschedule_meeting_time(std::string new_time, std::string new_day);
 
     // comparison operator
     bool operator==(const remote_assistance &rhs);
   private:
     std::string meeting_time;
+    std::string meeting_day;
 };
 
 #endif
