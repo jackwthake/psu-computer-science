@@ -14,6 +14,7 @@
 
 #include "input.h"
 
+using namespace std;
 
 /*
  * Default Constructor
@@ -37,10 +38,12 @@ assignment::assignment(std::string due_date, const char *name, int time_spent, i
  * Overloaded display function
 */
 void assignment::display(void) const { 
+  psu_activity::display();
+
   if (this->finished) {
-    std::cout << "Assignment " << this->get_name() << " was finished and  is due on " << this->due_date << std::endl;
+    cout << "This assignment for has already been turned in." << endl;
   } else {
-    std::cout << "Assignment " << this->get_name() << " is due on " << this->due_date << std::endl;
+    cout << "This assignment is due on " << this->due_date << endl;
   }
 }
 
@@ -62,7 +65,14 @@ void assignment::input(void) {
  * for all three classes but the functionality is all the same
 */
 void assignment::attend(void) {
-  this->finished = true;
+  if (!this->finished) {
+    ++this->num_attended;
+    this->finished = true;
+    
+    cout << "Assignemnt " << this->get_name() << " has been turned in." << endl;
+  } else {
+    cout << "Assignemnt " << this->get_name() << " was already turned in." << endl;
+  }
 }
 
 
@@ -70,7 +80,8 @@ void assignment::attend(void) {
  * Prepare for the assignment
 */
 void assignment::prepare(void) {
-  std::cout << "Working on assignment " << this->get_name() << std::endl;
+  ++this->num_prepared;
+  cout << "Class " << this->get_name() << " has been worked on ` " << this->num_prepared << " time(s)." << endl;
 }
 
 
