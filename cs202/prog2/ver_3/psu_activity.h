@@ -45,6 +45,8 @@ class psu_activity {
     void set_name(const char *);
     void set_priority(int);
     void set_time_spent(int);
+
+    int num_prepared, num_attended;
   private:
     char *name;
     int priority, time_spent;

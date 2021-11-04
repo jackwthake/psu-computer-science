@@ -28,7 +28,7 @@ using namespace std;
 */
 psu_activity::psu_activity(void) {
   this->name = NULL;
-  this->priority = this->time_spent = 0;
+  this->priority = this->time_spent = this->num_prepared = this->num_attended = 0;
 }
 
 
@@ -43,6 +43,7 @@ psu_activity::psu_activity(const char *name, int priority, int time_spent) : nam
 
   this->priority = priority;
   this->time_spent = time_spent;
+  this->num_prepared = this->num_attended = 0;
 }
 
 
@@ -59,6 +60,8 @@ psu_activity::psu_activity(const psu_activity &src) {
 
   this->priority = src.priority;
   this->time_spent = src.time_spent;
+  this->num_prepared = src.num_prepared;
+  this->num_attended = src.num_attended;
 }
 
 
