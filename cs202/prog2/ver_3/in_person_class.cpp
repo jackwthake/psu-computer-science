@@ -2,6 +2,11 @@
 
 #include <cstddef>
 #include <cstring>
+#include <iostream>
+
+#include "input.h"
+
+using namespace std;
 
 /*
  * default constructor
@@ -52,11 +57,44 @@ in_person_class::~in_person_class(void) {
 }
 
 
-/* overridden pure virtual functions from the ABT */
-void in_person_class::display(void) const { }
-void in_person_class::input(void) { }
-void in_person_class::attend(void) { }
-void in_person_class::prepare(void) { }
+/*
+ * Display the in person class's details
+*/
+void in_person_class::display(void) const {
+  psu_activity::display();
+
+  cout << this->course_number << " is taught by " << this->teacher << endl;    
+}
+
+
+/*
+ * Input information into the in person class
+*/
+void in_person_class::input(void) {
+  char buf[21];
+
+  psu_activity::input();
+  get_input_phrase("Who's the course instructor? ", buf, 21);
+  get_input_int("What's the course number? ", this->course_number);
+}
+
+
+/*
+ * Attend the class
+*/
+void in_person_class::attend(void) {
+  ++this->num_attended;
+  cout << "Class " << this->get_name() << " has been attended " << this->num_attended << " time(s)." << endl;
+}
+
+
+/*
+ * Prepare for the class
+*/
+void in_person_class::prepare(void) {
+  ++this->num_prepared;
+  cout << "Class " << this->get_name() << " has been practiced  " << this->num_prepared << " time(s)." << endl;
+}
 
 
 /*
