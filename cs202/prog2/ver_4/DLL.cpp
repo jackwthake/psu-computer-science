@@ -1,7 +1,7 @@
 #include "DLL.h"
 
 #include <cstddef>
-#include <string>
+#include <cstring>
 #include <iostream>
 
 using namespace std;
@@ -144,9 +144,7 @@ activity_list::~activity_list(void) {
 }
 
 
-/*
- * Insert into the DLL
-*/
+/* Insert into the DLL */
 bool activity_list::add_activity(psu_activity &to_add) {
   int priority = to_add.get_priority();
 
@@ -166,9 +164,7 @@ bool activity_list::add_activity(psu_activity &to_add) {
 }
 
 
-/*
- * Remove a specific activity
-*/
+/* Remove a specific activity */
 bool activity_list::remove_activity(psu_activity &to_remove) {
   for (int i = 0; i < this->length; ++i) {
     if (this->head[i]) {
@@ -181,9 +177,7 @@ bool activity_list::remove_activity(psu_activity &to_remove) {
 }
 
 
-/* 
- * Get an activity based off of it's name
-*/
+/* Get an activity based off of it's name */
 psu_activity *activity_list::get_activity(char *name) {
   for (int i = 0; i < this->length; ++i) {
     if (this->head[i]) {
@@ -198,9 +192,7 @@ psu_activity *activity_list::get_activity(char *name) {
 }
 
 
-/* 
- * clear the list
-*/
+/* clear the list */
 bool activity_list::clear_all(void) {
   for (int i = 0; i < this->length; ++i) {
     clear_list(this->head[i]);
@@ -212,9 +204,7 @@ bool activity_list::clear_all(void) {
 }
 
 
-/*
- * Display the list
-*/
+/* Display the list */
 bool activity_list::display(void) {
   for (int i = 0; i < this->length; ++i) {
     if (this->head[i]) { // if there is a list, print it
