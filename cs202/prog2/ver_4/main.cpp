@@ -37,9 +37,72 @@ void introduction(void) {
 }
 
 
+/* input and add an assignment to the list */
+void add_activity(activity_list &list) {
+  int choice = 0;
+  assignment a;
+  in_person_class i;
+  remote_assistance r;
+
+  cout << "Activity types: " << endl;
+  cout << " 1. Assignment \n" \
+          " 2. In Person Lecture \n" \
+          " 3. Remote Assistance Session(s)" << endl;
+  get_input_int("Which option? (1-3): ", choice);
+
+  switch(choice) {
+    case 1: // add an assignment
+      a.input();
+      list.add_activity(a);
+      break;
+    case 2: // add an in person lecture
+      i.input();
+      list.add_activity(i);
+      break;
+    case 3: // add a remote assistane seesion
+      r.input();
+      list.add_activity(r);
+      break;
+    default:
+      cout << "Error: Invalid input" << endl;
+      break;
+  }
+}
+
+
 /* handles DLL interactions with the user */
 void DLL_interaction(activity_list &list, vector<assignment> &completed_assignments) {
-  cout << "DLL interaction" << endl;
+  int choice = 0;
+  
+  cout << "Current activity options: " << endl;
+  cout << " 1. Add an activity \n" \
+          " 2. Remove an activity \n" \
+          " 3. Get an activity \n" \
+          " 4. Display the lists \n" \
+          " 5. Clear the lists \n" << endl;
+  get_input_int("Which option? (1-5): ", choice);
+
+  switch (choice) {
+    case 1: // Add activity
+      add_activity(list);
+      break;
+    case 2: // Remove an activity
+      break;
+    case 3: // Get an activity
+      char buf[31];
+      get_input_phrase("Please enter the name of the activity: ", buf, 31);
+      list.get_activity(buf)->display();
+      break;
+    case 4: // display the lists
+      list.display();
+      break;
+    case 5: // clear the lists
+      list.clear_all();
+      break;
+    default:
+      cout << "Error: invalid input" << endl;
+      break;
+  }
 }
 
 
