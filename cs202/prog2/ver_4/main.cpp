@@ -73,6 +73,7 @@ void add_activity(activity_list &list) {
 /* handles DLL interactions with the user */
 void DLL_interaction(activity_list &list, vector<assignment> &completed_assignments) {
   int choice = 0;
+  char buf[31];
   
   cout << "Current activity options: " << endl;
   cout << " 1. Add an activity \n" \
@@ -87,9 +88,11 @@ void DLL_interaction(activity_list &list, vector<assignment> &completed_assignme
       add_activity(list);
       break;
     case 2: // Remove an activity
+      get_input_phrase("Please enter the name of the activity to remove: ", buf, 31);
+      if (list.remove_activity(buf, completed_assignments))
+          cout << "Activity removed." << endl;
       break;
     case 3: // Get an activity
-      char buf[31];
       get_input_phrase("Please enter the name of the activity: ", buf, 31);
       list.get_activity(buf)->display();
       break;
@@ -144,10 +147,6 @@ void main_loop(activity_list &list, vector<assignment> &completed_assignments) {
 int main(void) {
   activity_list activities; // holds all current activities
   vector <assignment>completed_assignments; // holds all past assignments
-
-  assignment a1("10/12/21", "homework 4", 2);
-  activities.add_activity(a1);
-  activities.remove_activity(a1, completed_assignments);
 
   introduction();
   main_loop(activities, completed_assignments);

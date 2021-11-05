@@ -52,7 +52,7 @@ class activity_list {
     ~activity_list(void); // destructor
 
     bool add_activity(psu_activity &to_add); // add an activity to the beginning of a list
-    bool remove_activity(psu_activity &to_remove, std::vector<class assignment> &completed_assignments); // search through all priorities for a given activity
+    bool remove_activity(char *name, std::vector<class assignment> &completed_assignments); // search through all priorities for a given activity
     psu_activity *get_activity(char *name); // return a reference to an activity
     bool clear_all(void); // clear the list
     bool display(void); // print out the list

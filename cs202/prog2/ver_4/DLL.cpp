@@ -31,15 +31,16 @@ static void clear_list(node * &head) {
  * Use RTTI to check if the removed activity is an assignment, if it is - add it onto the completed assignment
  * vector.
 */
-static bool remove_activity(node * &head, psu_activity &targ, std::vector<assignment> &completed_assignments) {
+static bool remove_activity(node * &head, char *targ, std::vector<assignment> &completed_assignments) {
   if (!head) return false; // base case
-  if (*head == targ) { // if we've found the right match, delete it
+  if (strcmp(head->get_data()->get_name(), targ) == 0) { // if we've found the right match, delete it
     node *prev = head->get_prev();
     node *next = head->get_next();
 
     // check if we're removing an assignment
     if (assignment *a = dynamic_cast<assignment *>(head->get_data())) {
       completed_assignments.push_back(assignment(*a)); // copy assignment to the completed vector
+      cout << "Assignment moved to the completed assignments vector." << endl;
     }
 
     delete head;
@@ -96,6 +97,7 @@ node::node(psu_activity *data) {
     this->data = new in_person_class(*a);
   if (remote_assistance *a = dynamic_cast<remote_assistance*>(data))
     this->data = new remote_assistance(*a);
+
   this->prev = this->next = NULL;
 }
 
@@ -186,7 +188,7 @@ bool activity_list::add_activity(psu_activity &to_add) {
  * Remove a specific activity
  * using RTTI, if a removed activity is an assignment, push it to the completed assignment vector
 */
-bool activity_list::remove_activity(psu_activity &to_remove, std::vector<assignment> &completed_assignments) {
+bool activity_list::remove_activity(char *to_remove, std::vector<assignment> &completed_assignments) {
   for (int i = 0; i < this->length; ++i) {
     if (this->head[i]) {
       if (::remove_activity(this->head[i], to_remove, completed_assignments))
@@ -217,9 +219,11 @@ psu_activity *activity_list::get_activity(char *name) {
 bool activity_list::clear_all(void) {
   for (int i = 0; i < this->length; ++i) {
     clear_list(this->head[i]);
+    this->head[i] = NULL;
   }  
 
   delete []this->head;
+  this->head = NULL;
 
   return true;
 }
