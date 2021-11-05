@@ -11,6 +11,7 @@ int main(void) {
   activity_list ac1;
 
   ac1.add_activity(a1);
+  ac1.remove_activity(a1);
 
   return 0;
 };

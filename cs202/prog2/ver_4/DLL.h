@@ -23,7 +23,7 @@ class node {
     node(psu_activity *data); // normal constructor
 
     /* get next and previous pointers */
-    node *get_next(void);
+    node * &get_next(void);
     node *get_prev(void);
 
     /* set next and previous pointers */

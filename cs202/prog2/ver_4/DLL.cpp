@@ -15,6 +15,28 @@ static void clear_list(node * &head) {
   clear_list(tmp);
 }
 
+
+/* recursively remove a node from a list */
+static bool remove_activity(node * &head, psu_activity &targ) {
+  if (!head) return false; // base case
+  if (*head == targ) { // if we've found the right match, delete it
+    node *prev = head->get_prev();
+    node *next = head->get_next();
+
+    delete head;
+    head = NULL;
+
+    if (prev) // if there is a previous node, attach it to the next
+      prev->set_next(next);
+    if (next) // if there is a next node, attach it to the previous
+      next->set_prev(prev);
+
+    return true;
+  }
+
+  return remove_activity(head->get_next(), targ);
+}
+
     
 /*
  * Node class implementation
@@ -35,7 +57,7 @@ node::node(psu_activity *data) {
 
 
 /* returns the next node */
-node *node::get_next(void) {
+node * &node::get_next(void) {
   return this->next;
 }
 
@@ -122,7 +144,14 @@ bool activity_list::add_activity(psu_activity &to_add) {
  * Remove a specific activity
 */
 bool activity_list::remove_activity(psu_activity &to_remove) {
+  for (int i = 0; i < this->length; ++i) {
+    if (this->head[i]) {
+      if (::remove_activity(this->head[i], to_remove))
+        return true; 
+    }
+  }
 
+  return false;
 }
 
 
