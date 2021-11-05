@@ -74,6 +74,8 @@ void add_activity(activity_list &list) {
 void DLL_interaction(activity_list &list, vector<assignment> &completed_assignments) {
   int choice = 0;
   char buf[31];
+  string new_time, new_day;
+  psu_activity *res;
   
   cout << "Current activity options: " << endl;
   cout << " 1. Add an activity \n" \
@@ -94,7 +96,23 @@ void DLL_interaction(activity_list &list, vector<assignment> &completed_assignme
       break;
     case 3: // Get an activity
       get_input_phrase("Please enter the name of the activity: ", buf, 31);
-      list.get_activity(buf)->display();
+      res = list.get_activity(buf);
+      
+      if (res) {
+        res->display();
+
+        cout << "Attempting RTTI for remote_assistance class..." << endl;
+        if (remote_assistance *rem = dynamic_cast<remote_assistance*>(res)) {
+          get_input_phrase("Please enter the new meeting time (12:00pm): ", buf, 31);
+          new_time = buf;
+          get_input_phrase("Please enter the new meeting days (M or M/W): ", buf, 31);
+          new_day = buf;
+
+          rem->reschedule_meeting_time(new_time, new_day);
+        } else {
+          cout << "Object is not a remote_assistance instance." << endl;
+        }
+      }
       break;
     case 4: // display the lists
       list.display();
