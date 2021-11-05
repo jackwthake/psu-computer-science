@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "assignment.h"
+#include "in_person_class.h"
+#include "remote_assistance.h"
 
 using namespace std;
 
@@ -88,7 +90,12 @@ node::node(void) {
 
 /* normal constructor */
 node::node(psu_activity *data) {
-  this->data = data;
+  if (assignment *a = dynamic_cast<assignment*>(data))
+    this->data = new assignment(*a);
+  if (in_person_class *a = dynamic_cast<in_person_class*>(data))
+    this->data = new in_person_class(*a);
+  if (remote_assistance *a = dynamic_cast<remote_assistance*>(data))
+    this->data = new remote_assistance(*a);
   this->prev = this->next = NULL;
 }
 
