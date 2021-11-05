@@ -35,7 +35,7 @@ in_person_class::in_person_class(const char *course_name, const char *teacher, i
 /*
  * copy constructor
 */
-in_person_class::in_person_class(const in_person_class &src) {
+in_person_class::in_person_class(const in_person_class &src) : psu_activity(src) {
   this->teacher = NULL;
 
   if (src.teacher) {
@@ -73,8 +73,17 @@ void in_person_class::display(void) const {
 void in_person_class::input(void) {
   char buf[21];
 
+  if (this->teacher) {
+    delete []this->teacher;
+    this->teacher = nullptr;
+  }
+
   psu_activity::input();
   get_input_phrase("Who's the course instructor? ", buf, 21);
+
+  this->teacher = new char[strlen(buf) + 1];
+  strcpy(this->teacher, buf);
+
   get_input_int("What's the course number? ", this->course_number);
 }
 
