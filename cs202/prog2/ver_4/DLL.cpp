@@ -1,6 +1,12 @@
 #include "DLL.h"
 
 #include <cstddef>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+
 /*
  * Static recursive functions
 */
@@ -37,6 +43,26 @@ static bool remove_activity(node * &head, psu_activity &targ) {
   return remove_activity(head->get_next(), targ);
 }
 
+
+/* recursively retrieve an activity */
+static psu_activity *get_activity(node *head, char *name) {
+  if (!head) return nullptr;
+  if (strcmp(head->get_data()->get_name(), name) == 0) {
+    return head->get_data(); 
+  }
+
+  return get_activity(head->get_next(), name);
+}
+
+
+/* recursively display a list */
+static void display(node *head) {
+  if (!head) return;
+  
+  head->get_data()->display();
+  cout << "------------------" << endl;
+}
+
     
 /*
  * Node class implementation
@@ -70,21 +96,21 @@ node *node::get_prev(void) {
 
 
 /* set the next node */
-node *node::set_next(node *next) {
+void node::set_next(node *next) {
   this->next = next;
 }
 
 
 /* set the previous node */
-node *node::set_prev(node *prev) {
+void node::set_prev(node *prev) {
   this->prev = prev;
 }
 
 
 
 /* return the data */
-const psu_activity &node::get_data(void) {
-  return *this->data;
+psu_activity *node::get_data(void) {
+  return this->data;
 }
 
 
@@ -158,8 +184,17 @@ bool activity_list::remove_activity(psu_activity &to_remove) {
 /* 
  * Get an activity based off of it's name
 */
-bool activity_list::get_activity(char *name, psu_activity &result) {
+psu_activity *activity_list::get_activity(char *name) {
+  for (int i = 0; i < this->length; ++i) {
+    if (this->head[i]) {
+      psu_activity *ptr = ::get_activity(this->head[i], name);
+      if (ptr) {
+        return ptr;
+      }
+    }
+  } 
 
+  return nullptr;
 }
 
 
@@ -181,6 +216,15 @@ bool activity_list::clear_all(void) {
  * Display the list
 */
 bool activity_list::display(void) {
+  for (int i = 0; i < this->length; ++i) {
+    if (this->head[i]) { // if there is a list, print it
+      cout << "---- Priority " << i << " ----" << endl;
+      ::display(this->head[i]);
+    } else { // if there isn't a list, indicate it
+      cout << "List with priority " << i << " is empty." << endl << "------------------" << endl;
+    }
+  }
 
+  return true;
 }
 

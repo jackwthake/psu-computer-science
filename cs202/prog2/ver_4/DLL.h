@@ -27,11 +27,11 @@ class node {
     node *get_prev(void);
 
     /* set next and previous pointers */
-    node *set_next(node *next);
-    node *set_prev(node *prev);
+    void set_next(node *next);
+    void set_prev(node *prev);
 
-    /* return a constant reference to the data */
-    const psu_activity &get_data(void);
+    /* return a reference to the data */
+    psu_activity *get_data(void);
 
     /* compare a node directly to an activity */
     bool operator==(const psu_activity &rhs) const;
@@ -51,7 +51,7 @@ class activity_list {
 
     bool add_activity(psu_activity &to_add); // add an activity to the beginning of a list
     bool remove_activity(psu_activity &to_remove); // search through all priorities for a given activity
-    bool get_activity(char *name, psu_activity &result); // return a reference to an activity
+    psu_activity *get_activity(char *name); // return a reference to an activity
     bool clear_all(void); // clear the list
     bool display(void); // print out the list
   private:
