@@ -111,7 +111,39 @@ void DLL_interaction(activity_list &list, vector<assignment> &completed_assignme
 
 /* handles vector interactions with the user */
 void vector_interaction(activity_list &list, vector<assignment> &completed_assignments) {
-  cout << "vector interaction" << endl;
+  int choice = 0;
+  char buf[31];
+  
+  cout << "Past Assignment options: \n" \
+          " 1. Forget an assignment \n" \
+          " 2. Get an assignmnet \n" \
+          " 3. Display the completed assignments \n" \
+          " 4. Clear the completed assignments" << endl;
+  get_input_int("Which option? (1-4): ", choice);
+
+  switch (choice) {
+    case 1: // forget an assignment
+      break;
+    case 2: // get an assignment
+      get_input_phrase("Please enter the name of the assignment to retrieve: ", buf, 31);
+      for (assignment &a : completed_assignments) {
+        if (strcmp(a.get_name(), buf) == 0)
+          a.display();
+      }
+      break;
+    case 3: // display all assignments
+      for (assignment &a : completed_assignments) {
+        cout << "--------------" << endl;
+        a.display();
+      }
+      break;
+    case 4: // clear the completed assignments
+      completed_assignments.clear();
+      break;
+    default:
+      cout << "Error: Invalid input" << endl;
+      break;
+  }
 }
 
 

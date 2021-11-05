@@ -39,6 +39,7 @@ static bool remove_activity(node * &head, char *targ, std::vector<assignment> &c
 
     // check if we're removing an assignment
     if (assignment *a = dynamic_cast<assignment *>(head->get_data())) {
+      a->attend();
       completed_assignments.push_back(assignment(*a)); // copy assignment to the completed vector
       cout << "Assignment moved to the completed assignments vector." << endl;
     }
