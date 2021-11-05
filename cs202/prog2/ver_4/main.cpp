@@ -82,6 +82,10 @@ int main(void) {
   activity_list activities; // holds all current activities
   vector <assignment>completed_assignments; // holds all past assignments
 
+  assignment a1("10/12/21", "homework 4", 2);
+  activities.add_activity(a1);
+  activities.remove_activity(a1, completed_assignments);
+
   introduction();
   main_loop(activities, completed_assignments);
 

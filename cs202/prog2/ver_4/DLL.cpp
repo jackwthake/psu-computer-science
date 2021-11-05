@@ -4,6 +4,8 @@
 #include <cstring>
 #include <iostream>
 
+#include "assignment.h"
+
 using namespace std;
 
 
@@ -22,12 +24,21 @@ static void clear_list(node * &head) {
 }
 
 
-/* recursively remove a node from a list */
-static bool remove_activity(node * &head, psu_activity &targ) {
+/*
+ * recursively remove a node from a list
+ * Use RTTI to check if the removed activity is an assignment, if it is - add it onto the completed assignment
+ * vector.
+*/
+static bool remove_activity(node * &head, psu_activity &targ, std::vector<assignment> &completed_assignments) {
   if (!head) return false; // base case
   if (*head == targ) { // if we've found the right match, delete it
     node *prev = head->get_prev();
     node *next = head->get_next();
+
+    // check if we're removing an assignment
+    if (assignment *a = dynamic_cast<assignment *>(head->get_data())) {
+      completed_assignments.push_back(assignment(*a)); // copy assignment to the completed vector
+    }
 
     delete head;
     head = NULL;
@@ -40,7 +51,7 @@ static bool remove_activity(node * &head, psu_activity &targ) {
     return true;
   }
 
-  return remove_activity(head->get_next(), targ);
+  return remove_activity(head->get_next(), targ, completed_assignments);
 }
 
 
@@ -164,11 +175,14 @@ bool activity_list::add_activity(psu_activity &to_add) {
 }
 
 
-/* Remove a specific activity */
-bool activity_list::remove_activity(psu_activity &to_remove) {
+/*
+ * Remove a specific activity
+ * using RTTI, if a removed activity is an assignment, push it to the completed assignment vector
+*/
+bool activity_list::remove_activity(psu_activity &to_remove, std::vector<assignment> &completed_assignments) {
   for (int i = 0; i < this->length; ++i) {
     if (this->head[i]) {
-      if (::remove_activity(this->head[i], to_remove))
+      if (::remove_activity(this->head[i], to_remove, completed_assignments))
         return true; 
     }
   }
