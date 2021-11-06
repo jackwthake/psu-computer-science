@@ -12,7 +12,7 @@
 #ifndef __DLL_H__
 #define __DLL_H__
 
-#include "psu_activity.h"
+#include "objects.h"
 
 #include <vector>
 

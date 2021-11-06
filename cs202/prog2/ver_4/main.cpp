@@ -18,9 +18,7 @@
 #include <cstring>
 
 /* class headers */
-#include "assignment.h"
-#include "in_person_class.h"
-#include "remote_assistance.h"
+#include "objects.h"
 #include "DLL.h"
 
 /* helper */

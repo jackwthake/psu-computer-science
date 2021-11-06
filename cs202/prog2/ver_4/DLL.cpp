@@ -4,10 +4,6 @@
 #include <cstring>
 #include <iostream>
 
-#include "assignment.h"
-#include "in_person_class.h"
-#include "remote_assistance.h"
-
 using namespace std;
 
 
