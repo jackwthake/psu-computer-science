@@ -2,6 +2,7 @@
 #define __EVENT_H__
 
 #include <iostream>
+#include <exception>
 #include <utility>
 #include <list>
 
@@ -36,8 +37,8 @@ class event {
     ~event();
 
     /* review list functionality */
-    bool add_review(std::string review);
-    void display_reviews(void);
+    bool add_review(std::string review) throw(std::bad_alloc);
+    void display_reviews(void) throw(std::out_of_range); // thrown if the list is empty
 
     /* getters + setters */
     char *get_name();
@@ -79,8 +80,8 @@ class petting : public event {
     petting(const char *name, int capacity, int length, float ticket_price);
 
     /* interact with the animal list */
-    bool add_animal_type(animal_type t);
-    void display_all_animals() const;
+    bool add_animal_type(animal_type t) throw(std::bad_alloc);
+    void display_all_animals() const throw(std::out_of_range); // thrown if the list is empty
 
     /* overloaded operators */
     void operator=(const petting &rhs);
@@ -109,9 +110,9 @@ class aquatic : public event {
     aquatic(const char *name, int capacity, int length, float ticket_price);
 
     /* interact with the exhibit list */
-    bool add_exhibit(std::string exhibit_name, animal_type t);
-    std::pair<std::string, animal_type> &get_exhibit(std::string name) const;
-    void display_exhibits() const;
+    bool add_exhibit(std::string exhibit_name, animal_type t) throw(std::bad_alloc);
+    std::pair<std::string, animal_type> &get_exhibit(std::string name) const throw(std::out_of_range); // thrown if the list is empty
+    void display_exhibits() const throw(std::out_of_range); // thrown if the list is empty
     
     /* overloaded operators */
     void operator=(const aquatic &rhs);
@@ -138,14 +139,14 @@ class safari : public event {
   public:
     /* constructors */
     safari();
-    safari(const char *name, std::string guide, int capacity, int length, float ticket_price);
+    safari(const char *name, std::string guide, int capacity, int length, float ticket_price); 
 
     /* interact with the region list */
-    bool add_region(std::pair<std::string, std::list<animal_type>> &region);
-    std::pair<std::string, std::list<animal_type>> &construct_region(std::string, int *types, size_t length);
+    bool add_region(std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc);
+    std::pair<std::string, std::list<animal_type>> &construct_region(std::string, int *types, size_t length) throw(std::length_error, std::invalid_argument);
 
-    void display_region(std::string region_name) const;
-    void display_all_regions() const;
+    void display_region(std::string region_name) const throw(std::out_of_range); // thrown if the list is empty
+    void display_all_regions() const throw(std::out_of_range); // thrown if the list is empty
     
     /* getters and setters */
     std::string &get_guide() const;
