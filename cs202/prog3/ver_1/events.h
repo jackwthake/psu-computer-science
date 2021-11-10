@@ -1,3 +1,21 @@
+/*
+ * Jack Thake
+ * Karla Fant
+ * CS 202
+ * events.h
+ *
+ * This file holds all edclarations to the event base class and all three events. The event
+ * base class contains basic information regarding an event along with a list of reviews for 
+ * that given event. The petting class inherits from the event class and represents an event
+ * at a petting zoo and holds a list of all animals at said petting zoo. The aquatic class
+ * inherits from the event class and represents an aquarium and all it's various exhibits with 
+ * animals, it contains a list of pairs where each pair contains the exhibit name, as well as 
+ * the animal ID of the animal present in that exhibit. The safari class inherits from the
+ * event class and represents a guided tour through a safari. It contains a list of pairs
+ * representing each region of the safari, each pair contains the region name and a list
+ * of all animal IDs present in that region.
+*/
+
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
