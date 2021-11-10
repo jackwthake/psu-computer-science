@@ -25,7 +25,7 @@ typedef enum animal_type {
 
 
 
-/* ABT for all three events, a list of reviews for the given event */
+/* Base class for all three events, contains a list of reviews for the given event */
 class event {
   public:
     /* constructors + destructors */
@@ -51,9 +51,9 @@ class event {
     void set_ticket_price();
 
     /* overloaded operators */
-    virtual void operator=(const event &rhs);
-    virtual bool operator==(const event &rhs) const;
-    virtual bool operator!=(const event &rhs) const;
+    void operator=(const event &rhs);
+    bool operator==(const event &rhs) const;
+    bool operator!=(const event &rhs) const;
     
     friend std::ostream &operator<<(std::ostream &output, const event &obj);
     friend std::istream &operator<<(std::istream &output, const event &obj);
@@ -69,19 +69,25 @@ class event {
 
 
 /* represents an event at a petting zoo */
+/*
+ * Contains a list of animals at a given petting zoo
+ */
 class petting : public event {
   public:
+    /* constructors */
     petting();
     petting(const char *name, int capacity, int length, float ticket_price);
 
+    /* interact with the animal list */
     bool add_animal_type(animal_type t);
     void display_all_animals() const;
 
+    /* overloaded operators */
     void operator=(const petting &rhs);
     bool operator==(const petting &rhs) const;
     bool operator!=(const petting &rhs) const;
 
-    petting &operator+=(const animal_type &);
+    petting &operator+=(const animal_type &); /* will append an animal to the animal list */
     
     friend std::ostream &operator<<(std::ostream &output, const petting &obj);
     friend std::istream &operator<<(std::istream &output, const petting &obj);
@@ -92,8 +98,13 @@ class petting : public event {
 
 
 /* contains an aquatic event such as an aquarium */
+/*
+ * conatians a list of pairs, each pair contains an exhibit at the aquarium
+ * as well as what kind of animal is in that exhibit
+*/
 class aquatic : public event {
   public:
+    /* constructors */
     aquatic();
     aquatic(const char *name, int capacity, int length, float ticket_price);
 
@@ -107,7 +118,7 @@ class aquatic : public event {
     bool operator==(const aquatic &rhs) const;
     bool operator!=(const aquatic &rhs) const;
 
-    aquatic &operator+=(const std::pair<std::string, animal_type> &);
+    aquatic &operator+=(const std::pair<std::string, animal_type> &); /* will append a pair to the exhibit list */
     
     friend std::ostream &operator<<(std::ostream &output, const aquatic &obj);
     friend std::istream &operator<<(std::istream &output, const aquatic &obj);
@@ -119,8 +130,13 @@ class aquatic : public event {
 
 
 /* contains a safari event */
+/*
+ * Contains a list of pairs, each pair contains the name of a region on the safari and a list of what animals
+ * can be found in that region.
+*/
 class safari : public event {
   public:
+    /* constructors */
     safari();
     safari(const char *name, std::string guide, int capacity, int length, float ticket_price);
 
@@ -140,7 +156,7 @@ class safari : public event {
     bool operator==(const safari &rhs) const;
     bool operator!=(const safari &rhs) const;
 
-    safari &operator+=(const std::pair<std::string, std::list<animal_type>> &);
+    safari &operator+=(const std::pair<std::string, std::list<animal_type>> &); /* will append a region onto the list */
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
     friend std::istream &operator<<(std::istream &output, const safari &obj);
