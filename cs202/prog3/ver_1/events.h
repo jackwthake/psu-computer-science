@@ -99,6 +99,7 @@ class petting : public event {
 
     /* interact with the animal list */
     bool add_animal_type(animal_type t) throw(std::bad_alloc);
+    bool does_animal_exist(animal_type t) const;
     void display_all_animals() const throw(std::out_of_range); // thrown if the list is empty
 
     /* overloaded operators */
@@ -107,6 +108,7 @@ class petting : public event {
     bool operator!=(const petting &rhs) const;
 
     petting &operator+=(const animal_type &); /* will append an animal to the animal list */
+    petting &operator-=(const animal_type &); /* will remove an animal from the animal list */
     
     friend std::ostream &operator<<(std::ostream &output, const petting &obj);
     friend std::istream &operator<<(std::istream &output, const petting &obj);
@@ -138,6 +140,7 @@ class aquatic : public event {
     bool operator!=(const aquatic &rhs) const;
 
     aquatic &operator+=(const std::pair<std::string, animal_type> &); /* will append a pair to the exhibit list */
+    aquatic &operator-=(const std::pair<std::string, animal_type> &); /* will remove a pair from the exhibit list */
     
     friend std::ostream &operator<<(std::ostream &output, const aquatic &obj);
     friend std::istream &operator<<(std::istream &output, const aquatic &obj);
@@ -176,6 +179,7 @@ class safari : public event {
     bool operator!=(const safari &rhs) const;
 
     safari &operator+=(const std::pair<std::string, std::list<animal_type>> &); /* will append a region onto the list */
+    safari &operator-=(const std::pair<std::string, std::list<animal_type>> &); /* will remove a region from the list */
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
     friend std::istream &operator<<(std::istream &output, const safari &obj);
