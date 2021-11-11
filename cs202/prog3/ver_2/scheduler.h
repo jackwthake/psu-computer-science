@@ -74,9 +74,12 @@ class scheduler {
 
     scheduler &operator+=(const event &); // will add an event into the BST
     scheduler &operator-=(const event &); // will remove an event from the BST
+
+    friend scheduler &operator+(const scheduler &a, const scheduler &b); /* add two scheduler objects together, combining their lists */
+    friend scheduler &operator-(const scheduler &a, const scheduler &b); /* subtract two pettting objects from eachother, removing their matching list elements */
   private:
     std::list<event *>scheduled; // contains a list of all scheduled events
-    node *head; // contains a BST of all events
+    node *root; // contains a BST of all events
 };
 
 
