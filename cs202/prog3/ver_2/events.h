@@ -56,7 +56,7 @@ class event {
 
     /* review list functionality */
     bool add_review(std::string &review) throw(std::bad_alloc);
-    void display_reviews(void) throw(std::string); // thrown if the list is empty
+    void display_reviews(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
 
     /* overloaded operators */
     void operator=(const event &rhs);
