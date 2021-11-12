@@ -1,4 +1,5 @@
 #include "events.h"
+#include <cstring>
 
 /**
  * event class implementation
@@ -24,8 +25,17 @@ event::event(const char *name, int capacity, int length, float ticket_price) {
 }
 
 
-event::event(const event &src) : event(src.event_name, src.capacity, src.length, src.ticket_price) {
-    
+event::event(const event &src) {
+  if (src.event_name) {
+    this->event_name = new char[strlen(src.event_name) + 1];
+    strcpy(this->event_name, src.event_name);
+  } else {
+   this->event_name = NULL;
+  }
+
+  this->capacity = src.capacity;
+  this->length = src.length;
+  this->ticket_price = src.ticket_price;
 }
 
 
@@ -35,8 +45,19 @@ event::~event() {
 }
 
 
-bool event::add_review(std::string review) throw(std::bad_alloc) { }
-void event::display_reviews(void) throw(std::out_of_range) { }
+bool event::add_review(std::string &review) throw(std::bad_alloc) {
+  this->reviews.emplace_front(review);
+}
+
+
+void event::display_reviews(void) throw(std::string) {
+  if (this->reviews.empty())
+    throw(std::string("Error: Empty Review List"));
+
+  for (std::string rev : this->reviews) {
+    std::cout << "Review: " << rev << std::endl;
+  }
+}
 
 /* overloaded operators */
 void event::operator=(const event &rhs) { }
