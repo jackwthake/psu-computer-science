@@ -241,11 +241,16 @@ void event::copy_data(const event &src) {
 /**
  * petting class implementation
 */
+
+/* Constructors + Destructors */
+
+/* default */
 petting::petting() : event() {
   this->animals = std::list<animal_type>();
 }
 
 
+/* normal */
 petting::petting(const char *name, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
   this->animals = std::list<animal_type>();
 }
@@ -253,6 +258,7 @@ petting::petting(const char *name, int capacity, int length, float ticket_price)
 
 /* interact with the animal list */
 
+/* add an animal to the list */
 bool petting::add_animal_type(animal_type t) throw(std::bad_alloc) {
   this->animals.emplace_back(t);
 
@@ -264,6 +270,7 @@ bool petting::add_animal_type(animal_type t) throw(std::bad_alloc) {
 }
 
 
+/* is an animal type present in the animal list */
 bool petting::does_animal_exist(animal_type t) const {
   for (animal_type val: this->animals) {
     if (val == t)
@@ -274,6 +281,7 @@ bool petting::does_animal_exist(animal_type t) const {
 }
 
 
+/* display a list of all animals present at the event */
 void petting::display_all_animals(std::ostream &output) const throw(std::string) {
   unsigned i = 0;
 
@@ -288,6 +296,8 @@ void petting::display_all_animals(std::ostream &output) const throw(std::string)
 
 
 /* overloaded operators */
+
+/* equality operator */
 bool petting::operator==(const petting &rhs) const {
   if (this == &rhs)
     return true;
@@ -302,6 +312,7 @@ bool petting::operator==(const petting &rhs) const {
 }
 
 
+/* not equal too */
 bool petting::operator!=(const petting &rhs) const {
   if (!this->operator==(rhs))
     return true;
@@ -310,6 +321,9 @@ bool petting::operator!=(const petting &rhs) const {
 }
 
 
+/* addition assignment operator */
+
+/* add two lists together */
 petting &petting::operator+=(const petting &rhs) {
   for (animal_type val : rhs.animals) {
     this->animals.emplace_back(val);
@@ -323,6 +337,7 @@ petting &petting::operator+=(const petting &rhs) {
 }
 
 
+/* add an animal type onto the list */
 petting &petting::operator+=(const animal_type val) {
   this->add_animal_type(val);
 
@@ -330,6 +345,9 @@ petting &petting::operator+=(const animal_type val) {
 }
 
 
+/* subtraction assignment operator */
+
+/* remove all matching elements */
 petting &petting::operator-=(const petting &rhs) {
   for (animal_type targ : rhs.animals) {
     this->animals.remove(targ);  
@@ -339,6 +357,7 @@ petting &petting::operator-=(const petting &rhs) {
 }
 
 
+/* look for and remove a specific animal ID */
 petting &petting::operator-=(const animal_type val) {
   this->animals.remove(val);
 
@@ -347,6 +366,9 @@ petting &petting::operator-=(const animal_type val) {
 
 /* friend functions */
 
+/* addition operators */
+
+/* add an animal ID to the list */
 petting operator+(const petting &p, animal_type val) {
   petting result = p;
   result.add_animal_type(val);
@@ -355,6 +377,7 @@ petting operator+(const petting &p, animal_type val) {
 }
 
 
+/* add an animal ID to the list */
 petting operator+(animal_type val, const petting &p) {
   petting result = p;
   result.add_animal_type(val);
@@ -363,6 +386,7 @@ petting operator+(animal_type val, const petting &p) {
 }
 
 
+/* append a list onto another and then remove duplicates */
 petting operator+(const petting &a, const petting &b) {
   petting result = a;
   for (animal_type val_a : a.animals) {
@@ -380,6 +404,10 @@ petting operator+(const petting &a, const petting &b) {
 }
 
 
+/* subtraction operator */
+
+
+/* remove an animal ID from the list */
 petting operator-(const petting &p, animal_type val) {
   petting result = p;
   result.animals.remove(val);
@@ -388,6 +416,7 @@ petting operator-(const petting &p, animal_type val) {
 }
 
 
+/* remove an animal ID from the list */
 petting operator-(animal_type val, const petting &p) {
   petting result = p;
   result.animals.remove(val);
@@ -396,8 +425,8 @@ petting operator-(animal_type val, const petting &p) {
 }
 
 
+/* remove all matching elements from a list returning a copy */
 petting operator-(const petting &a, const petting &b) {
-  // remove b from a 
   petting result = a;
   for (animal_type val : b.animals) {
     result.animals.remove(val);
@@ -407,9 +436,11 @@ petting operator-(const petting &a, const petting &b) {
 }
 
 
+/* insertion operator */
 std::ostream &operator<<(std::ostream &output, const petting &obj) {
   operator<<(output, (event)obj);
 
+  output << "\n";
   try {
     obj.display_all_animals();
   } catch (...) {
