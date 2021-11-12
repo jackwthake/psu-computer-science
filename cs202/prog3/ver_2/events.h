@@ -35,7 +35,7 @@ typedef enum animal_type {
   /* aquarium */
   penguin,
   seal,
-  sea_otters,
+  sea_otter,
   /* safari */
   girrafe,
   leopard,
@@ -69,7 +69,6 @@ class event {
     bool operator>=(const event &rhs) const;
     
     friend std::ostream &operator<<(std::ostream &output, const event &obj);
-    friend std::istream &operator>>(std::istream &intput, event &obj);
   private:
     void copy_data(const event &src);
 
@@ -96,7 +95,7 @@ class petting : public event {
     /* interact with the animal list */
     bool add_animal_type(animal_type t) throw(std::bad_alloc);
     bool does_animal_exist(animal_type t) const;
-    void display_all_animals() const throw(std::out_of_range); // thrown if the list is empty
+    void display_all_animals(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
 
     /* overloaded operators */
     bool operator==(const petting &rhs) const;
@@ -109,7 +108,6 @@ class petting : public event {
     friend petting operator-(const petting &a, const petting &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const petting &obj);
-    friend std::istream &operator>>(std::istream &intput, petting &obj);
   private:
     std::list<animal_type> animals;
 };
@@ -143,7 +141,6 @@ class aquatic : public event {
     friend aquatic operator-(const aquatic &a, const aquatic &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const aquatic &obj);
-    friend std::istream &operator>>(std::istream &intput, aquatic &obj);
   private:
     /* list of pairs, containing the name of the exhibit, and the animal type associated with that exhibit */
     std::list<std::pair<std::string, animal_type>> exhibits;
@@ -180,7 +177,6 @@ class safari : public event {
     friend safari operator-(const safari &a, const safari &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
-    friend std::istream &operator>>(std::istream &intput, safari &obj);
   private:
     std::string guide;
 

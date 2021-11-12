@@ -16,7 +16,6 @@ int main(void) {
   }
 
   std::cout << ev << std::endl;
-  std::cin >> ev;
 
   ev.add_review(str);
   ev.add_review(str2);
@@ -37,5 +36,11 @@ int main(void) {
   } catch (std::string s) {
     std::cout << s << std::endl;
   }
+
+
+  petting p("Petting zoo", 64, 30, 5.0f);
+  p.add_animal_type(animal_type::pig);
+  std::cout << p << std::endl;
+
   return 0;
 }

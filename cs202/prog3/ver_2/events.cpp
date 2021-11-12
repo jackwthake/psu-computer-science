@@ -19,6 +19,45 @@
 #include "events.h"
 #include <cstring>
 
+
+std::ostream &operator<<(std::ostream &output, animal_type &val) {
+  switch (val) {
+    case animal_type::goat:
+      output << "Goat";
+      break;
+    case animal_type::chicken:
+      output << "Chicken";
+      break;
+    case animal_type::pig:
+      output << "Pig";
+      break;
+    case animal_type::horse:
+      output << "Horse";
+      break;
+    case animal_type::penguin:
+      output << "Penguin";
+      break;
+    case animal_type::seal:
+      output << "Seal";
+      break;
+    case animal_type::sea_otter:
+      output << "Sea Otter";
+      break;
+    case animal_type::girrafe:
+      output << "Girrafe";
+      break;
+    case animal_type::leopard:
+      output << "Leopard";
+      break;
+    case animal_type::lion:
+      output << "Lion";
+      break;
+  }
+
+  return output;
+}
+
+
 /**
  * event class implementation
 */
@@ -178,12 +217,6 @@ std::ostream &operator<<(std::ostream &output, const event &obj) {
 }
 
 
-/* input from an istream */
-std::istream &operator>>(std::istream &input, event &obj) {
-  return input;
-}
-
-
 /* private member functions */
 
 /* copy data into the object */
@@ -199,3 +232,98 @@ void event::copy_data(const event &src) {
   this->length = src.length;
   this->ticket_price = src.ticket_price;
 }
+
+
+
+/**
+ * petting class implementation
+*/
+petting::petting() : event() {
+  this->animals = std::list<animal_type>();
+}
+
+
+petting::petting(const char *name, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
+  this->animals = std::list<animal_type>();
+}
+
+
+/* interact with the animal list */
+
+bool petting::add_animal_type(animal_type t) throw(std::bad_alloc) {
+  this->animals.emplace_back(t);
+
+  // get rid of duplicates
+  this->animals.sort();
+  this->animals.unique();
+
+  return true;
+}
+
+
+bool petting::does_animal_exist(animal_type t) const {
+  for (animal_type val: this->animals) {
+    if (val == t)
+      return true;
+  }
+
+  return false;
+}
+
+
+void petting::display_all_animals(std::ostream &output) const throw(std::string) {
+  unsigned i = 0;
+
+  if (this->animals.empty())
+    throw(std::string("Error: Empty list."));
+
+  output << "Animals available at event:\n";
+  for (animal_type val: this->animals) {
+    output << ++i << " | " << val << std::endl;
+  }
+}
+
+
+/* overloaded operators */
+bool petting::operator==(const petting &rhs) const {
+  if (this == &rhs)
+    return true;
+
+  if (event::operator==(rhs)) {
+    if (this->animals == rhs.animals) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+bool petting::operator!=(const petting &rhs) const {
+  if (!this->operator==(rhs))
+    return true;
+
+  return false;
+}
+
+
+petting &petting::operator+=(const animal_type &) { }
+petting &petting::operator-=(const animal_type &) { }
+
+/* friend functions */
+
+petting operator+(const petting &a, const petting &b) { }
+petting operator-(const petting &a, const petting &b) { }
+
+std::ostream &operator<<(std::ostream &output, const petting &obj) {
+  operator<<(output, (event)obj);
+
+  try {
+    obj.display_all_animals();
+  } catch (...) {
+    output << "No animals currently in the event.";
+  }
+
+  return output;
+}
+
