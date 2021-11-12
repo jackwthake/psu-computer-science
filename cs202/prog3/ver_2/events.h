@@ -59,7 +59,7 @@ class event {
     void display_reviews(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
 
     /* overloaded operators */
-    void operator=(const event &rhs);
+    event &operator=(const event &rhs);
     bool operator==(const event &rhs) const;
     bool operator!=(const event &rhs) const;
 

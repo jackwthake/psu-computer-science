@@ -37,7 +37,7 @@ event::event() {
 event::event(const char *name, int capacity, int length, float ticket_price) {
   if (name) {
     this->event_name = new char[strlen(name) + 1];
-    strcpy(this->event_name, name);
+    this->event_name = strcpy(this->event_name, name);
   } else {
     this->event_name = NULL;
   }
@@ -50,7 +50,16 @@ event::event(const char *name, int capacity, int length, float ticket_price) {
 
 /* copy */
 event::event(const event &src) {
-  operator=(src);
+  if (src.event_name) {
+    this->event_name = new char[strlen(src.event_name) + 1];
+    this->event_name = strcpy(this->event_name, src.event_name);
+  } else {
+    this->event_name = NULL;
+  }
+
+  this->capacity = src.capacity;
+  this->length = src.length;
+  this->ticket_price = src.ticket_price;
 }
 
 
@@ -87,12 +96,15 @@ void event::display_reviews(std::ostream &output) const throw(std::string) {
 /* overloaded operators */
 
 /* assignment operator */
-void event::operator=(const event &rhs) {
+event &event::operator=(const event &rhs) {
+  if (this == &rhs)
+    return *this;
+  if (this->event_name)
+    delete []this->event_name;
+
   if (rhs.event_name) {
     this->event_name = new char[strlen(rhs.event_name) + 1];
     strcpy(this->event_name, rhs.event_name);
-  } else {
-   this->event_name = NULL;
   }
 
   this->capacity = rhs.capacity;
@@ -100,6 +112,8 @@ void event::operator=(const event &rhs) {
   this->ticket_price = rhs.ticket_price;
 
   this->reviews = std::list<std::string>(rhs.reviews);
+
+  return *this;
 }
 
 
