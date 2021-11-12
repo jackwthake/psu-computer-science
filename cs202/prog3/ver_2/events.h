@@ -191,10 +191,19 @@ class safari : public event {
     bool operator!=(const safari &rhs) const;
 
     safari &operator+=(const std::pair<std::string, std::list<animal_type>> &); /* will append a region onto the list */
+    safari &operator+=(const safari &);
     safari &operator-=(const std::pair<std::string, std::list<animal_type>> &); /* will remove a region from the list */
+    safari &operator-=(const safari &);
+
+    /* friend functions */
 
     friend safari operator+(const safari &a, const safari &b); /* add two safari events together, combining their lists */
-    friend safari operator-(const safari &a, const safari &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend safari operator+(const safari &a, const std::pair<std::string, std::list<animal_type>> &);
+    friend safari operator+(const std::pair<std::string, std::list<animal_type>> &, const safari &a);
+    
+    friend safari operator-(const safari &a, const safari &b); /* add two safari events together, combining their lists */
+    friend safari operator-(const safari &a, const std::pair<std::string, std::list<animal_type>> &);
+    friend safari operator-(const std::pair<std::string, std::list<animal_type>> &, const safari &a);
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
   private:
