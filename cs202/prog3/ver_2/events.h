@@ -103,8 +103,8 @@ class petting : public event {
     petting &operator+=(const animal_type &); /* will append an animal to the animal list */
     petting &operator-=(const animal_type &); /* will remove an animal from the animal list */
 
-    friend petting &operator+(const petting &a, const petting &b); /* add two petting events together, combining their lists */
-    friend petting &operator-(const petting &a, const petting &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend petting operator+(const petting &a, const petting &b); /* add two petting events together, combining their lists */
+    friend petting operator-(const petting &a, const petting &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const petting &obj);
     friend std::istream &operator>>(std::istream &intput, petting &obj);
@@ -137,8 +137,8 @@ class aquatic : public event {
     aquatic &operator+=(const std::pair<std::string, animal_type> &); /* will append a pair to the exhibit list */
     aquatic &operator-=(const std::pair<std::string, animal_type> &); /* will remove a pair from the exhibit list */
 
-    friend aquatic &operator+(const aquatic &a, const aquatic &b); /* add two aquatic events together, combining their lists */
-    friend aquatic &operator-(const aquatic &a, const aquatic &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend aquatic operator+(const aquatic &a, const aquatic &b); /* add two aquatic events together, combining their lists */
+    friend aquatic operator-(const aquatic &a, const aquatic &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const aquatic &obj);
     friend std::istream &operator>>(std::istream &intput, aquatic &obj);
@@ -174,8 +174,8 @@ class safari : public event {
     safari &operator+=(const std::pair<std::string, std::list<animal_type>> &); /* will append a region onto the list */
     safari &operator-=(const std::pair<std::string, std::list<animal_type>> &); /* will remove a region from the list */
 
-    friend safari &operator+(const safari &a, const safari &b); /* add two safari events together, combining their lists */
-    friend safari &operator-(const safari &a, const safari &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend safari operator+(const safari &a, const safari &b); /* add two safari events together, combining their lists */
+    friend safari operator-(const safari &a, const safari &b); /* subtract two pettting events from eachother, removing their matching list elements */
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
     friend std::istream &operator>>(std::istream &intput, safari &obj);

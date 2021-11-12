@@ -16,6 +16,7 @@ int main(void) {
   }
 
   std::cout << ev << std::endl;
+  std::cin >> ev;
 
   ev.add_review(str);
   ev.add_review(str2);
