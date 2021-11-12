@@ -101,11 +101,18 @@ class petting : public event {
     bool operator==(const petting &rhs) const;
     bool operator!=(const petting &rhs) const;
 
+    petting &operator+=(const petting &rhs); /* will append the two animal lists */
     petting &operator+=(const animal_type &); /* will append an animal to the animal list */
+    petting &operator-=(const petting &rhs); /* will remove all matching entries in the animal list */
     petting &operator-=(const animal_type &); /* will remove an animal from the animal list */
 
-    friend petting operator+(const petting &a, const petting &b); /* add two petting events together, combining their lists */
-    friend petting operator-(const petting &a, const petting &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend petting operator+(const petting &a, animal_type &val); /* add an entry to the list */
+    friend petting operator+(animal_type &val, const petting &p);
+    friend petting operator+(const petting &a, const petting &b); /* add two lists together */
+
+    friend petting operator-(const petting &a, animal_type &val); /* remove an object from the list */
+    friend petting operator-(animal_type &val, const petting &p);
+    friend petting operator-(const petting &a, const petting &b); /* remove all matching items between the two lists */
     
     friend std::ostream &operator<<(std::ostream &output, const petting &obj);
   private:
