@@ -460,17 +460,22 @@ std::ostream &operator<<(std::ostream &output, const petting &obj) {
 */
 
 /* constructors */
+
+/* default */
 aquatic::aquatic() : event() {
   this->exhibits = std::list<std::pair<std::string, animal_type>>();
 }
 
 
+/* normal */
 aquatic::aquatic(const char *name, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
   this->exhibits = std::list<std::pair<std::string, animal_type>>();
 }
 
 
 /* interact with the exhibit list */
+
+/* add an exhibit to the list and have the aquatic class construct the pair */
 bool aquatic::add_exhibit(std::string &exhibit_name, animal_type t) throw(std::bad_alloc) {
   this->exhibits.emplace_back(make_pair(exhibit_name, t));  
 
@@ -478,6 +483,7 @@ bool aquatic::add_exhibit(std::string &exhibit_name, animal_type t) throw(std::b
 }
 
 
+/* add an exhibit to the list with a pre-made pair */
 bool aquatic::add_exhibit(const std::pair<std::string, animal_type> &obj) throw(std::bad_alloc) {
   this->exhibits.emplace_back(obj);
 
@@ -485,6 +491,7 @@ bool aquatic::add_exhibit(const std::pair<std::string, animal_type> &obj) throw(
 }
 
 
+/* display all exhibits */
 void aquatic::display_exhibits(std::ostream &output) const throw(std::string) {
   if (this->exhibits.empty())
     throw(std::string("Error: empty list"));
@@ -496,6 +503,8 @@ void aquatic::display_exhibits(std::ostream &output) const throw(std::string) {
 }
 
 /* overloaded operators */
+
+/* equality operator */
 bool aquatic::operator==(const aquatic &rhs) const {
   if (this == &rhs)
     return true;
@@ -510,6 +519,7 @@ bool aquatic::operator==(const aquatic &rhs) const {
 }
 
 
+/* inequality */
 bool aquatic::operator!=(const aquatic &rhs) const {
   if (!this->operator==(rhs))
     return true;
@@ -518,6 +528,7 @@ bool aquatic::operator!=(const aquatic &rhs) const {
 }
 
 
+/* addition assignmnet operator, append a pair onto the list */
 aquatic &aquatic::operator+=(const std::pair<std::string, animal_type> &to_add) {
   this->add_exhibit(to_add);
 
@@ -525,6 +536,7 @@ aquatic &aquatic::operator+=(const std::pair<std::string, animal_type> &to_add) 
 }
 
 
+/* append another list onto the list */
 aquatic &aquatic::operator+=(const aquatic &obj) {
   for (auto &pair : obj.exhibits) {
     this->add_exhibit(pair);
@@ -534,6 +546,7 @@ aquatic &aquatic::operator+=(const aquatic &obj) {
 }
 
 
+/* remove an exhibit from the list */
 aquatic &aquatic::operator-=(const std::pair<std::string, animal_type> &obj) {
   this->exhibits.remove(obj);
 
@@ -541,6 +554,7 @@ aquatic &aquatic::operator-=(const std::pair<std::string, animal_type> &obj) {
 }
 
 
+/* remove all matching elements */
 aquatic &aquatic::operator-=(const aquatic &obj) {
   for (auto &pair : obj.exhibits) {
     this->exhibits.remove(pair);
@@ -549,8 +563,13 @@ aquatic &aquatic::operator-=(const aquatic &obj) {
   return *this;
 }
 
+
 /* friend functions */
 
+
+/* addition operators */
+
+/* add two lists together */
 aquatic operator+(const aquatic &a, const aquatic &b) {
   aquatic res = a;
 
@@ -565,6 +584,7 @@ aquatic operator+(const aquatic &a, const aquatic &b) {
 }
 
 
+/* append a pair onto the list */
 aquatic operator+(const std::pair<std::string, animal_type> &a, const aquatic &b) {
   aquatic res = b;
   res.add_exhibit(a);
@@ -573,6 +593,7 @@ aquatic operator+(const std::pair<std::string, animal_type> &a, const aquatic &b
 }
 
 
+/* append a pair onto the list */
 aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &b) {
   aquatic res = a;
   res.add_exhibit(b);
@@ -581,6 +602,9 @@ aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &b
 }
 
 
+/* subtraction operators */
+
+/* remove all matching elements */
 aquatic operator-(const aquatic &a, const aquatic &b) {
   aquatic res = a;
   for (auto &pair : b.exhibits) {
@@ -591,6 +615,7 @@ aquatic operator-(const aquatic &a, const aquatic &b) {
 }
 
 
+/* remove a given pair from the list */
 aquatic operator-(const std::pair<std::string, animal_type> &a, const aquatic &b) {
   aquatic res = b;
   res.exhibits.remove(a);
@@ -599,6 +624,7 @@ aquatic operator-(const std::pair<std::string, animal_type> &a, const aquatic &b
 }
 
 
+/* remove a given pair from the list */
 aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &b) {
   aquatic res = a;
   res.exhibits.remove(b);
@@ -607,6 +633,7 @@ aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &b
 }
 
 
+/* insertion operator */
 std::ostream &operator<<(std::ostream &output, const aquatic &obj) {
   operator<<(output, (event)obj);
 
