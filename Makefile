@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS= -Wall -ansi -std=c++11
+CXXFLAGS= -Wall -std=c++11
 UNAME_S := $(shell uname -s)
 
 default: cs162 cs163 cs202
