@@ -39,7 +39,9 @@ typedef enum animal_type {
   /* safari */
   girrafe,
   leopard,
-  lion
+  lion,
+
+  unknown
 } animal_type;
 
 
@@ -136,8 +138,7 @@ class aquatic : public event {
 
     /* interact with the exhibit list */
     bool add_exhibit(std::string &exhibit_name, animal_type t) throw(std::bad_alloc);
-    std::pair<std::string, animal_type> &get_exhibit(std::string &name) const throw(std::out_of_range); // thrown if the list is empty
-    void display_exhibits() const throw(std::out_of_range); // thrown if the list is empty
+    void display_exhibits(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
     
     /* overloaded operators */
     bool operator==(const aquatic &rhs) const;

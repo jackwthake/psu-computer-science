@@ -55,6 +55,9 @@ static std::ostream &operator<<(std::ostream &output, animal_type &val) {
     case animal_type::lion:
       output << "Lion";
       break;
+    default:
+      output << "Uknown";
+      break;
   }
 
   return output;
@@ -445,6 +448,93 @@ std::ostream &operator<<(std::ostream &output, const petting &obj) {
     obj.display_all_animals();
   } catch (...) {
     output << "No animals currently in the event.";
+  }
+
+  return output;
+}
+
+
+
+/**
+ * Aquatic class implementation
+*/
+
+/* constructors */
+aquatic::aquatic() : event() {
+  this->exhibits = std::list<std::pair<std::string, animal_type>>();
+}
+
+
+aquatic::aquatic(const char *name, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
+  this->exhibits = std::list<std::pair<std::string, animal_type>>();
+}
+
+
+/* interact with the exhibit list */
+bool aquatic::add_exhibit(std::string &exhibit_name, animal_type t) throw(std::bad_alloc) {
+  this->exhibits.emplace_back(make_pair(exhibit_name, t));  
+
+  return true;
+}
+
+
+void aquatic::display_exhibits(std::ostream &output) const throw(std::string) {
+  if (this->exhibits.empty())
+    throw(std::string("Error: empty list"));
+
+  output << "Exhibit List:\n";
+  for (auto val : this->exhibits) {
+    output << val.first << " exhibit has " << val.second << "s\n"; 
+  }
+}
+
+/* overloaded operators */
+bool aquatic::operator==(const aquatic &rhs) const {
+  if (this == &rhs)
+    return true;
+
+  if (event::operator==(rhs)) {
+    if (this->exhibits == rhs.exhibits) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+bool aquatic::operator!=(const aquatic &rhs) const {
+  if (!this->operator==(rhs))
+    return true;
+
+  return false;
+}
+
+
+aquatic &aquatic::operator+=(const std::pair<std::string, animal_type> &) { }
+aquatic &aquatic::operator+=(const aquatic &) { }
+aquatic &aquatic::operator-=(const std::pair<std::string, animal_type> &) { }
+aquatic &aquatic::operator-=(const aquatic &) { }
+
+/* friend functions */
+
+aquatic operator+(const aquatic &a, const aquatic &b) { }
+aquatic operator+(const std::pair<std::string, animal_type> &, const aquatic &b) { }
+aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &) { }
+
+aquatic operator-(const aquatic &a, const aquatic &b) { }
+aquatic operator-(const std::pair<std::string, animal_type> &, const aquatic &b) { }
+aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &) { }
+
+
+std::ostream &operator<<(std::ostream &output, const aquatic &obj) {
+  operator<<(output, (event)obj);
+
+  output << "\n";
+  try {
+    obj.display_exhibits(output);
+  } catch (...) {
+    output << "No exhibits to display";
   }
 
   return output;
