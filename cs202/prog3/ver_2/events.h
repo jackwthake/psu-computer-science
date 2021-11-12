@@ -144,10 +144,19 @@ class aquatic : public event {
     bool operator!=(const aquatic &rhs) const;
 
     aquatic &operator+=(const std::pair<std::string, animal_type> &); /* will append a pair to the exhibit list */
+    aquatic &operator+=(const aquatic &);
     aquatic &operator-=(const std::pair<std::string, animal_type> &); /* will remove a pair from the exhibit list */
+    aquatic &operator-=(const aquatic &);
+
+    /* friend functions */
 
     friend aquatic operator+(const aquatic &a, const aquatic &b); /* add two aquatic events together, combining their lists */
-    friend aquatic operator-(const aquatic &a, const aquatic &b); /* subtract two pettting events from eachother, removing their matching list elements */
+    friend aquatic operator+(const std::pair<std::string, animal_type> &, const aquatic &b); /* append a pair onto the list */
+    friend aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &); /* append a pair onto the list */
+    
+    friend aquatic operator-(const aquatic &a, const aquatic &b); /* remove matching elements in the exhibits list */
+    friend aquatic operator-(const std::pair<std::string, animal_type> &, const aquatic &b); /* remove a pair from the list */
+    friend aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &); /* remove a pair from the list */
     
     friend std::ostream &operator<<(std::ostream &output, const aquatic &obj);
   private:
