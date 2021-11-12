@@ -20,7 +20,10 @@
 #include <cstring>
 
 
-std::ostream &operator<<(std::ostream &output, animal_type &val) {
+/* static helper functions */
+
+/* function to output the animal_id enum type as a string */
+static std::ostream &operator<<(std::ostream &output, animal_type &val) {
   switch (val) {
     case animal_type::goat:
       output << "Goat";
@@ -307,13 +310,102 @@ bool petting::operator!=(const petting &rhs) const {
 }
 
 
-petting &petting::operator+=(const animal_type &) { }
-petting &petting::operator-=(const animal_type &) { }
+petting &petting::operator+=(const petting &rhs) {
+  for (animal_type val : rhs.animals) {
+    this->animals.emplace_back(val);
+  }
+
+  // remove duplicates
+  this->animals.sort();
+  this->animals.unique();
+
+  return *this;
+}
+
+
+petting &petting::operator+=(const animal_type val) {
+  this->add_animal_type(val);
+
+  return *this;
+}
+
+
+petting &petting::operator-=(const petting &rhs) {
+  for (animal_type targ : rhs.animals) {
+    this->animals.remove(targ);  
+  }
+
+  return *this;
+}
+
+
+petting &petting::operator-=(const animal_type val) {
+  this->animals.remove(val);
+
+  return *this;
+}
 
 /* friend functions */
 
-petting operator+(const petting &a, const petting &b) { }
-petting operator-(const petting &a, const petting &b) { }
+petting operator+(const petting &p, animal_type val) {
+  petting result = p;
+  result.add_animal_type(val);
+
+  return result;
+}
+
+
+petting operator+(animal_type val, const petting &p) {
+  petting result = p;
+  result.add_animal_type(val);
+
+  return result;
+}
+
+
+petting operator+(const petting &a, const petting &b) {
+  petting result = a;
+  for (animal_type val_a : a.animals) {
+    result.add_animal_type(val_a);
+  }
+
+  for (animal_type val_b : b.animals) {
+    result.add_animal_type(val_b);
+  }
+
+  result.animals.sort();
+  result.animals.unique();
+
+  return result;
+}
+
+
+petting operator-(const petting &p, animal_type val) {
+  petting result = p;
+  result.animals.remove(val);
+
+  return result; 
+}
+
+
+petting operator-(animal_type val, const petting &p) {
+  petting result = p;
+  result.animals.remove(val);
+
+  return result; 
+}
+
+
+petting operator-(const petting &a, const petting &b) {
+  // remove b from a 
+  petting result = a;
+  for (animal_type val : b.animals) {
+    result.animals.remove(val);
+  }
+
+  return result;
+}
+
 
 std::ostream &operator<<(std::ostream &output, const petting &obj) {
   operator<<(output, (event)obj);
