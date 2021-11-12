@@ -50,16 +50,7 @@ event::event(const char *name, int capacity, int length, float ticket_price) {
 
 /* copy */
 event::event(const event &src) {
-  if (src.event_name) {
-    this->event_name = new char[strlen(src.event_name) + 1];
-    this->event_name = strcpy(this->event_name, src.event_name);
-  } else {
-    this->event_name = NULL;
-  }
-
-  this->capacity = src.capacity;
-  this->length = src.length;
-  this->ticket_price = src.ticket_price;
+  this->copy_data(src);
 }
 
 
@@ -97,21 +88,12 @@ void event::display_reviews(std::ostream &output) const throw(std::string) {
 
 /* assignment operator */
 event &event::operator=(const event &rhs) {
-  if (this == &rhs)
+  if (this == &rhs) // check self assignment
     return *this;
-  if (this->event_name)
+  if (this->event_name) // deallocate passed memory;
     delete []this->event_name;
 
-  if (rhs.event_name) {
-    this->event_name = new char[strlen(rhs.event_name) + 1];
-    strcpy(this->event_name, rhs.event_name);
-  }
-
-  this->capacity = rhs.capacity;
-  this->length = rhs.length;
-  this->ticket_price = rhs.ticket_price;
-
-  this->reviews = std::list<std::string>(rhs.reviews);
+  this->copy_data(rhs);
 
   return *this;
 }
@@ -183,8 +165,8 @@ bool event::operator>=(const event &rhs) const {
 /* output to an ostream */
 std::ostream &operator<<(std::ostream &output, const event &obj) {
   output << "Event with name " << obj.event_name << " has a maximum capacity of " << obj.capacity << ". \n" \
-            << obj.event_name << " lasts " << obj.length << " minutes and has a ticket price of $" << obj.ticket_price << ". \n" \
-            << "This event has the following reviews: \n";
+         << obj.event_name << " lasts " << obj.length << " minutes and has a ticket price of $" << obj.ticket_price << ". \n" \
+         << "This event has the following reviews: \n";
   
   try {
     obj.display_reviews(output);
@@ -201,3 +183,19 @@ std::istream &operator>>(std::istream &input, event &obj) {
   return input;
 }
 
+
+/* private member functions */
+
+/* copy data into the object */
+void event::copy_data(const event &src) {
+  if (src.event_name) {
+    this->event_name = new char[strlen(src.event_name) + 1];
+    this->event_name = strcpy(this->event_name, src.event_name);
+  } else {
+    this->event_name = NULL;
+  }
+
+  this->capacity = src.capacity;
+  this->length = src.length;
+  this->ticket_price = src.ticket_price;
+}

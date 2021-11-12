@@ -71,6 +71,8 @@ class event {
     friend std::ostream &operator<<(std::ostream &output, const event &obj);
     friend std::istream &operator>>(std::istream &intput, event &obj);
   private:
+    void copy_data(const event &src);
+
     char *event_name;
     int capacity, length;
     float ticket_price;
