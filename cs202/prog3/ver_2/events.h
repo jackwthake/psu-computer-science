@@ -138,6 +138,7 @@ class aquatic : public event {
 
     /* interact with the exhibit list */
     bool add_exhibit(std::string &exhibit_name, animal_type t) throw(std::bad_alloc);
+    bool add_exhibit(const std::pair<std::string, animal_type> &) throw(std::bad_alloc);
     void display_exhibits(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
     
     /* overloaded operators */

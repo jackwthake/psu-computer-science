@@ -6,8 +6,13 @@ int main(void) {
   std::cout << p << std::endl;
 
   std::string tester = "Penguin";
-  p.add_exhibit(tester, penguin);
+  p += make_pair(tester, pig);
   std::cout << p << std::endl;
+  p -= make_pair(tester, pig);
+  std::cout << p << std::endl;
+  p = p + make_pair(tester, horse);
+  std::cout << p << std::endl;
+  p = p - make_pair(tester, horse);
 
   return 0;
 }

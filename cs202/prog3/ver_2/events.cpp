@@ -478,6 +478,13 @@ bool aquatic::add_exhibit(std::string &exhibit_name, animal_type t) throw(std::b
 }
 
 
+bool aquatic::add_exhibit(const std::pair<std::string, animal_type> &obj) throw(std::bad_alloc) {
+  this->exhibits.emplace_back(obj);
+
+  return true;
+}
+
+
 void aquatic::display_exhibits(std::ostream &output) const throw(std::string) {
   if (this->exhibits.empty())
     throw(std::string("Error: empty list"));
@@ -511,20 +518,93 @@ bool aquatic::operator!=(const aquatic &rhs) const {
 }
 
 
-aquatic &aquatic::operator+=(const std::pair<std::string, animal_type> &) { }
-aquatic &aquatic::operator+=(const aquatic &) { }
-aquatic &aquatic::operator-=(const std::pair<std::string, animal_type> &) { }
-aquatic &aquatic::operator-=(const aquatic &) { }
+aquatic &aquatic::operator+=(const std::pair<std::string, animal_type> &to_add) {
+  this->add_exhibit(to_add);
+
+  return *this;
+}
+
+
+aquatic &aquatic::operator+=(const aquatic &obj) {
+  for (auto &pair : obj.exhibits) {
+    this->add_exhibit(pair);
+  }
+
+  return *this;
+}
+
+
+aquatic &aquatic::operator-=(const std::pair<std::string, animal_type> &obj) {
+  this->exhibits.remove(obj);
+
+  return *this;
+}
+
+
+aquatic &aquatic::operator-=(const aquatic &obj) {
+  for (auto &pair : obj.exhibits) {
+    this->exhibits.remove(pair);
+  }   
+
+  return *this;
+}
 
 /* friend functions */
 
-aquatic operator+(const aquatic &a, const aquatic &b) { }
-aquatic operator+(const std::pair<std::string, animal_type> &, const aquatic &b) { }
-aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &) { }
+aquatic operator+(const aquatic &a, const aquatic &b) {
+  aquatic res = a;
 
-aquatic operator-(const aquatic &a, const aquatic &b) { }
-aquatic operator-(const std::pair<std::string, animal_type> &, const aquatic &b) { }
-aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &) { }
+  for (auto &pair : b.exhibits) {
+    res.exhibits.emplace_back(pair);
+  }
+
+  res.exhibits.sort();
+  res.exhibits.unique();
+
+  return res;
+}
+
+
+aquatic operator+(const std::pair<std::string, animal_type> &a, const aquatic &b) {
+  aquatic res = b;
+  res.add_exhibit(a);
+
+  return res;
+}
+
+
+aquatic operator+(const aquatic &a, const std::pair<std::string, animal_type> &b) {
+  aquatic res = a;
+  res.add_exhibit(b);
+
+  return res;
+}
+
+
+aquatic operator-(const aquatic &a, const aquatic &b) {
+  aquatic res = a;
+  for (auto &pair : b.exhibits) {
+    res.exhibits.remove(pair);
+  }
+
+  return res;
+}
+
+
+aquatic operator-(const std::pair<std::string, animal_type> &a, const aquatic &b) {
+  aquatic res = b;
+  res.exhibits.remove(a);
+
+  return res;
+}
+
+
+aquatic operator-(const aquatic &a, const std::pair<std::string, animal_type> &b) {
+  aquatic res = a;
+  res.exhibits.remove(b);
+
+  return res;
+}
 
 
 std::ostream &operator<<(std::ostream &output, const aquatic &obj) {
