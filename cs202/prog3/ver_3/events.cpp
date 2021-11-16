@@ -673,3 +673,56 @@ bool safari::add_region(std::pair<std::string, std::list<animal_type>> &region) 
   return true;
 }
 
+
+bool safari::add_region(std::string &region, animal_type *types, size_t length) throw(std::length_error, std::invalid_argument) {
+  if (!types) {
+    throw(std::invalid_argument("Error: Animal ID array invalid."));
+  } else if (length <= 0) {
+    throw(std::length_error("Error: Animal ID array with invalid length (less than or equal to 0)."));
+  }
+
+  std::list<animal_type> ids;
+  for (int i = 0; i < length; ++i) {
+    ids.emplace_front(types[i]);
+  }
+
+  std::pair<std::string, std::list<animal_type>> pair = make_pair(region, ids);
+  this->regions.emplace_front(pair);
+
+  return true;
+}
+
+
+void safari::display_region(std::string &region_name) const throw(std::out_of_range) {
+  if (this->regions.empty()) {
+    throw(std::out_of_range("Error: Empty region list."));
+  }
+
+  for (auto &pair: this->regions) {
+    if (pair.first == region_name) {
+      std::cout << "Region " << pair.first << " contains the following animals:" << std::endl;
+      std::cout << "=====================" << std::endl;
+
+      for (animal_type id : pair.second) {
+        std::cout << id << std::endl; 
+      }
+    }
+  }
+}
+
+
+void safari::display_all_regions() const throw(std::out_of_range) {
+  if (this->regions.empty()) {
+    throw(std::out_of_range("Error: Empty region list."));
+  }
+
+  for (auto &pair : this->regions) {
+    std::cout << "Region " << pair.first << " contains the following animals:" << std::endl;
+    std::cout << "=====================" << std::endl;
+
+    for (animal_type id : pair.second) {
+      std::cout << id << std::endl; 
+    }
+  }
+}
+

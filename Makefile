@@ -132,8 +132,11 @@ cs202 : 202_program1 202_program2 202_program3
 202_program3_snapshot1: cs202/*3/*1/*.h
 	$(CC) $(CXXFLAGS) -fsyntax-only cs202/*3/*1/*.h 
 
-202_program3_snapshot2: cs202/*3/*2/*.h
+202_program3_snapshot2: cs202/*3/*2/*.cpp
 	$(CC) $(CXXFLAGS) -o bin/202/prog3_v1.out cs202/*3/*2/*.cpp 
+
+202_program3_snapshot3: cs202/*3/*3/*.cpp
+	$(CC) $(CXXFLAGS) -o bin/202/prog3_v2.out cs202/*3/*3/*.cpp 
 
 
 clean:

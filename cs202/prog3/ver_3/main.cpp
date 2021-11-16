@@ -2,17 +2,15 @@
 #include "scheduler.h"
 
 int main(void) {
-  aquatic p("aquarium", 64, 30, 5.0f);
-  std::cout << p << std::endl;
+  std::string region = "Savannah";
+  std::string guide = "Me";
 
-  std::string tester = "Penguin";
-  p += make_pair(tester, pig);
-  std::cout << p << std::endl;
-  p -= make_pair(tester, pig);
-  std::cout << p << std::endl;
-  p = p + make_pair(tester, horse);
-  std::cout << p << std::endl;
-  p = p - make_pair(tester, horse);
+  animal_type types[3] = { lion, leopard, girrafe };
+  safari p("aquarium", guide, 64, 30, 5.0f);
+
+  p.add_region(region, types, 3);
+  p.display_all_regions();
+
 
   return 0;
 }
