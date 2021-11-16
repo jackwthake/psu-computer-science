@@ -19,7 +19,7 @@
 class node {
   public:
     node();
-    node(event *data);
+    node(event &data);
 
     /* get left and right nodes */
     node * &get_right();
@@ -32,7 +32,7 @@ class node {
     /* get the data in a node */
     event *get_data();
   private:
-    event *data;
+    event data;
     node *left, *right;
 };
 
