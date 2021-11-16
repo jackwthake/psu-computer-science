@@ -654,12 +654,16 @@ std::ostream &operator<<(std::ostream &output, const aquatic &obj) {
 */
 
 
+/* constructors + destructors */
+
+/* default */
 safari::safari() : event() {
   this->regions = std::list<std::pair<std::string, std::list<animal_type>>>();
   this->guide = "";
 }
 
 
+/* normal */
 safari::safari(const char *name, std::string &guide, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
   this->regions = std::list<std::pair<std::string, std::list<animal_type>>>();
   this->guide = guide;
@@ -667,13 +671,16 @@ safari::safari(const char *name, std::string &guide, int capacity, int length, f
 
 
 /* interact with the region list */
-bool safari::add_region(std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc) {
+
+/* add a region to the list from an already constructed pair */
+bool safari::add_region(const std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc) {
   this->regions.emplace_back(region);
 
   return true;
 }
 
 
+/* add a region to the list from an array of animal IDs */
 bool safari::add_region(std::string &region, animal_type *types, size_t length) throw(std::length_error, std::invalid_argument) {
   if (!types) {
     throw(std::invalid_argument("Error: Animal ID array invalid."));
@@ -681,11 +688,13 @@ bool safari::add_region(std::string &region, animal_type *types, size_t length) 
     throw(std::length_error("Error: Animal ID array with invalid length (less than or equal to 0)."));
   }
 
+  /* construct the list */
   std::list<animal_type> ids;
   for (int i = 0; i < length; ++i) {
     ids.emplace_front(types[i]);
   }
 
+  /* make the pair and then add it to the regions list */
   std::pair<std::string, std::list<animal_type>> pair = make_pair(region, ids);
   this->regions.emplace_front(pair);
 
@@ -693,36 +702,182 @@ bool safari::add_region(std::string &region, animal_type *types, size_t length) 
 }
 
 
+/* display a given region based on name */
 void safari::display_region(std::string &region_name) const throw(std::out_of_range) {
   if (this->regions.empty()) {
     throw(std::out_of_range("Error: Empty region list."));
   }
 
   for (auto &pair: this->regions) {
-    if (pair.first == region_name) {
+    if (pair.first == region_name) { /* if found, print out it's details */
       std::cout << "Region " << pair.first << " contains the following animals:" << std::endl;
       std::cout << "=====================" << std::endl;
 
       for (animal_type id : pair.second) {
         std::cout << id << std::endl; 
       }
+
+      /* we return because we no longer need to iterate through the list */
+      return;
     }
   }
 }
 
 
-void safari::display_all_regions() const throw(std::out_of_range) {
+/* display all regions to a given ostream */
+void safari::display_all_regions(std::ostream &output) const throw(std::out_of_range) {
   if (this->regions.empty()) {
     throw(std::out_of_range("Error: Empty region list."));
   }
 
   for (auto &pair : this->regions) {
-    std::cout << "Region " << pair.first << " contains the following animals:" << std::endl;
-    std::cout << "=====================" << std::endl;
+    output << "Region " << pair.first << " contains the following animals:" << std::endl;
+    output << "=====================" << std::endl;
 
     for (animal_type id : pair.second) {
-      std::cout << id << std::endl; 
+      output << id << std::endl; 
     }
   }
+}
+
+
+/* Overloaded operators */
+
+/* equality operator */
+bool safari::operator==(const safari &rhs) const {
+  if(event::operator==(rhs)) {
+    if (this->guide == rhs.guide && this->regions == rhs.regions) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+/* inequality operator */
+bool safari::operator!=(const safari &rhs) const {
+  if (!safari::operator==(rhs)) {
+    return true;
+  }
+
+  return false;
+}
+
+
+/* addition assignment operators */
+
+/* add a region onto a list */
+safari &safari::operator+=(const std::pair<std::string, std::list<animal_type>> &region) {
+  this->add_region(region);
+
+  return *this;
+}
+
+
+/* combine two lists */
+safari &safari::operator+=(const safari &rhs) {
+  for (const std::pair<std::string, std::list<animal_type>> &pair : rhs.regions) {
+    this->add_region(pair);
+  }
+
+  return *this;
+}
+
+
+
+/* subtraction assignment operators */
+
+/* remove a region */
+safari &safari::operator-=(const std::pair<std::string, std::list<animal_type>> &region) {
+  this->regions.remove(region);
+
+  return *this;
+}
+
+
+/* remove all matching elements from another region list */
+safari &safari::operator-=(const safari &rhs) {
+  for (auto &pair : rhs.regions) {
+    this->regions.remove(pair);
+  }
+
+  return *this;
+}
+
+
+/* friend functions */
+
+/* addition oeprators */
+
+/* add two lists together */
+safari operator+(const safari &a, const safari &b) {
+  safari result = a;
+  result += b;
+
+  return result;
+}
+
+
+/* add a region onto a list */
+safari operator+(const safari &a, const std::pair<std::string, std::list<animal_type>> &pair) {
+  safari result = a;
+  result += pair;
+
+  return result;
+}
+
+
+/* add a region onto a list */
+safari operator+(const std::pair<std::string, std::list<animal_type>> &pair, const safari &a) {
+  safari result = a;
+  result += pair;
+
+  return result;
+}
+
+
+/* subtraction operators */
+
+/* remove all matching elements from one region list */
+safari operator-(const safari &a, const safari &b) {
+  safari result = a;
+  result -= b;
+
+  return result;
+}
+
+
+/* remove a region from the list */
+safari operator-(const safari &a, const std::pair<std::string, std::list<animal_type>> &pair) {
+  safari result = a;
+  result -= pair;
+
+  return result;
+}
+
+
+/* remove a region from the list */
+safari operator-(const std::pair<std::string, std::list<animal_type>> &pair, const safari &a) {
+  safari result = a;
+  result -= pair;
+
+  return result;
+}
+
+
+/* insertion operator */
+std::ostream &operator<<(std::ostream &output, const safari &obj) {
+  operator<<(output, (event)obj);
+  
+  output << "This safari has the following regions: \n";
+
+  try {
+    obj.display_all_regions(output);
+  } catch (...) {
+    output << "No regions have been added to this safari, yet.";
+  }
+
+  return output;
 }
 

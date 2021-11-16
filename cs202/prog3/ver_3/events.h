@@ -180,11 +180,11 @@ class safari : public event {
     safari(const char *name, std::string &guide, int capacity, int length, float ticket_price); 
 
     /* interact with the region list */
-    bool add_region(std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc);
+    bool add_region(const std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc);
     bool add_region(std::string &, animal_type *types, size_t length) throw(std::length_error, std::invalid_argument);
 
     void display_region(std::string &region_name) const throw(std::out_of_range); // thrown if the list is empty
-    void display_all_regions() const throw(std::out_of_range); // thrown if the list is empty
+    void display_all_regions(std::ostream &output = std::cout) const throw(std::out_of_range); // thrown if the list is empty
     
     /* overloaded operators */
     bool operator==(const safari &rhs) const;
