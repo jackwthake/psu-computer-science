@@ -870,7 +870,7 @@ safari operator-(const std::pair<std::string, std::list<animal_type>> &pair, con
 std::ostream &operator<<(std::ostream &output, const safari &obj) {
   operator<<(output, (event)obj);
   
-  output << "This safari has the following regions: \n";
+  output << "\nThis safari has the following regions: \n";
 
   try {
     obj.display_all_regions(output);
