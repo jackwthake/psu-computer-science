@@ -5,7 +5,7 @@ public class linear_list {
     private final Random rand;
 
     /* Embedded node */
-    public static class Node {
+    private static class Node {
         public Node next;
         public int data;
     }
@@ -66,6 +66,8 @@ public class linear_list {
         int old_head = this.head.data;
         int ret = this.num_times(this.head);
 
+        // if we don't check for the head node equalling the end,
+        // we could end up counting the end node twice.
         if (old_head != this.head.data) {
             this.head.data = old_head;
             --ret;
