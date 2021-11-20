@@ -121,14 +121,14 @@ int binary_search_tree<TYPE, attribute>::get_height() {
 
 /* assignment operator */
 template <class TYPE, typename attribute>
-binary_search_tree<TYPE, attribute> &binary_search_tree<TYPE, attribute>::operator=(const binary_search_tree<TYPE, attribute> &rhs) {
+binary_search_tree<TYPE, attribute> &binary_search_tree<TYPE, attribute>::operator=(binary_search_tree<TYPE, attribute> &rhs) {
   if (this == &rhs) {
     return *this;
   } else {
     this->clear_tree(this->root);
   }
 
-  // TODO: Once the copy_tree function is completed, call it
+  this->copy_tree(this->root, rhs.root);
 
   return *this; 
 }
@@ -161,8 +161,14 @@ bool binary_search_tree<TYPE, attribute>::insert(node<TYPE> * &root, TYPE &to_ad
 
 /* copy one tree from another node by node */
 template <class TYPE, typename attribute>
-void binary_search_tree<TYPE, attribute>::copy_tree(node<TYPE> * &dest, const node<TYPE> * &src) {
-  // TODO: Implement me
+void binary_search_tree<TYPE, attribute>::copy_tree(node<TYPE> * &dest, node<TYPE> * &src) {
+  if (!src) {
+    return;
+  }
+
+  this->insert(dest, src->get_data());
+  this->copy_tree(dest->get_left(), src->get_left());
+  this->copy_tree(dest->get_right(), src->get_right());
 }
 
 

@@ -38,12 +38,12 @@ class binary_search_tree {
     int get_height();
 
     /* operators */
-    binary_search_tree &operator=(const binary_search_tree &);
+    binary_search_tree &operator=(binary_search_tree &);
 
   private:
     /* recursive functions */
     bool insert(node<TYPE> * &root, TYPE &); // insert a type into the tree
-    void copy_tree(node<TYPE> * &dest, const node<TYPE> * &src);
+    void copy_tree(node<TYPE> * &dest, node<TYPE> * &src);
     void search(node<TYPE> * &root, attribute &, std::list<TYPE> &); // search the tree by the attribute, populating a list
     
     void get_ios_and_delete(node<TYPE> * &root, TYPE &); // get the ios for the passed node and delete it, storing it in the reference
