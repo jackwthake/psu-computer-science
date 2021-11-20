@@ -102,8 +102,7 @@ public class linear_list {
     /* recursively add a list */
     private Node add_node(Node head, final int to_add) {
         if (head == null) { // last node in the list
-            head = new Node();
-            head.data = to_add;
+            head = new Node(to_add);
             return head;
         }
 
