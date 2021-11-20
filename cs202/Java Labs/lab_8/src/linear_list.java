@@ -106,7 +106,7 @@ public class linear_list {
             return head;
         }
 
-        head.next = add_node(head.next, to_add);
+        head.set_next(add_node(head.get_next(), to_add));
         return head;
     }
 
