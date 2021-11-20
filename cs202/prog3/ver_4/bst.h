@@ -1,8 +1,18 @@
+/*
+ * Jack Thake
+ * Karla Fant
+ * CS 202
+ *
+ * This file contains the definition to the binary search tree. this tree uses templates to make a generic
+ * tree that can be used with all of the derived events.
+*/
+
 #ifndef __BST_H__
 #define __BST_H__
 
 #include <list>
     
+/* node in a node */
 template <class TYPE>
 class node {
   public:
@@ -22,6 +32,7 @@ class node {
 };
 
 
+/* binary search tree */
 template <class TYPE, typename attribute>
 class binary_search_tree {
   public:

@@ -56,7 +56,7 @@ class event {
 
     ~event();
 
-    virtual void input(void);
+    void input(void);
 
     /* review list functionality */
     bool add_review(std::string &review) throw(std::bad_alloc);

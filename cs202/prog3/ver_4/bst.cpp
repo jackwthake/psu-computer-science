@@ -1,3 +1,12 @@
+/*
+ * Jack Thake
+ * Karla Fant
+ * CS 202
+ *
+ * This file contains the definition to the binary search tree. this tree uses templates to make a generic
+ * tree that can be used with all of the derived events.
+*/
+
 #include "bst.h"
 
 #include <iostream>
@@ -103,7 +112,6 @@ bool binary_search_tree<TYPE, attribute>::remove(attribute &key) {
 }
 
 
-
 /* Wrapper function to display the tree */
 template <class TYPE, typename attribute>
 void binary_search_tree<TYPE, attribute>::display_all() {
@@ -139,9 +147,9 @@ binary_search_tree<TYPE, attribute> &binary_search_tree<TYPE, attribute>::operat
 /* insert a type into the tree */
 template <class TYPE, typename attribute>
 bool binary_search_tree<TYPE, attribute>::insert(node<TYPE> * &root, TYPE &to_add) {
-  if (!this->root) { /* found the insertion point */
-    this->root = new node<TYPE>(to_add);
-    if (!this->root)
+  if (!root) { /* found the insertion point */
+    root = new node<TYPE>(to_add);
+    if (!root)
       return false;
 
     /* success */
@@ -149,10 +157,10 @@ bool binary_search_tree<TYPE, attribute>::insert(node<TYPE> * &root, TYPE &to_ad
   }
 
   /* keep going through the tree */
-  if (to_add < this->root->get_data()) {
-    return this->insert(this->root->get_left(), to_add);
+  if (to_add < root->get_data()) {
+    return this->insert(root->get_left(), to_add);
   } else {
-    return this->insert(this->root->get_right(), to_add);
+    return this->insert(root->get_right(), to_add);
   }
   
   return false;

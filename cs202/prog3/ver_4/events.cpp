@@ -186,13 +186,7 @@ event &event::operator=(const event &rhs) {
 /* equality operator */
 bool event::operator==(const event &rhs) const {
   if (strcmp(this->event_name, rhs.event_name) == 0) {
-    if (this->capacity == rhs.capacity && this->length == rhs.length) {
-      if (this->ticket_price == rhs.ticket_price) {
-        if (this->reviews == rhs.reviews) {
-          return true;
-        }
-      }
-    }
+    return true;
   }
 
   return false;
