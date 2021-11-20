@@ -108,6 +108,45 @@ event::~event() {
 }
 
 
+/* input an event */
+void event::input(void) {
+  char conf = '\0', buf[33];
+
+  std::cout << "Please enter the name of the event: ";
+  std::cin.get(buf, 33, '\n');
+  std::cin.ignore(100, '\n');
+
+  this->event_name = new char[strlen(buf) + 1];
+  strcpy(this->event_name, buf);
+
+  std::cout << "Please enter the maximum capacity of the event: ";
+  std::cin >> this->capacity;
+  std::cin.ignore(100, '\n');
+
+  std::cout << "Please enter the length of the event in minutes: ";
+  std::cin >> this->length;
+  std::cin.ignore(100, '\n');
+
+  std::cout << "Please enter the ticket price of the event in dollars: ";
+  std::cin >> this->ticket_price;
+  std::cin.ignore(100, '\n');
+
+  do {
+    std::string review;
+
+    std::cout << "Please enter a review for this event: ";
+    std::cin >> review;
+    std::cin.ignore(100, '\n');
+
+    this->add_review(review);
+
+    std::cout << "More reviews to add? (y/n): " << std::endl;
+    std::cin >> conf;
+    std::cin.ignore(100, '\n');
+  } while (tolower(conf) != 'n');
+}
+
+
 /* interact with review list */
 
 /* adds a review to the list */
@@ -659,14 +698,12 @@ std::ostream &operator<<(std::ostream &output, const aquatic &obj) {
 /* default */
 safari::safari() : event() {
   this->regions = std::list<std::pair<std::string, std::list<animal_type>>>();
-  this->guide = "";
 }
 
 
 /* normal */
-safari::safari(const char *name, std::string &guide, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
+safari::safari(const char *name, int capacity, int length, float ticket_price) : event(name, capacity, length, ticket_price) {
   this->regions = std::list<std::pair<std::string, std::list<animal_type>>>();
-  this->guide = guide;
 } 
 
 
@@ -746,7 +783,7 @@ void safari::display_all_regions(std::ostream &output) const throw(std::out_of_r
 /* equality operator */
 bool safari::operator==(const safari &rhs) const {
   if(event::operator==(rhs)) {
-    if (this->guide == rhs.guide && this->regions == rhs.regions) {
+    if (this->regions == rhs.regions) {
       return true;
     }
   }

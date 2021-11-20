@@ -56,6 +56,8 @@ class event {
 
     ~event();
 
+    virtual void input(void);
+
     /* review list functionality */
     bool add_review(std::string &review) throw(std::bad_alloc);
     void display_reviews(std::ostream &output=std::cout) const throw(std::string); // thrown if the list is empty
@@ -177,7 +179,7 @@ class safari : public event {
   public:
     /* constructors */
     safari();
-    safari(const char *name, std::string &guide, int capacity, int length, float ticket_price); 
+    safari(const char *name, int capacity, int length, float ticket_price); 
 
     /* interact with the region list */
     bool add_region(const std::pair<std::string, std::list<animal_type>> &region) throw(std::bad_alloc);
@@ -207,8 +209,6 @@ class safari : public event {
     
     friend std::ostream &operator<<(std::ostream &output, const safari &obj);
   private:
-    std::string guide;
-
     /* list of pairs, containing the name of the region, and the animal types associated with that region */
     std::list<std::pair<std::string, std::list<animal_type>>> regions;
 };
