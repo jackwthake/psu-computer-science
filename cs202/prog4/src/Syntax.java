@@ -1,6 +1,11 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * This abstract base class represents one of my three chosen scopes for translating C++ to Python
+ * This class is responsible for loading a dictionary from file. This dictionary is a linear linked list
+ * of pairs, with each pair representing a C++ term and its equivalent term in Python.
+ */
 abstract public class Syntax {
     protected String translated;
     protected String[] tokens;
@@ -9,7 +14,9 @@ abstract public class Syntax {
     private final String dictionary_path;
 
 
-    // default constructor
+    /**
+     * Default constructor
+     */
     public Syntax() {
         this.translated = this.dictionary_path = null;
         this.syntax_dictionary = null;
@@ -17,7 +24,11 @@ abstract public class Syntax {
     }
 
 
-    // load the syntax dictionary from file
+    /**
+     * Constructs a Syntax object, loading its internal dictionary from file
+     * @param dictionary_path
+     * The path to the dictionary file, the data file should be formatted as {C++ Term},{Equivalent Python Term}
+     */
     public Syntax(String dictionary_path) {
         this.dictionary_path = dictionary_path;
         this.translated = null;
@@ -38,13 +49,15 @@ abstract public class Syntax {
     }
 
 
-    // print out translated string
+    /**
+     * Prints the final translation if it exists
+     */
     public void emit_translation() {
         if (this.translated != null) System.out.println(this.translated);
     }
 
 
     // abstract functions for the children to implement
-    abstract public void digest_string(String untranslated);
-    abstract public boolean translate();
+    abstract public void digest_string(String untranslated); // tokenize the string
+    abstract public boolean translate(); // translate the string
 }

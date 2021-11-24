@@ -55,6 +55,7 @@ public class Variable extends Syntax {
      * @return
      * Returns true upon success, false otherwise
      */
+    @SuppressWarnings("StringConcatenationInLoop")
     @Override
     public boolean translate() {
         if (this.tokens == null)
