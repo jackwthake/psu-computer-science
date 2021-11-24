@@ -42,6 +42,9 @@ public class Dictionary_Node {
             return this.y;
         }
 
-        return this.next.get_matching(x);
+        if (this.next != null)
+            return this.next.get_matching(x);
+
+        return null;
     }
 }

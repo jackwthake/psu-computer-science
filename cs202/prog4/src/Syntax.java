@@ -2,22 +2,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 abstract public class Syntax {
-    protected String untranslated, translated;
+    protected String translated;
+    protected String[] tokens;
+
     protected Dictionary_Node syntax_dictionary;
     private final String dictionary_path;
 
 
     // default constructor
     public Syntax() {
-        this.untranslated = this.translated = this.dictionary_path = null;
+        this.translated = this.dictionary_path = null;
         this.syntax_dictionary = null;
+        this.tokens = null;
     }
 
 
     // load the syntax dictionary from file
     public Syntax(String dictionary_path) {
         this.dictionary_path = dictionary_path;
-        this.translated = this.untranslated = null;
+        this.translated = null;
+        this.tokens = null;
 
         // Create the dictionary for tokens, each node contains the c++ term followed by the python term
         this.syntax_dictionary = new Dictionary_Node();
