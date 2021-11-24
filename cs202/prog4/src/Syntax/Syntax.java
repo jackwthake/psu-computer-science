@@ -1,3 +1,5 @@
+package Syntax;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -25,7 +27,7 @@ abstract public class Syntax {
 
 
     /**
-     * Constructs a Syntax object, loading its internal dictionary from file
+     * Constructs a Syntax.Syntax object, loading its internal dictionary from file
      * @param dictionary_path
      * The path to the dictionary file, the data file should be formatted as {C++ Term},{Equivalent Python Term}
      */

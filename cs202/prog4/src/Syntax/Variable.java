@@ -1,8 +1,8 @@
-import java.util.Arrays;
+package Syntax;
 
 /**
  * This class represents the translation of one variable declaration from C++ to python.
- * It inherits from the Syntax base class and implements its abstract methods.
+ * It inherits from the Syntax.Syntax base class and implements its abstract methods.
  */
 public class Variable extends Syntax {
     private static final String var_path = "./variable.txt";
