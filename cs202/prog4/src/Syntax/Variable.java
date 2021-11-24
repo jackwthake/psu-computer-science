@@ -5,14 +5,7 @@ package Syntax;
  * It inherits from the Syntax.Syntax base class and implements its abstract methods.
  */
 public class Variable extends Syntax {
-    private static final String var_path = "./variable.txt";
-
-    public static void main(String[] args) {
-        Variable var = new Variable();
-        var.digest_string("const char *str = \"hello world\";");
-        var.translate();
-        var.emit_translation();
-    }
+    private static final String var_path = "./data/variable.txt";
 
     /**
      * Default constructor
@@ -55,24 +48,25 @@ public class Variable extends Syntax {
      * @return
      * Returns true upon success, false otherwise
      */
-    @SuppressWarnings("StringConcatenationInLoop")
     @Override
     public boolean translate() {
         if (this.tokens == null)
             return false;
 
+        // remove last space
+        this.tokens[this.tokens.length - 1] = this.tokens[this.tokens.length - 1].split(" ")[0];
+
         this.translated = "";
         for (String token : this.tokens) { // convert tokens to their dictionary matches
             String str = this.syntax_dictionary.get_matching(token);
-            if (str != null) { // is in the dictionary
-                this.translated += str + " ";
-            } else { // if a value isn't in the dictionary we just emit it
-                this.translated += token + " ";
+            if (str != null) {
+                this.translated = this.translated.concat(str + " ");
+            } else {
+                this.translated = this.translated.concat(token + " ");
             }
         }
 
-        // remove last space
-        this.tokens[this.tokens.length - 1] = this.tokens[this.tokens.length - 1].split(" ")[0];
+        this.translated = this.translated.replaceAll("\\s+$", ""); // remove trailing white space
         return true;
     }
 }
