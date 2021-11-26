@@ -6,7 +6,7 @@ public class Conditional extends Syntax {
 
     public static void main(String[] args) {
         Conditional cond = new Conditional();
-        cond.digest_string("if (var > 1 && var < 6) { }");
+        cond.digest_string("if(variable > 1 && variable < 6) { }");
         cond.translate();
         cond.emit_translation();
     }
@@ -18,8 +18,8 @@ public class Conditional extends Syntax {
 
     @Override
     public void digest_string(String untranslated) {
+        untranslated = this.remove_invalid_parens(untranslated);
         this.tokens = untranslated.replace("else if", "elif").split(" ");
-        this.remove_invalid_parens();
 
         // remove last space
         this.tokens[this.tokens.length - 1] = this.tokens[this.tokens.length - 1].split(" ")[0];
@@ -53,24 +53,31 @@ public class Conditional extends Syntax {
     }
 
 
-    protected void remove_invalid_parens() {
+    protected String remove_invalid_parens(String untranslated) {
         int paren_count = 0;
-        int first_paren_position = 0;
         int last_paren_position = 0;
 
-        for (int i = 0; i < this.tokens.length; ++i) {
-            if (this.tokens[i].contains("(") && paren_count == 0) {
-                ++paren_count;
-                first_paren_position = i;
-            }
+        StringBuilder sb = new StringBuilder(untranslated);
 
-            if (this.tokens[i].contains(")")) {
+        for (int i = 0; i < sb.length(); ++i) {
+            if (sb.charAt(i) == '(' && paren_count == 0) { // capture the first opening parenthesis
+                ++paren_count;
+
+                if (i >= 1) {
+                    if (sb.charAt(i - 1) == ' ') { // if the last character was a space, just remove the paren
+                        sb.deleteCharAt(i);
+                    } else {
+                        sb.setCharAt(i, ' '); // otherwise, replace the paren with a space
+                    }
+                }
+            } else if (sb.charAt(i) == ')') { // keep updating the closing paren position to capture the last one
                 ++paren_count;
                 last_paren_position = i;
             }
         }
 
-        this.tokens[first_paren_position] = this.tokens[first_paren_position].replace("(", "");
-        this.tokens[last_paren_position] = this.tokens[last_paren_position].replace(")", "");
+        // delete the last paren before returning the resulting string
+        sb.deleteCharAt(last_paren_position);
+        return sb.toString();
     }
 }
