@@ -1,6 +1,5 @@
 package Syntax;
 
-
 /**
  * Represents the translation of one C++ conditional statement to the equivalent python conditional statement
  */

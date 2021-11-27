@@ -1,6 +1,5 @@
 package Syntax;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,9 +8,13 @@ public class Loop extends Conditional {
 
     public static void main(String[] args) {
         Loop loop = new Loop();
-        loop.digest_string("for(int num : numbers) {}");
+        Conditional con = new Conditional();
+        loop.digest_string("while (var < 5) { }");
+        con.digest_string("if (var < 5) { }");
         loop.translate();
+        con.translate();
         loop.emit_translation();
+        con.emit_translation();
     }
 
     public Loop() {
@@ -24,12 +27,20 @@ public class Loop extends Conditional {
         this.tokens = untranslated.split("\\(", 2);
         String type = this.tokens[0];
 
-        this.tokens = this.tokens[1].split(" ", 2);
-        this.tokens[0] = type;
+        if (type.compareToIgnoreCase("while") == 0) {
+            // if the loop is a while loop, we can digest it as if it were an if statement, using our parent's digest
+            // function.
+            super.digest_string(untranslated);
+        } else {
+            // this applies to for loops
+            this.tokens = this.tokens[1].split(" ", 2);
+            this.tokens[0] = type;
+            this.tokens[0] = this.tokens[0].replaceAll(" ", "");
 
-        this.tokens[1] = this.tokens[1].replaceAll(" ", ""); // remove any spaces in the second token
-        this.tokens[1] = this.tokens[1].replaceAll("\\{\\}", ""); // remove ending curly brace
-        this.tokens[1] = this.remove_invalid_parens(this.tokens[1]); // remove extra paren
+            this.tokens[1] = this.tokens[1].replaceAll(" ", ""); // remove any spaces in the second token
+            this.tokens[1] = this.tokens[1].replaceAll("\\{\\}", ""); // remove ending curly brace
+            this.tokens[1] = this.remove_invalid_parens(this.tokens[1]); // remove extra paren
+        }
     }
 
 
@@ -48,9 +59,9 @@ public class Loop extends Conditional {
 
         switch(this.tokens[0]) {
             case "for":
-                if (this.translate_for_in_loop())
-                    return true;
                 if (this.translate_for_range_loop())
+                    return true;
+                if (this.translate_for_in_loop())
                     return true;
                 break;
             case "while":
@@ -102,26 +113,28 @@ public class Loop extends Conditional {
         translated = translated.replace("*", iterator_name);
         translated = translated.replace("!", loop_length);
 
-        return false;
+        return true;
     }
 
 
     private boolean translate_for_in_loop() {
         String search_result;
 
-        this.tokens = this.tokens[1].split(":");
+        this.tokens = this.tokens[0].split(":");
         search_result = this.syntax_dictionary.get_matching("for(:)");
         search_result = search_result.replace("*", this.tokens[0]);
         search_result = search_result.replace("!", this.tokens[1]);
 
         this.translated = search_result;
 
-        return false;
+        return true;
     }
 
 
     private boolean translate_while_loop() {
-        // TODO: Implement me
+        // FIXME: This is a little buggy but gets the job mostly done
+        super.translate(); // while loops can be translated in the same way if statements are
+
         return false;
     }
 }
