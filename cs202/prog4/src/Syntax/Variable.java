@@ -10,14 +10,6 @@ import java.util.regex.Pattern;
 public class Variable extends Syntax {
     private static final String var_path = "./data/variable.txt";
 
-    public static void main(String[] args) {
-        Variable var = new Variable();
-
-        var.digest_string("int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };");
-        var.translate();
-        var.emit_translation();
-    }
-
     /**
      * Default constructor
      */

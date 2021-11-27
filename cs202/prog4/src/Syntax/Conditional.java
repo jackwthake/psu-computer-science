@@ -7,13 +7,6 @@ package Syntax;
 public class Conditional extends Syntax {
     private static final String cond_path = "./data/conditional.txt";
 
-    public static void main(String[] args) {
-        Conditional cond = new Conditional();
-        cond.digest_string("if(variable > 1 && variable < 6) { }");
-        cond.translate();
-        cond.emit_translation();
-    }
-
     /**
      * Default constructor
      */
