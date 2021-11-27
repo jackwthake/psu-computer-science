@@ -1,6 +1,5 @@
 package Syntax;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +13,7 @@ public class Variable extends Syntax {
     public static void main(String[] args) {
         Variable var = new Variable();
 
-        var.digest_string("int arr [ 10 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };");
+        var.digest_string("int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };");
         var.translate();
         var.emit_translation();
     }
@@ -93,6 +92,29 @@ public class Variable extends Syntax {
 
 
     /**
+     * Translate a C++ variable declaration to python
+     * @return
+     * Returns true upon success, false otherwise.
+     */
+    private boolean translate_normal_var() {
+        String[] old_tokens = this.tokens;
+        this.tokens = new String[old_tokens.length - 1];
+
+        // remove data type token
+        System.arraycopy(old_tokens, 1, this.tokens, 0, this.tokens.length);
+
+        for (String token : this.tokens) { // For a normal variable we don't need the dictionary
+            this.translated = this.translated.concat(token + " ");
+        }
+
+        return true;
+    }
+
+
+    /* Translate arrays */
+
+
+    /**
      * Translate a C++ array declaration to python
      * @return
      * Returns true upon success, false otherwise.
@@ -167,28 +189,44 @@ public class Variable extends Syntax {
      * Returns true upon a successful translation, false otherwise.
      */
     private boolean translate_populated_array_decl() {
-        // TODO: Implement me
-        return false;
-    }
+        Pattern pattern;
+        Matcher match;
+        String identifier, array_contents, search_key, search_result;
 
-
-    /**
-     * Translate a C++ variable declaration to python
-     * @return
-     * Returns true upon success, false otherwise.
-     */
-    private boolean translate_normal_var() {
-        String[] old_tokens = this.tokens;
-        this.tokens = new String[old_tokens.length - 1];
-
-        // remove data type token
-        System.arraycopy(old_tokens, 1, this.tokens, 0, this.tokens.length);
-
-        for (String token : this.tokens) { // For a normal variable we don't need the dictionary
-            this.translated = this.translated.concat(token + " ");
+        // Get the array name
+        pattern = Pattern.compile("(.+)\\[");
+        match = pattern.matcher(this.tokens[1]);
+        if (match.find()) {
+            identifier = match.group(1);
+        } else {
+            throw new IllegalArgumentException();
         }
 
-        return true;
+        // Get the array contents
+        pattern = Pattern.compile("\\{.+\\}");
+        match = pattern.matcher(this.tokens[1]);
+        if (match.find()) {
+            array_contents = match.group();
+            array_contents = array_contents.replaceAll("(\\{|\\})", "");
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        // Refine search key
+        search_key = this.tokens[1].replaceAll(".*\\[", "["); // remove array identifier
+        search_key = search_key.replaceAll("\\[[^\\[]*\\]", "[]"); // reduce to generic search term
+        search_key = search_key.replaceAll("=\\{.+\\}", "={!}"); // remove set initialization, if it exists
+
+        // search the dictionary
+        search_result = this.syntax_dictionary.get_matching(search_key);
+        if (search_result != null) { // if a result is found
+            this.translated = identifier + " " + search_result; // construct translation
+            this.translated = this.translated.replaceAll("!", array_contents); // substitute ! with array length
+
+            return true;
+        }
+
+        return false;
     }
 
 
