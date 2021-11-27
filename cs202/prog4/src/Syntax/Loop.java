@@ -9,7 +9,7 @@ public class Loop extends Conditional {
 
     public static void main(String[] args) {
         Loop loop = new Loop();
-        loop.digest_string("for(int i = 0; i < 5; ++i) {}");
+        loop.digest_string("for(int num : numbers) {}");
         loop.translate();
         loop.emit_translation();
     }
@@ -66,11 +66,13 @@ public class Loop extends Conditional {
 
 
     private boolean translate_for_range_loop() {
-        String iterator_name = "", iterator_starting_val = "", loop_length = "", search_result;
+        String iterator_name = "", iterator_starting_val, loop_length = "", search_result;
         Pattern pattern;
         Matcher match;
 
         this.tokens = this.tokens[1].split(";");
+        if (this.tokens.length < 2)
+            return false;
 
         // get the iterator name
         pattern = Pattern.compile(".+?=");
@@ -105,7 +107,15 @@ public class Loop extends Conditional {
 
 
     private boolean translate_for_in_loop() {
-        // TODO: Implement me
+        String search_result;
+
+        this.tokens = this.tokens[1].split(":");
+        search_result = this.syntax_dictionary.get_matching("for(:)");
+        search_result = search_result.replace("*", this.tokens[0]);
+        search_result = search_result.replace("!", this.tokens[1]);
+
+        this.translated = search_result;
+
         return false;
     }
 
