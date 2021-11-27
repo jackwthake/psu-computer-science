@@ -1,6 +1,9 @@
 package Syntax;
 
 
+/**
+ * Represents the translation of one C++ conditional statement to the equivalent python conditional statement
+ */
 public class Conditional extends Syntax {
     private static final String cond_path = "./data/conditional.txt";
 
@@ -11,11 +14,20 @@ public class Conditional extends Syntax {
         cond.emit_translation();
     }
 
+    /**
+     * Default constructor
+     */
     public Conditional() {
         // load dictionary from file
         super(cond_path);
     }
 
+
+    /**
+     * Tokenizes the passed piece of untranslated C++ code in preparation of the full translation
+     * @param untranslated
+     * The untranslated piece of C++ code
+     */
     @Override
     public void digest_string(String untranslated) {
         untranslated = this.remove_invalid_parens(untranslated);
@@ -25,6 +37,12 @@ public class Conditional extends Syntax {
         this.tokens[this.tokens.length - 1] = this.tokens[this.tokens.length - 1].split(" ")[0];
     }
 
+
+    /**
+     * This function is responsible for the actual translation from C++ to python
+     * @return
+     * Returns true if the translation was successful, false otherwise.
+     */
     @Override
     public boolean translate() {
         if (this.tokens == null)
@@ -53,6 +71,15 @@ public class Conditional extends Syntax {
     }
 
 
+    /**
+     * Removes out-most opening and closing parenthesis for the python translation. `if(condition)` -> `if condition`,
+     * Doing this makes the tokenization easier to perform. This process preserves any parenthesis nested in the if
+     * statement.
+     * @param untranslated
+     * The untranslated piece of C++ code
+     * @return
+     * Returns a string containing the result of removing the out-most parenthesis
+     */
     protected String remove_invalid_parens(String untranslated) {
         int paren_count = 0;
         int last_paren_position = 0;

@@ -69,4 +69,6 @@ public class Variable extends Syntax {
         this.translated = this.translated.replaceAll("\\s+$", ""); // remove trailing white space
         return true;
     }
+
+    // TODO: Implement the ability to declare arrays
 }
