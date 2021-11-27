@@ -9,7 +9,7 @@ public class Loop extends Conditional {
     public static void main(String[] args) {
         Loop loop = new Loop();
         Conditional con = new Conditional();
-        loop.digest_string("while (var < 5) { }");
+        loop.digest_string("for (;;) { }");
         con.digest_string("if (var < 5) { }");
         loop.translate();
         con.translate();
@@ -37,9 +37,12 @@ public class Loop extends Conditional {
             this.tokens[0] = type;
             this.tokens[0] = this.tokens[0].replaceAll(" ", "");
 
-            this.tokens[1] = this.tokens[1].replaceAll(" ", ""); // remove any spaces in the second token
-            this.tokens[1] = this.tokens[1].replaceAll("\\{\\}", ""); // remove ending curly brace
-            this.tokens[1] = this.remove_invalid_parens(this.tokens[1]); // remove extra paren
+            if (this.tokens[1].replaceAll(" ", "").compareToIgnoreCase("{}") != 0) {
+                this.tokens[1] = this.tokens[1].replaceAll(" ", ""); // remove any spaces in the second token
+                this.tokens[1] = this.tokens[1].replaceAll("\\{\\}", ""); // remove ending curly brace
+
+                this.tokens[1] = this.remove_invalid_parens(this.tokens[1]); // remove extra paren
+            }
         }
     }
 
@@ -81,23 +84,33 @@ public class Loop extends Conditional {
         Pattern pattern;
         Matcher match;
 
+        // first we check for an infinite for loop, its tokens could either be "{ }", "{}" we check this first because
+        // if we let it progress to the string refinement we'll get array out of bounds exceptions.
+        if (this.tokens[0].replaceAll(" ", "").compareToIgnoreCase("{}") != 0) {
+            this.translated = "while true:";
+
+            return true;
+        }
+
+        // split the for loop into its 3 statements
         this.tokens = this.tokens[1].split(";");
-        if (this.tokens.length < 2)
+        if (this.tokens.length < 2) // we only need the first two, variable declaration and stopping condition
             return false;
 
         // get the iterator name
-        pattern = Pattern.compile(".+?=");
+        pattern = Pattern.compile(".+?="); // regex to grab iterator name
         match = pattern.matcher(this.tokens[0]);
         if (match.find()) {
             iterator_name = match.group();
-            iterator_name = iterator_name.replace("=", "");
+            iterator_name = iterator_name.replace("=", ""); // remove trailing = character
         }
 
         // get the starting value of the iterator
+        // using the same regex we find and replace the variable name leaving just its value
         iterator_starting_val = this.tokens[0].replaceAll(".+?=", "");
 
         // get the loop length
-        pattern = Pattern.compile("\\W.+$");
+        pattern = Pattern.compile("\\W.+$"); // grab the stopping length
         match = pattern.matcher(this.tokens[1]);
         if (match.find()) {
             loop_length = match.group();
