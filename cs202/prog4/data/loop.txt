@@ -1,0 +1,3 @@
+for(),for * in range(!):
+for(d:a),for * in !:
+while,while *:

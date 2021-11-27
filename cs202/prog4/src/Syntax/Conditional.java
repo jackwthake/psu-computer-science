@@ -17,6 +17,16 @@ public class Conditional extends Syntax {
 
 
     /**
+     * Constructor for conditionals children
+     * @param path
+     * Path to the dictionary file
+     */
+    protected Conditional(String path) {
+        super(path);
+    }
+
+
+    /**
      * Tokenizes the passed piece of untranslated C++ code in preparation of the full translation
      * @param untranslated
      * The untranslated piece of C++ code
