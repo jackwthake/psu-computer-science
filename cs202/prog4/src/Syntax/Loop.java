@@ -3,25 +3,27 @@ package Syntax;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * Represents the translation of a C++ loop to a Python loop
+ */
 public class Loop extends Conditional {
     private static final String loop_path = "./data/loop.txt";
 
-    public static void main(String[] args) {
-        Loop loop = new Loop();
-        Conditional con = new Conditional();
-        loop.digest_string("for (;;) { }");
-        con.digest_string("if (var < 5) { }");
-        loop.translate();
-        con.translate();
-        loop.emit_translation();
-        con.emit_translation();
-    }
-
+    /**
+     * Default constructor
+     */
     public Loop() {
         super(loop_path);
     }
 
 
+    /**
+     * Prepare the untranslated code for translation, this class handles for loops uniquely while using its base class
+     * to digest while loops, as they can be treated as an if statement syntactically
+     * @param untranslated
+     * The untranslated C++ code
+     */
     @Override
     public void digest_string(String untranslated) {
         this.tokens = untranslated.split("\\(", 2);
@@ -47,6 +49,11 @@ public class Loop extends Conditional {
     }
 
 
+    /**
+     * Translates C++ loops to Python loops, using the base class for the translation of while loops.
+     * @return
+     * Returns true upon success, false otherwise.
+     */
     @Override
     public boolean translate() {
         // *----*------------------------------------------------*----------------------------*
@@ -79,6 +86,11 @@ public class Loop extends Conditional {
     }
 
 
+    /**
+     * Translates a C++ for range loop, ie. for (int i = 0; i < 10; ++i) { }
+     * @return
+     * Returns true upon success, false otherwise.
+     */
     private boolean translate_for_range_loop() {
         String iterator_name = "", iterator_starting_val, loop_length = "", search_result;
         Pattern pattern;
@@ -130,6 +142,11 @@ public class Loop extends Conditional {
     }
 
 
+    /**
+     * Translates a C++ for in loop, i.e. for (int num : numbers) { }
+     * @return
+     * Returns true upon success, false otherwise.
+     */
     private boolean translate_for_in_loop() {
         String search_result;
 
@@ -144,6 +161,11 @@ public class Loop extends Conditional {
     }
 
 
+    /**
+     * Translates a C++ While loop, i.e. while (condition) { }
+     * @return
+     * Returns true upon success, false otherwise.
+     */
     private boolean translate_while_loop() {
         // FIXME: This is a little buggy but gets the job mostly done
         super.translate(); // while loops can be translated in the same way if statements are
