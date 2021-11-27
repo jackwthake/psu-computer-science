@@ -1,8 +1,2 @@
-int,var
-float,var
-double,var
-long,var
-short,var
-std::string,var
-string,var
-char,var
+[!],= [None] * !
+[]={!},= [!]
