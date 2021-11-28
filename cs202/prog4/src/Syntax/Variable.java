@@ -13,7 +13,7 @@ public class Variable extends Syntax {
     /**
      * Default constructor
      */
-    Variable() {
+    public Variable() {
         // load the dictionary from file
         super(var_path);
     }

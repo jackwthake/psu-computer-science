@@ -12,7 +12,7 @@ abstract public class Syntax {
     protected String translated;
     protected String[] tokens;
 
-    protected Dictionary_Node syntax_dictionary;
+    protected Dictionary syntax_dictionary;
     private final String dictionary_path;
 
 
@@ -37,7 +37,7 @@ abstract public class Syntax {
         this.tokens = null;
 
         // Create the dictionary for tokens, each node contains the c++ term followed by the python term
-        this.syntax_dictionary = new Dictionary_Node();
+        this.syntax_dictionary = new Dictionary();
 
         // attempt to read the data file
         try(BufferedReader br = new BufferedReader(new FileReader(this.dictionary_path))) {

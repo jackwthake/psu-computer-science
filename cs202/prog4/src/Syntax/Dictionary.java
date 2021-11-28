@@ -4,14 +4,14 @@ package Syntax;
  * Represents a Node in the list, this list has no LLL class just a node class. Each node contains the functionality
  * to work with itself, or move to the next node by calling the next nodes function.
  */
-public class Dictionary_Node {
+public class Dictionary {
     private String x, y;
-    private Dictionary_Node next;
+    private Dictionary next;
 
     /**
      * Default Constructor
      */
-    public Dictionary_Node() {
+    public Dictionary() {
         this.x = this.y = null;
         this.next = null;
     }
@@ -24,7 +24,7 @@ public class Dictionary_Node {
      * @param y
      * Y is the second value in the pair
      */
-    public Dictionary_Node(String x, String y) {
+    public Dictionary(String x, String y) {
         this.x = x;
         this.y = y;
         this.next = null;
@@ -40,7 +40,7 @@ public class Dictionary_Node {
      * @return
      * Returns a reference to the resulting list.
      */
-    public Dictionary_Node add_node(String x, String y) {
+    public Dictionary add_node(String x, String y) {
         if (this.next == null) {
             if (this.x == null && this.y == null) { // empty list
                 this.x = x;
@@ -49,7 +49,7 @@ public class Dictionary_Node {
                 return this;
             }
 
-            this.next = new Dictionary_Node(x, y);
+            this.next = new Dictionary(x, y);
             return this;
         }
 

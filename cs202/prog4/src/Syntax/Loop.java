@@ -3,7 +3,6 @@ package Syntax;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * Represents the translation of a C++ loop to a Python loop
  */
