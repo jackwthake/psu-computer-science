@@ -9,12 +9,6 @@ import Syntax.Variable;
 public class Context {
     Syntax syntax;
 
-    public static void main(String[] args) {
-        Context con = new Context();
-        con.translate("sdfss");
-        con.emit_translation();
-    }
-
     /**
      * Default constructor
      */
