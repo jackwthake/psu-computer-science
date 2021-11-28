@@ -33,6 +33,7 @@ public class Conditional extends Syntax {
     @Override
     public void digest_string(String untranslated) {
         untranslated = this.remove_invalid_parens(untranslated);
+        untranslated = untranslated.replaceAll("\\{|\\}", "");
         this.tokens = untranslated.replace("else if", "elif").split(" ");
 
         // remove last space
@@ -62,13 +63,8 @@ public class Conditional extends Syntax {
         }
 
         this.translated = this.translated.replaceAll("\\s+$", ""); // remove trailing white space
+        this.translated = this.translated.concat(":");
 
-        // remove space between last token and colon
-        StringBuilder sb = new StringBuilder(this.translated);
-        sb.deleteCharAt(sb.length() - 2);
-
-        // apply changes and return
-        this.translated = sb.toString();
         return true;
     }
 

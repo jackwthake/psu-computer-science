@@ -70,7 +70,7 @@ public class Context {
         }
 
         // if we reach out here and there's a '=' and a ';' present in the string, it must be a variable declaration
-        if (untranslated.contains("=") && untranslated.contains(";")) {
+        if ((untranslated.contains("=") || untranslated.contains("[")) && untranslated.contains(";")) {
             return Context_Type.VARIABLE;
         }
 

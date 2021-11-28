@@ -40,6 +40,7 @@ public class Translator {
 
                 System.out.print("Would you like to view the translation? (y/n): ");
                 conf = this.scanner.next().charAt(0);
+                this.scanner.nextLine();
                 if (Character.toLowerCase(conf) == 'y') {
                     this.context.emit_translation();
                 }
@@ -49,6 +50,7 @@ public class Translator {
 
             System.out.print("Would you like to translate another line? (y/n): ");
             conf = this.scanner.next().charAt(0);
+            this.scanner.nextLine();
         } while (Character.toLowerCase(conf) != 'n');
     }
 

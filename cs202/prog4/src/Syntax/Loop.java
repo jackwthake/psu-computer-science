@@ -67,18 +67,18 @@ public class Loop extends Conditional {
             return false;
 
         switch(this.tokens[0]) {
-            case "for":
-                if (this.translate_for_range_loop())
+            case "for": //FIXME: For loops no matter what generate "while true:"
+                if (this.translate_for_range_loop()) // "for (statement; statement; statement) { }
                     return true;
-                if (this.translate_for_in_loop())
+                if (this.translate_for_in_loop()) // "for (type data : array) { }"
                     return true;
                 break;
             case "while":
-                if (this.translate_while_loop())
+                if (super.translate()) // while loops can be translated in the same way if statements are
                     return true;
                 break;
             default:
-                throw new UnknownError();
+                throw new UnknownError("Unreachable");
         }
 
         return false;
@@ -157,18 +157,5 @@ public class Loop extends Conditional {
         this.translated = search_result;
 
         return true;
-    }
-
-
-    /**
-     * Translates a C++ While loop, i.e. while (condition) { }
-     * @return
-     * Returns true upon success, false otherwise.
-     */
-    private boolean translate_while_loop() {
-        // FIXME: This is a little buggy but gets the job mostly done
-        super.translate(); // while loops can be translated in the same way if statements are
-
-        return false;
     }
 }
