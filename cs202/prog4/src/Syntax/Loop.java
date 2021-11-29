@@ -67,7 +67,7 @@ public class Loop extends Conditional {
             return false;
 
         switch(this.tokens[0]) {
-            case "for": //FIXME: For loops no matter what generate "while true:"
+            case "for":
                 if (this.translate_for_range_loop()) // "for (statement; statement; statement) { }
                     return true;
                 if (this.translate_for_in_loop()) // "for (type data : array) { }"
@@ -97,7 +97,7 @@ public class Loop extends Conditional {
 
         // first we check for an infinite for loop, its tokens could either be "{ }", "{}" we check this first because
         // if we let it progress to the string refinement we'll get array out of bounds exceptions.
-        if (this.tokens[0].replaceAll(" ", "").compareToIgnoreCase("{}") != 0) {
+        if (this.tokens[1].replaceAll(" ", "").compareToIgnoreCase("{}") == 0) {
             this.translated = "while true:";
 
             return true;
