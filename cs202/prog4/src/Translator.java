@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 /**
  * Main class for the translator program, handles input and output with the user and interacts with the context class.
  */

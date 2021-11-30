@@ -50,7 +50,12 @@ abstract public class Syntax {
     }
 
 
-    protected boolean append_file_to_dictionary(String path) {
+    /**
+     * Appends a dictionary from disk onto the current dictionary
+     * @param path
+     * Path to the file containing the dictionary
+     */
+    protected void append_file_to_dictionary(String path) {
         // attempt to read the data file
         try(BufferedReader br = new BufferedReader(new FileReader(path))) {
             for(String line; (line = br.readLine()) != null; ) { // read line by line
@@ -59,11 +64,7 @@ abstract public class Syntax {
             }
         } catch (java.io.IOException e) {
             System.out.println("Failed to load data file at path " + path);
-
-            return false;
         }
-
-        return true;
     }
 
 
