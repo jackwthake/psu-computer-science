@@ -56,7 +56,7 @@ public class Conditional extends Syntax {
         this.translated = "";
         for (String token : this.tokens) {
             String str = this.syntax_dictionary.get_matching(token);
-            if (str != null) { // FIXME: Not finding relational operator substitutions in dictionary
+            if (str != null) {
                 this.translated = this.translated.concat(str + " ");
             } else {
                 this.translated = this.translated.concat(token + " ");

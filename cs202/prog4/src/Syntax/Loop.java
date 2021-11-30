@@ -26,7 +26,7 @@ public class Loop extends Conditional {
     @Override
     public void digest_string(String untranslated) {
         this.tokens = untranslated.split("\\(", 2);
-        String type = this.tokens[0];
+        String type = this.tokens[0].replace(" ", "");
 
         if (type.compareToIgnoreCase("while") == 0) {
             // if the loop is a while loop, we can digest it as if it were an if statement, using our parent's digest
@@ -73,7 +73,7 @@ public class Loop extends Conditional {
                 if (this.translate_for_in_loop()) // "for (type data : array) { }"
                     return true;
                 break;
-            case "while": // FIXME buggy translation, tokens get randomly omitted
+            case "while":
                 if (super.translate()) // while loops can be translated in the same way if statements are
                     return true;
                 break;
