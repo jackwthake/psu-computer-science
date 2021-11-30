@@ -1,5 +1,14 @@
 import java.util.Scanner;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Translator.java
+ * Monday, Nov 29th, 2021
+ *
+ * This class is meant to be the interface between the user and the underlying system.
+ */
+
 /**
  * Main class for the translator program, handles input and output with the user and interacts with the context class.
  */

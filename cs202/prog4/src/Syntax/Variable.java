@@ -1,5 +1,14 @@
 package Syntax;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Variable.java
+ *
+ * Represents the translation of a C++ variable declaration to a Python declaration. This class is derived from the
+ * Syntax class.
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

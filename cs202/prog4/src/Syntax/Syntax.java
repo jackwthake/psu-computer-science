@@ -1,5 +1,14 @@
 package Syntax;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Syntax.java
+ *
+ * Abstract base class for all the syntax classes, contains functionality to load a dictionary from file, as well as
+ * contains the basic variables needed by all the derived classes
+ */
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 

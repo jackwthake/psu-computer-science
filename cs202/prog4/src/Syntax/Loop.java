@@ -3,6 +3,15 @@ package Syntax;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Loop.java
+ *
+ * Contains all the functionality to translate a C++ loop to a Python loop. This class is a child of the Conditional
+ * as they are very similar. We can use some functionality from the conditional class
+ */
+
 /**
  * Represents the translation of a C++ loop to a Python loop
  */

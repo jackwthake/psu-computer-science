@@ -3,6 +3,15 @@ import Syntax.Loop;
 import Syntax.Syntax;
 import Syntax.Variable;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Context.java
+ *
+ * Represents one line of code to be translated, it determines the type of statement being passed to it and creates the
+ * appropriate object through dynamic binding.
+ */
+
 /**
  * Represents one C++ statement, determines which type it is and translates. This class makes use of dynamic binding.
  */

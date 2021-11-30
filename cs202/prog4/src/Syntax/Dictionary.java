@@ -1,5 +1,15 @@
 package Syntax;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Dictionary.java
+ *
+ * This class uses a linear linked list of pairs to act as a dictionary where one value of the pair represents a C++
+ * term with the other value representing the python equivalent. THere is only a node class in this implementation of the
+ * list, as each node contains the recursive functions needed to interact with itself or call to the next node's function.
+ */
+
 /**
  * Represents a Node in the list, this list has no LLL class just a node class. Each node contains the functionality
  * to work with itself, or move to the next node by calling the next nodes function.

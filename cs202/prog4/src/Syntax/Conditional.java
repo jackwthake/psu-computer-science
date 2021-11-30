@@ -1,5 +1,14 @@
 package Syntax;
 
+/*
+ * Jack Thake
+ * CS 202
+ * Conditional.java
+ *
+ * Contains all code needed to parse and translate a conditional statement, is the base class for the Loop class.
+ * Contains the functionality to translate as well as trim down the input string
+ */
+
 /**
  * Represents the translation of one C++ conditional statement to the equivalent python conditional statement
  */
