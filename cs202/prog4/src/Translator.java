@@ -67,6 +67,8 @@ public class Translator {
      * Enters a line of code into the context
      */
     private boolean get_input() {
+        System.out.println("Please limit variable declarations to one line i.e. 'char *name = \"Jack\";'");
+        System.out.println("Please include any curly braces present in a conditional or loop statement");
         System.out.println("Please enter a valid line of C++ code:");
         return this.context.translate(scanner.nextLine());
     }
