@@ -104,8 +104,9 @@ public class Variable extends Syntax {
         // remove data type token
         System.arraycopy(old_tokens, 1, this.tokens, 0, this.tokens.length);
 
-        for (String token : this.tokens) { // For a normal variable we don't need the dictionary
-            this.translated = this.translated.concat(token + " ");
+        for (String token : this.tokens) {
+            if (token.compareTo("new") != 0) // ignore the new keyword
+                this.translated = this.translated.concat(token + " ");
         }
 
         return true;
