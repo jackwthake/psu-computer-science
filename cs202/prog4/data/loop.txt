@@ -1,7 +1,2 @@
 for(),for * in range(!):
 for(:),for * in !:
-{,:
-}, 
-&&,and
-||,or
-!,not

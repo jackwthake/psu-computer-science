@@ -73,7 +73,7 @@ public class Loop extends Conditional {
                 if (this.translate_for_in_loop()) // "for (type data : array) { }"
                     return true;
                 break;
-            case "while":
+            case "while": // FIXME buggy translation, tokens get randomly omitted
                 if (super.translate()) // while loops can be translated in the same way if statements are
                     return true;
                 break;

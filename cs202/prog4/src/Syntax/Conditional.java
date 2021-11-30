@@ -21,7 +21,8 @@ public class Conditional extends Syntax {
      * Path to the dictionary file
      */
     protected Conditional(String path) {
-        super(path);
+        super(cond_path);
+        this.append_file_to_dictionary(path);
     }
 
 
