@@ -6,8 +6,16 @@ package Dictionary;
  *
  */
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class Tree {
     private Node root;
+
+    public static void main(String[] args) {
+        Tree t = new Tree("./data/dictionary.txt");
+        t.display();
+    }
 
 
     /**
@@ -15,6 +23,25 @@ public class Tree {
      */
     public Tree() {
         this.root = null;
+    }
+
+
+    /**
+     * Load a dictionary from file
+     * @param path
+     * the path of the file to load
+     */
+    public Tree(String path) {
+        this.root = null;
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+            for(String line; (line = br.readLine()) != null; ) { // read line by line
+                String[] tokens = line.split(",", 2); // format should be {Search term},{Definition}
+                this.insert(new Entry(tokens[0], tokens[1]));
+            }
+        } catch (java.io.IOException e) {
+            System.out.println("Failed to load data file at path " + path);
+        }
     }
 
 
