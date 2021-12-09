@@ -17,6 +17,9 @@ public class Entry {
     public final String get_value() {
         return this.value;
     }
+    public final String get_key() {
+        return this.key;
+    }
 
     public boolean isEqual(String key) {
         return this.key.compareToIgnoreCase(key) == 0;

@@ -5,15 +5,8 @@ package Dictionary;
  *
  */
 
-import java.util.Random;
-
 public class Tree {
     private Node root;
-
-    public static void main(String[] args) {
-
-    }
-
 
     public Tree() {
         this.root = null;
@@ -28,6 +21,26 @@ public class Tree {
         Node[] nodes = this.insert(this.root, null, data);
         this.root = nodes[0];
         this.check_and_fix_colors(nodes[1]);
+    }
+
+
+    /**
+     * Recursively display the tree
+     */
+    public void display() {
+        this.display(this.root);
+    }
+
+
+    /**
+     * Recursively search the tree for a result
+     * @param key
+     * The key to search for
+     * @return
+     * Returns either a matching entry or a null reference
+     */
+    public Entry search(String key) {
+        return this.search(this.root, key);
     }
 
 
@@ -178,5 +191,41 @@ public class Tree {
             root.parent.color = Node.Color.BLACK;
             grandparent.color = Node.Color.RED;
         }
+    }
+
+    /**
+     * Recursively display the tree
+     * @param root
+     * The current node to display
+     */
+    private void display(Node root) {
+        if (root == null) return;
+
+        this.display(root.left);
+        System.out.println(root.data.get_key());
+        System.out.println(root.data.get_value());
+        this.display(root.right);
+    }
+
+
+    /**
+     * Recursively search the tree
+     * @param root
+     * The current node to search
+     * @param key
+     * The key to seach for
+     * @return
+     * Returns a matching result or a null reference
+     */
+    private Entry search(Node root, String key) {
+        if (root == null) return null;
+
+        if (root.data.isEqual(key)) {
+            return root.data;
+        } else if (root.data.greater_than(key)) {
+            return this.search(root.left, key);
+        }
+
+        return this.search(root.right, key);
     }
 }
