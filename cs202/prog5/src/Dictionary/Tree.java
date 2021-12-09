@@ -1,4 +1,5 @@
 package Dictionary;
+
 /*
  * Jack Thake
  * Tree.java
@@ -8,6 +9,10 @@ package Dictionary;
 public class Tree {
     private Node root;
 
+
+    /**
+     * Default constructor
+     */
     public Tree() {
         this.root = null;
     }
@@ -16,6 +21,7 @@ public class Tree {
     /**
      * Insert an item into the tree
      * @param data
+     * THe entry to be inserted
      */
     public void insert(Entry data) {
         Node[] nodes = this.insert(this.root, null, data);
@@ -43,6 +49,14 @@ public class Tree {
         return this.search(this.root, key);
     }
 
+
+    /**
+     * Clears the tree
+     */
+    public void clear_tree() {
+        this.root = null;
+    }
+    
 
     /**
      * Inserts a node recursively into the list, not checking for color errors
@@ -193,6 +207,7 @@ public class Tree {
         }
     }
 
+
     /**
      * Recursively display the tree
      * @param root
@@ -213,7 +228,7 @@ public class Tree {
      * @param root
      * The current node to search
      * @param key
-     * The key to seach for
+     * The key to search for
      * @return
      * Returns a matching result or a null reference
      */
