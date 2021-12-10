@@ -11,7 +11,7 @@ package Syntax;
  */
 
 /**
- * Represents a Node in the list, this list has no LLL class just a node class. Each node contains the functionality
+ * Represents a Tree_node in the list, this list has no LLL class just a node class. Each node contains the functionality
  * to work with itself, or move to the next node by calling the next nodes function.
  */
 public class Dictionary {

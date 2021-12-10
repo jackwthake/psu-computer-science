@@ -3,20 +3,13 @@ package Dictionary;
 /*
  * Jack Thake
  * Tree.java
+ * CS202
  *
+ * Represents one Red-Black tree, using the node class.
  */
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 public class Tree {
-    private Node root;
-
-    public static void main(String[] args) {
-        Tree t = new Tree("./data/dictionary.txt");
-        t.display();
-    }
-
+    private Tree_node root;
 
     /**
      * Default constructor
@@ -27,31 +20,12 @@ public class Tree {
 
 
     /**
-     * Load a dictionary from file
-     * @param path
-     * the path of the file to load
-     */
-    public Tree(String path) {
-        this.root = null;
-
-        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
-            for(String line; (line = br.readLine()) != null; ) { // read line by line
-                String[] tokens = line.split(",", 2); // format should be {Search term},{Definition}
-                this.insert(new Entry(tokens[0], tokens[1]));
-            }
-        } catch (java.io.IOException e) {
-            System.out.println("Failed to load data file at path " + path);
-        }
-    }
-
-
-    /**
      * Insert an item into the tree
      * @param data
      * THe entry to be inserted
      */
     public void insert(Entry data) {
-        Node[] nodes = this.insert(this.root, null, data);
+        Tree_node[] nodes = this.insert(this.root, null, data);
         this.root = nodes[0];
         this.check_and_fix_colors(nodes[1]);
     }
@@ -96,12 +70,12 @@ public class Tree {
      * @return
      * Returns an array where the first index is the root, the second being a reference to the added node
      */
-    private Node[] insert(Node root, Node parent, Entry data) {
-        Node[] arr;
+    private Tree_node[] insert(Tree_node root, Tree_node parent, Entry data) {
+        Tree_node[] arr;
 
         if (root == null) {
-            Node tmp = new Node(data, parent);
-            return new Node[]{tmp, tmp};
+            Tree_node tmp = new Tree_node(data, parent);
+            return new Tree_node[]{tmp, tmp};
         }
 
         if (data.less_than(root.data)) {
@@ -122,19 +96,21 @@ public class Tree {
      * @param root
      * The node to act as the origin of the rotation
      */
-    private void rotate_right(Node root) {
-        Node parent = root.parent;
-        Node leftChild = root.left;
+    private void rotate_right(Tree_node root) {
+        Tree_node parent = root.parent;
+        Tree_node left = root.left;
 
-        root.left = leftChild.right;
-        if (leftChild.right != null) {
-            leftChild.right.parent = root;
+        // perform the rotation if possible
+        root.left = left.right;
+        if (left.right != null) {
+            left.right.parent = root;
         }
 
-        leftChild.right = root;
-        root.parent = leftChild;
+        left.right = root;
+        root.parent = left;
 
-        this.replace_parents_child(parent, root, leftChild);
+        // reset the parent child relationships after the rotation
+        this.replace_parents_child(parent, root, left);
     }
 
 
@@ -143,19 +119,21 @@ public class Tree {
      * @param root
      * The node to act as the origin of the rotation
      */
-    private void rotate_left(Node root) {
-        Node parent = root.parent;
-        Node rightChild = root.right;
+    private void rotate_left(Tree_node root) {
+        Tree_node parent = root.parent;
+        Tree_node right = root.right;
 
-        root.right = rightChild.left;
-        if (rightChild.left != null) {
-            rightChild.left.parent = root;
+        // perform the rotation if possible
+        root.right = right.left;
+        if (right.left != null) {
+            right.left.parent = root;
         }
 
-        rightChild.left = root;
-        root.parent = rightChild;
+        right.left = root;
+        root.parent = right;
 
-        this.replace_parents_child(parent, root, rightChild);
+        // Reset the parent child relationships after the rotation
+        this.replace_parents_child(parent, root, right);
     }
 
 
@@ -163,24 +141,23 @@ public class Tree {
      * Replace a parent's child after rotation
      * @param parent
      * The parent
-     * @param old_child
+     * @param old_c
      * The previous child
-     * @param new_child
+     * @param new_c
      * The new child
      */
-    private void replace_parents_child(Node parent, Node old_child, Node new_child) {
+    private void replace_parents_child(Tree_node parent, Tree_node old_c, Tree_node new_c) {
         if (parent == null) { // we are the root node
-            this.root = new_child;
-        } else if (parent.left == old_child) { // the child to replace is left
-            parent.left = new_child;
-        } else if (parent.right == old_child) { // the child to replace is right
-            parent.right = new_child;
-        } else { // not in the hierarchy
-            throw new IllegalStateException("Node is not a child of its parent");
-        }
+            this.root = new_c;
+        } else if (parent.left == old_c) { // the child to replace is left
+            parent.left = new_c;
+        } else if (parent.right == old_c) { // the child to replace is right
+            parent.right = new_c;
+        } else // not in the hierarchy
+            return;
 
-        if (new_child != null) { // change parent
-            new_child.parent = parent;
+        if (new_c != null) { // change parent
+            new_c.parent = parent;
         }
     }
 
@@ -190,47 +167,51 @@ public class Tree {
      * @param root
      * THe newly inserted node
      */
-    private void check_and_fix_colors(Node root) {
+    private void check_and_fix_colors(Tree_node root) {
         if (root.parent == null) { // the root is always black
-            root.color = Node.Color.BLACK;
+            root.color = Tree_node.Color.BLACK;
             return;
         }
 
-        if (root.parent.color == Node.Color.BLACK) { // no rule is violated if our parent is black
+        if (root.parent.color == Tree_node.Color.BLACK) { // no rule is violated if our parent is black
             return;
         }
 
-        Node grandparent = root.parent.parent;
-        if (grandparent == null) {
-            root.parent.color = Node.Color.BLACK;
+        // check if we have a gp
+        Tree_node gp = root.parent.parent;
+        if (gp == null) { // if we don't have a grandparent, then our parent has to be the root.
+            root.parent.color = Tree_node.Color.BLACK; // ensure the root is black
             return;
         }
 
-        Node uncle = root.get_uncle();
-        if (uncle != null && uncle.color == Node.Color.RED) {
-            root.parent.color = Node.Color.BLACK;
-            uncle.color = Node.Color.BLACK;
-            grandparent.color = Node.Color.RED;
+        // get the uncle of our current node, check it's color
+        Tree_node uncle = root.get_uncle();
+        if (uncle != null && uncle.color == Tree_node.Color.RED) {
+            // if uncle is red, then we need to recolor our parent and grandparent
+            root.parent.color = Tree_node.Color.BLACK;
+            uncle.color = Tree_node.Color.BLACK;
+            gp.color = Tree_node.Color.RED;
 
-            check_and_fix_colors(grandparent);
-        } else if (root.parent == grandparent.left) {
+            // since we recolored our grandparent we now need to check if that new color is correct
+            check_and_fix_colors(gp);
+        } else if (root.parent == gp.left) { // determine which type of rotation is necessary
             if (root == root.parent.right) {
                 rotate_left(root.parent);
                 root.parent = root;
             }
 
-            rotate_right(grandparent);
-            root.parent.color = Node.Color.BLACK; // FIXME Sometimes we reach here and parent is null?
-            grandparent.color = Node.Color.RED;
+            rotate_right(gp); // we always center the rotation around our grandparent
+            root.parent.color = Tree_node.Color.BLACK;
+            gp.color = Tree_node.Color.RED;
         } else {
             if (root == root.parent.left) {
                 rotate_right(root.parent);
                 root.parent = root;
             }
 
-            rotate_left(grandparent);
-            root.parent.color = Node.Color.BLACK;
-            grandparent.color = Node.Color.RED;
+            rotate_left(gp); // we always center the rotation around our grandparent
+            root.parent.color = Tree_node.Color.BLACK;
+            gp.color = Tree_node.Color.RED;
         }
     }
 
@@ -240,8 +221,10 @@ public class Tree {
      * @param root
      * The current node to display
      */
-    private void display(Node root) {
+    private void display(Tree_node root) {
         if (root == null) return;
+
+        // in order traversal
 
         this.display(root.left);
         System.out.println(root.data.get_key());
@@ -259,8 +242,10 @@ public class Tree {
      * @return
      * Returns a matching result or a null reference
      */
-    private Entry search(Node root, String key) {
+    private Entry search(Tree_node root, String key) {
         if (root == null) return null;
+
+        // just traverse as if it were a BST
 
         if (root.data.isEqual(key)) {
             return root.data;

@@ -3,7 +3,9 @@ package Dictionary;
 /*
  * Jack Thake
  * Entry.java
+ * CS202
  *
+ * This class represents one entry in the dictionary of python terms, used in the Tree_node class.
  */
 
 public class Entry {
@@ -32,5 +34,9 @@ public class Entry {
 
     public boolean less_than(Entry key) {
         return this.key.compareToIgnoreCase(key.key) < 0;
+    }
+
+    public String to_String() {
+        return this.key + "\n" + this.value;
     }
 }
