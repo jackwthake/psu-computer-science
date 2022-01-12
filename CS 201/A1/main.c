@@ -13,30 +13,28 @@ int main(int argc, char **argv) {
     char buf[10] = { 0 }, c;
     struct timeval start_time, end_time;
 
-    srand(time(NULL));
-    assert(gettimeofday(&start_time, NULL) == 0);
+    srand(time(NULL));                              /* initialise the random number generator */
+    assert(gettimeofday(&start_time, NULL) == 0);   /* get the starting time for the timer */
 
     for (i = 0; i < WORD_LENGTH; ++i) {
-        int curr_word = rand() % WORD_LENGTH;
-        while (has_visited[curr_word] == 1)
+        int curr_word = rand() % WORD_LENGTH;       /* get a random index in the words array */
+        while (has_visited[curr_word] == 1)         /* keep generating new indexes until an unused one is found */
             curr_word = rand() % WORD_LENGTH;
         
-        has_visited[curr_word] = 1;
+        has_visited[curr_word] = 1;                 /* set the unused word to used for the next iteration */
 
+        /* loop until the inputted strings match */
         while (strncmp(buf, words[curr_word], strlen(words[curr_word])) != 0) {
-            printf("%s: ", words[curr_word]);
+            printf("%s: ", words[curr_word]);       /* print out the word to type, and except the appropriately sized input */
             scanf("%10s", buf);
             while((c = getchar()) != '\n' && c != EOF);
         }
 
-        memset(buf, 0x00, 10);
+        memset(buf, 0x00, 10);                      /* without this, we could get with a different set of words false match */
     }
 
-    assert(gettimeofday(&end_time, NULL) == 0);
-    end_time.tv_sec -= start_time.tv_sec;
-    end_time.tv_usec -= start_time.tv_usec;
-
-    printf("Total time taken: %ld.%06d seconds\n", end_time.tv_sec, end_time.tv_usec);
+    assert(gettimeofday(&end_time, NULL) == 0);     /* get the ending time for the timer */
+    printf("Total time taken: %ld.%06d seconds\n", end_time.tv_sec - start_time.tv_sec, end_time.tv_usec - start_time.tv_usec);
 
     return 0;
 }
