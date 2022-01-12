@@ -9,7 +9,7 @@
 static const char *words[WORD_LENGTH] = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
 
 int main(int argc, char **argv) {
-    int has_visited[WORD_LENGTH] = { 0 }, i;        /* this array will be used as a boolean array for whether a word ahs already been typed */
+    int has_visited[WORD_LENGTH] = { 0 }, i;        /* this array will be used as a boolean array for whether a word has already been typed */
     char buf[10] = { 0 };
     struct timeval start_time, end_time;            /* these will be used to measure the time the user takes */
 
