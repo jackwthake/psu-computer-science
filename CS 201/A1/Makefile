@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-ansi -pedantic -Wall -Wextra -ggdb
+CFLAGS=-ansi -pedantic -ggdb
 
 default: main.c
 	$(CC) $(CFLAGS) main.c
