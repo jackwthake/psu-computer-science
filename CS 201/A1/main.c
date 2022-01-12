@@ -9,9 +9,9 @@
 static const char *words[WORD_LENGTH] = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
 
 int main(int argc, char **argv) {
-    int has_visited[WORD_LENGTH] = { 0 }, i;
+    int has_visited[WORD_LENGTH] = { 0 }, i;        /* this array will be used as a boolean array for whether a word ahs already been typed */
     char buf[10] = { 0 }, c;
-    struct timeval start_time, end_time;
+    struct timeval start_time, end_time;            /* these will be used to measure the time the user takes */
 
     srand(time(NULL));                              /* initialise the random number generator */
     assert(gettimeofday(&start_time, NULL) == 0);   /* get the starting time for the timer */
