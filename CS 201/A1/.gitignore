@@ -1,0 +1,7 @@
+typing_word_game
+*.txt
+*.*.log
+*.dSYM
+*.vscode
+build/
+__pycache__
