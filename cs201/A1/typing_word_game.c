@@ -8,6 +8,10 @@
 #define WORD_LENGTH 9
 static const char *words[WORD_LENGTH] = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
 
+int compare(const char *a, const char *b) {
+    return strlen(a) == strlen(b) && (strncmp(a, b, strlen(a)) == 0) ? 1 : 0;
+}
+
 int main(int argc, char **argv) {
     int has_visited[WORD_LENGTH] = { 0 }, i;
     char buf[10] = { 0 };
@@ -27,7 +31,7 @@ int main(int argc, char **argv) {
         has_visited[curr_word] = 1;
 
         /* loop until the inputted strings match */
-        while (strncmp(buf, words[curr_word], strlen(words[curr_word])) != 0) { // FAITAL: causes test 4 to fail
+        while (!compare(buf, words[curr_word])) { // FAITAL: causes test 4 to fail
             printf("word #%d is %s: ", i + 1, words[curr_word]);
             scanf("%10s", buf);
             while((c = getchar()) != '\n' && c != EOF);
