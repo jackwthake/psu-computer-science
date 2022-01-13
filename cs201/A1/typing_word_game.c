@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         has_visited[curr_word] = 1;
 
         /* loop until the inputted strings match */
-        while (!compare(buf, words[curr_word])) { // FAITAL: causes test 4 to fail
+        while (!compare(buf, words[curr_word])) {
             printf("word #%d is %s: ", i + 1, words[curr_word]);
             scanf("%10s", buf);
             while((c = getchar()) != '\n' && c != EOF); /* consume unneeded chars */
