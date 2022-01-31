@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <assert.h>
 
 /* 
@@ -19,13 +20,20 @@ void wrapped_printf(const char *fmt, ...) {
 /*
  * Print the binary representation of a 16 bit unsigned integer
 */
-void print_binary(u_int16_t num) {
-    int i = 0;
-    for (i = 0; i < 16; ++i) {
+void print_binary(uint16_t num) {
+    int i;
+
+    /* iterate through input, determine if there should be a 1 or 0 at a given position. */
+    for (i = 15; i >= 0; --i) {
         if (num >> i & 0x1) {
             wrapped_printf("1");
         } else {
             wrapped_printf("0");
+        }
+
+        /* pretty print in spaces every 4 characters */
+        if (i % 4 == 0 && i < 16) {
+            wrapped_printf(" ");
         }
     }
 
@@ -33,7 +41,7 @@ void print_binary(u_int16_t num) {
 }
 
 int main(int argc, char **argv) {
-    u_int16_t result = 0x00;
+    uint16_t result = 0x00;
     size_t i;
 
     if (argc < 2) { /* ensure there are arguments to be parsed */
@@ -41,15 +49,17 @@ int main(int argc, char **argv) {
         return -1;
     }
 
+    /* iterate through the provided arguments */
     for (i = 1; i < argc; ++i) {
         char *end = NULL;
-        u_int16_t arg = strtol(argv[i], &end, 10);
+        uint16_t arg = strtol(argv[i], &end, 10);
         
-        if (arg > 15) {
+        if (arg < 0 || arg > 15) { /* check provided argument */
             printf("Arguments must be in the range [0...15].\n");
             return -1;
         }
 
+        /* set the apropriate bit */
         result |= (uint16_t)0x01 << arg;
     }
 
