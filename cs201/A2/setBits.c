@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <assert.h>
 
@@ -41,7 +42,15 @@ int main(int argc, char **argv) {
     }
 
     for (i = 1; i < argc; ++i) {
-        wrapped_printf("%s\n", argv[i]);
+        char *end = NULL;
+        u_int16_t arg = strtol(argv[i], &end, 10);
+        
+        if (arg > 15) {
+            printf("Arguments must be in the range [0...15].\n");
+            return -1;
+        }
+
+        result |= (uint16_t)0x01 << arg;
     }
 
     print_binary(result);
