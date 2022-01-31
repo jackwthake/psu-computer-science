@@ -18,7 +18,7 @@ void wrapped_printf(const char *fmt, ...) {
 }
 
 int main(int argc, char **argv) {
-    int i, first = 1;
+    int i;
     uint32_t a, b, result;
     char *end;
 
@@ -33,23 +33,16 @@ int main(int argc, char **argv) {
     assert(end != NULL);
 
     result = a & b;
+    wrapped_printf("Bits ");
     if (result) {
-        wrapped_printf("Bits ");
         for (i = 0; i < 32; ++i) {
             if (result >> i & 0x1) {
-                if (first) {
-                    wrapped_printf("%d", i);
-                    first = 0;
-                } else {
-                    wrapped_printf(",%d", i);
-                }
+                wrapped_printf("%d,", i);
             }
         }
-
-        wrapped_printf(" in common.  Hexadecimal: %x, Signed: %d, Unsigned: %u\n", result, result, result);
-    } else {
-        wrapped_printf("No bits in common.\n");
     }
+
+    wrapped_printf(" in common. Hexadecimal: %x, Signed: %d, Unsigned: %u.\n", result, result, result);
 
     return 0;
 }
