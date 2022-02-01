@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
         char *end = NULL;
         uint16_t arg = strtol(argv[i], &end, 10);
         
-        if (arg < 0 || arg > 15) { /* check provided argument */
+        if ((arg < 0 || arg > 15) && end != argv[i]) { /* check provided argument */
             wrapped_printf("Arguments must be in the range [0...15].\n");
             return -1;
         }
