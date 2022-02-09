@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-Wall -ansi
-DFLAGS=-g
-PROGS= setBits showBits
+LDFLAGS=-lm
+PROGS=fp_parse
 
 all: $(PROGS)
 
 %: %.c
-	$(CC) $(CFLAGS) $(DFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
 
 clean:
 	rm -f $(PROGS) *.o ~*
