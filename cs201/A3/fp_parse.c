@@ -19,26 +19,6 @@ void wrapped_printf(const char *fmt, ...) {
     va_end(args);
 }
 
-void print_binary(uint16_t num) {
-    int i;
-
-    /* iterate through input, determine if there should be a 1 or 0 at a given position. */
-    for (i = 15; i >= 0; --i) {
-        if (num >> i & 0x1) {
-            wrapped_printf("1");
-        } else {
-            wrapped_printf("0");
-        }
-
-        /* pretty print in spaces every 4 characters */
-        if (i % 4 == 0 && i < 16) {
-            wrapped_printf(" ");
-        }
-    }
-
-    wrapped_printf("\n");
-}
-
 /* get the length of a binary string without leading zeroes */
 int get_binary_length(int num) {
     int acc = 0, i;
@@ -55,8 +35,8 @@ int get_binary_length(int num) {
 
 
 unsigned generate_bitmask(int offset, int mask_length) {
-    unsigned mask = 0x00;
-    for (int i = offset; i < mask_length + offset; ++i) { /* set a region of a string to 1 */
+    unsigned mask = 0x00, i;
+    for (i = offset; i < mask_length + offset; ++i) { /* set a region of a string to 1 */
         mask |= (1 << i); /* set the current bit */
     }
 
@@ -64,16 +44,51 @@ unsigned generate_bitmask(int offset, int mask_length) {
 }
 
 
+float get_fraction(unsigned fraction) {
+    int length = get_binary_length(fraction), i, j;
+    float acc = 0.0f;
+    for (i = 0, j = length; i < length; ++i, --j) {
+        if ((fraction >> i) & 0x1) {
+            acc += pow(2, -j);
+        }
+    }
+
+    return acc;
+}
+
+
+/* V = (-1)^s * M * 2^e*/
 void show_float(int f_bits, int e_bits, int bias, int num) {
     unsigned f_mask = generate_bitmask(0, f_bits);
     unsigned e_mask = generate_bitmask(f_bits, e_bits);
-    unsigned fraction = f_mask & num, exponent = e_mask & num;
-    int sign = num >> (f_bits + e_bits);
+    unsigned fraction = f_mask & num, exponent = (e_mask & num) >> f_bits;
+    int sign = num >> (f_bits + e_bits), E, S;
+    float M;
 
-    print_binary(num);
-    print_binary(fraction);
-    print_binary(exponent);
-    print_binary(sign);
+    if (exponent == generate_bitmask(0, e_bits)) { /* exponent is all 1's - Special values */
+        if (fraction == 0x00) {
+            if (sign) {
+                wrapped_printf("-");
+            } else {
+                wrapped_printf("+");
+            }
+            
+            wrapped_printf("inf\n");
+        } else {
+            wrapped_printf("NaN\n");
+        }
+
+        return;
+    } else if (exponent == 0x00) /* exponent is all zeros - denormalized */{
+        M = get_fraction(fraction);
+        E = 1 - bias;
+    } else { /* normalised */
+        M = get_fraction(fraction) + 1;
+        E = exponent - bias;
+    }
+
+    S = pow(-1, sign);
+    wrapped_printf("%f\n", S * M * pow(2, E));
 }
 
 int main(int argc, char **argv) {
