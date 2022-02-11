@@ -19,9 +19,6 @@ void wrapped_printf(const char *fmt, ...) {
     va_end(args);
 }
 
-/*
- * Print the binary representation of a 16 bit unsigned integer
-*/
 void print_binary(uint16_t num) {
     int i;
 
@@ -42,35 +39,72 @@ void print_binary(uint16_t num) {
     wrapped_printf("\n");
 }
 
-void show_float(int fraction, int exponent, int bias, int num) {
-    int E = 0;
-    while (num) {
-        ++E;
-        num &= num - 1;
+/* get the length of a binary string without leading zeroes */
+int get_binary_length(int num) {
+    int acc = 0, i;
+    /* reconstruct binary, bit * 2^i stop when it adds up to the target, returning the number of bits in the number */
+    for (i = 0; i < 16; ++i) { /* the largest possible bit string is 16 bits */
+        acc += ((num >> i) & 0x1) * pow(2, i);
+
+        if (acc == num)
+            return i + 1;
     }
 
-    wrapped_printf("exp: %d, bias: %d\n", E + bias, bias);
+    return -1; /* an error occured if we reach here */
+}
+
+
+unsigned generate_bitmask(int offset, int mask_length) {
+    unsigned mask = 0x00;
+    for (int i = offset; i < mask_length + offset; ++i) { /* set a region of a string to 1 */
+        mask |= (1 << i); /* set the current bit */
+    }
+
+    return mask;
+}
+
+
+void show_float(int f_bits, int e_bits, int bias, int num) {
+    unsigned f_mask = generate_bitmask(0, f_bits);
+    unsigned e_mask = generate_bitmask(f_bits, e_bits);
+    unsigned fraction = f_mask & num, exponent = e_mask & num;
+    int sign = num >> (f_bits + e_bits);
+
+    print_binary(num);
+    print_binary(fraction);
+    print_binary(exponent);
+    print_binary(sign);
 }
 
 int main(int argc, char **argv) {
-    int fraction = 0, exponent = 0, num = 0x00, bias;
+    int f_bits = 0, e_bits = 0, num = 0x00, bias;
+    int true_length = 0;
     
     if (argc != 4) {
         wrapped_printf("Not enough arguments supplied.\n");
         return EXIT_FAILURE;
     }
 
-    assert(sscanf(argv[1], "%d", &fraction) > 0);
-    assert(sscanf(argv[2], "%d", &exponent) > 0);
+    /* grab command line arguments */
+    assert(sscanf(argv[1], "%d", &f_bits) > 0);
+    assert(sscanf(argv[2], "%d", &e_bits) > 0);
     assert(sscanf(argv[3], "%x", &num) > 0);
 
-    if ((fraction < 2 || fraction > 10) || (exponent < 3 || exponent > 5)) {
+    /* bounds check sign bits */
+    if ((f_bits < 2 || f_bits > 10) || (e_bits < 3 || e_bits > 5)) {
         wrapped_printf("Invalid argument\n");
         return EXIT_FAILURE;
     }
 
-    bias = pow(2, exponent - 1) - 1;
-    show_float(fraction, exponent, bias, num);
+    /* checks that the inputted number can be represented within the inputted amount of bits, + 1 is for sign bit */
+    true_length = get_binary_length(num);
+    if (true_length <= 1 + e_bits + f_bits && true_length != -1) {
+        bias = pow(2, e_bits - 1) - 1; /* from spec */
+        show_float(f_bits, e_bits, bias, num);
+    } else {
+        wrapped_printf("Invalid input.\n");
+        return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }
