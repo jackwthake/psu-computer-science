@@ -34,6 +34,7 @@ int get_binary_length(int num) {
 }
 
 
+/* generate a bitmask covering a region of a bitstring */
 unsigned generate_bitmask(int offset, int mask_length) {
     unsigned mask = 0x00, i;
     for (i = offset; i < mask_length + offset; ++i) { /* set a region of a string to 1 */
@@ -44,6 +45,7 @@ unsigned generate_bitmask(int offset, int mask_length) {
 }
 
 
+/* get the fraction out of the binary string */
 float get_fraction(unsigned fraction) {
     int length = get_binary_length(fraction), i, j;
     float acc = 0.0f;
@@ -57,24 +59,23 @@ float get_fraction(unsigned fraction) {
 }
 
 
-/* V = (-1)^s * M * 2^e*/
+/* Show the IEEE 754 representation of the passed number with the specified number of bits */
 void show_float(int f_bits, int e_bits, int bias, int num) {
-    unsigned f_mask = generate_bitmask(0, f_bits);
-    unsigned e_mask = generate_bitmask(f_bits, e_bits);
-    unsigned fraction = f_mask & num, exponent = (e_mask & num) >> f_bits;
+    unsigned f_mask = generate_bitmask(0, f_bits), e_mask = generate_bitmask(f_bits, e_bits); /* bitmasks to isolate fields */
+    unsigned fraction = f_mask & num, exponent = (e_mask & num) >> f_bits; /* isolate fields and shift appropriately */
     int sign = num >> (f_bits + e_bits), E, S;
     float M;
 
     if (exponent == generate_bitmask(0, e_bits)) { /* exponent is all 1's - Special values */
-        if (fraction == 0x00) {
+        if (fraction == 0x00) { /* either positive or negative infinity */
             if (sign) {
                 wrapped_printf("-");
             } else {
                 wrapped_printf("+");
             }
-            
+
             wrapped_printf("inf\n");
-        } else {
+        } else { /* exponent is 0 but fraction is not, results in NaN */
             wrapped_printf("NaN\n");
         }
 
@@ -87,9 +88,11 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
         E = exponent - bias;
     }
 
+    /* final calculation */
     S = pow(-1, sign);
     wrapped_printf("%f\n", S * M * pow(2, E));
 }
+
 
 int main(int argc, char **argv) {
     int f_bits = 0, e_bits = 0, num = 0x00, bias;
