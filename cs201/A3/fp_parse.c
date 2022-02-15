@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdint.h>
-#include <ctype.h>
-#include <string.h>
 
 #include <math.h>
 #include <assert.h>
@@ -39,7 +37,7 @@ int get_binary_length(int num) {
 float get_fraction(unsigned fraction, unsigned num_bits) {
     int i, j;
     float acc = 0.0f;
-    fraction <<= 1;
+    fraction <<= 1; /* janky hack, only way for it to work, confused */
     for (i = 0, j = num_bits + 1; i < num_bits + 1; ++i, --j) {
         acc += ((fraction >> j) & 0x1) * pow(2, -i);
     }
@@ -59,25 +57,22 @@ unsigned generate_bitmask(int offset, int mask_length) {
 
 /* Show the IEEE 754 representation of the passed number with the specified number of bits */
 void show_float(int f_bits, int e_bits, int bias, int num) {
-    unsigned f_mask = generate_bitmask(0, f_bits), e_mask = generate_bitmask(f_bits, e_bits); /* bitmasks to isolate fields */
-    unsigned fraction = f_mask & num, exponent = (e_mask & num) >> f_bits; /* isolate fields and shift appropriately */
-    int sign = num >> (f_bits + e_bits), E, S;
+    unsigned fraction = generate_bitmask(0, f_bits) & num, exponent = (generate_bitmask(f_bits, e_bits) & num) >> f_bits; /* isolate fields and shift appropriately */
+    int sign = num >> (f_bits + e_bits), E;
     float M;
 
     if (exponent == generate_bitmask(0, e_bits)) { /* exponent is all 1's - Special values */
         if (fraction == 0x00) { /* either positive or negative infinity */
-            if (sign) {
+            if (sign)
                 wrapped_printf("-");
-            } else {
+            else
                 wrapped_printf("+");
-            }
 
             wrapped_printf("inf\n");
-        } else { /* exponent is 0 but fraction is not, results in NaN */
+        } else /* exponent is 0 but fraction is not, results in NaN */
             wrapped_printf("NaN\n");
-        }
 
-        return;
+        return; /* we return because no calculation is necesary */
     } else if (exponent == 0x00) /* exponent is all zeros - denormalized */{
         M = get_fraction(fraction, f_bits);
         E = 1 - bias;
@@ -86,16 +81,14 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
         E = exponent - bias;
     }
 
-    /* final calculation */
-    S = pow(-1, sign);
-    wrapped_printf("%f\n", S * M * pow(2, E));
+    /* print final calculation */
+    wrapped_printf("%f\n", pow(-1, sign) * M * pow(2, E));
 }
 
 
 int main(int argc, char **argv) {
     int f_bits = 0, e_bits = 0, num = 0x00, bias;
     int true_length = 0;
-    char buf[10] = { 0x00 };
     
     if (argc != 4) {
         wrapped_printf("Not enough arguments supplied.\n");
