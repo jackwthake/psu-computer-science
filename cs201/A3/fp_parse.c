@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <ctype.h>
+#include <string.h>
 
 #include <math.h>
 #include <assert.h>
@@ -33,6 +35,17 @@ int get_binary_length(int num) {
     return -1; /* an error occured if we reach here */
 }
 
+/* get the fraction out of the binary string */
+float get_fraction(unsigned fraction, unsigned num_bits) {
+    int i, j;
+    float acc = 0.0f;
+    fraction <<= 1;
+    for (i = 0, j = num_bits + 1; i < num_bits + 1; ++i, --j) {
+        acc += ((fraction >> j) & 0x1) * pow(2, -i);
+    }
+
+    return acc;
+}
 
 /* generate a bitmask covering a region of a bitstring */
 unsigned generate_bitmask(int offset, int mask_length) {
@@ -43,21 +56,6 @@ unsigned generate_bitmask(int offset, int mask_length) {
 
     return mask;
 }
-
-
-/* get the fraction out of the binary string */
-float get_fraction(unsigned fraction) {
-    int length = get_binary_length(fraction), i, j;
-    float acc = 0.0f;
-    for (i = 0, j = length; i < length; ++i, --j) {
-        if ((fraction >> i) & 0x1) {
-            acc += pow(2, -j);
-        }
-    }
-
-    return acc;
-}
-
 
 /* Show the IEEE 754 representation of the passed number with the specified number of bits */
 void show_float(int f_bits, int e_bits, int bias, int num) {
@@ -81,10 +79,10 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
 
         return;
     } else if (exponent == 0x00) /* exponent is all zeros - denormalized */{
-        M = get_fraction(fraction);
+        M = get_fraction(fraction, f_bits);
         E = 1 - bias;
     } else { /* normalised */
-        M = get_fraction(fraction) + 1;
+        M = get_fraction(fraction, f_bits) + 1;
         E = exponent - bias;
     }
 
@@ -97,6 +95,7 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
 int main(int argc, char **argv) {
     int f_bits = 0, e_bits = 0, num = 0x00, bias;
     int true_length = 0;
+    char buf[10] = { 0x00 };
     
     if (argc != 4) {
         wrapped_printf("Not enough arguments supplied.\n");
