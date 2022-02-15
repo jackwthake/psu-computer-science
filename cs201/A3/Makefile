@@ -6,7 +6,7 @@ PROGS=fp_parse
 all: $(PROGS)
 
 %: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 
 clean:
 	rm -f $(PROGS) *.o ~*
