@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <ctype.h>
+#include <string.h>
 
 #include <math.h>
 #include <assert.h>
@@ -17,6 +19,24 @@ void wrapped_printf(const char *fmt, ...) {
     va_start(args, fmt);
     assert(vprintf(fmt, args) > 0);
     va_end(args);
+}
+
+/*
+ * searches for illegal characters in an input string
+ * Adapted from: https://stackoverflow.com/questions/223832/check-a-string-to-see-if-all-characters-are-hexadecimal-values
+*/
+int check_argument(const char *buf) {
+    int i;
+    for (i = 0; i < strnlen(buf, 5); ++i) {
+        int is_hex = (buf[i] >= '0' && buf[i] <= '9') ||
+                     (buf[i] >= 'a' && buf[i] <= 'f') ||
+                     (buf[i] >= 'A' && buf[i] <= 'F');
+        
+        if (!is_hex)
+            return 0;
+    }
+
+    return 1;
 }
 
 /* get the length of a binary string without leading zeroes */
@@ -99,6 +119,7 @@ int main(int argc, char **argv) {
     assert(sscanf(argv[1], "%d", &f_bits) > 0);
     assert(sscanf(argv[2], "%d", &e_bits) > 0);
     assert(sscanf(argv[3], "%x", &num) > 0);
+    assert(check_argument(argv[3]));
 
     /* bounds check sign bits */
     if ((f_bits < 2 || f_bits > 10) || (e_bits < 3 || e_bits > 5)) {
