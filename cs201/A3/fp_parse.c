@@ -1,25 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <stdint.h>
 #include <ctype.h>
 #include <string.h>
 
 #include <math.h>
-#include <assert.h>
 
-/* 
- * this function wraps the normal printf and error checks.
- * Variadic argument list from printf.c from:
- * https://code.woboq.org/userspace/glibc/stdio-common/printf.c.html
-*/
-void wrapped_printf(const char *fmt, ...) {
-    va_list args;
-
-    va_start(args, fmt);
-    assert(vprintf(fmt, args) > 0);
-    va_end(args);
-}
 
 /*
  * searches for illegal characters in an input string
@@ -84,13 +69,13 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
     if (exponent == generate_bitmask(0, e_bits)) { /* exponent is all 1's - Special values */
         if (fraction == 0x00) { /* either positive or negative infinity */
             if (sign)
-                wrapped_printf("-");
+                printf("-");
             else
-                wrapped_printf("+");
+                printf("+");
 
-            wrapped_printf("inf\n");
+            printf("inf\n");
         } else /* exponent is 0 but fraction is not, results in NaN */
-            wrapped_printf("NaN\n");
+            printf("NaN\n");
 
         return; /* we return because no calculation is necesary */
     } else if (exponent == 0x00) /* exponent is all zeros - denormalized */{
@@ -102,7 +87,7 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
     }
 
     /* print final calculation */
-    wrapped_printf("%f\n", pow(-1, sign) * M * pow(2, E));
+    printf("%f\n", pow(-1, sign) * M * pow(2, E));
 }
 
 
@@ -111,19 +96,29 @@ int main(int argc, char **argv) {
     int true_length = 0;
     
     if (argc != 4) {
-        wrapped_printf("Not enough arguments supplied.\n");
+        printf("Not enough arguments supplied.\n");
         return EXIT_FAILURE;
     }
 
     /* grab command line arguments */
-    assert(sscanf(argv[1], "%d", &f_bits) > 0);
-    assert(sscanf(argv[2], "%d", &e_bits) > 0);
-    assert(sscanf(argv[3], "%x", &num) > 0);
-    assert(check_argument(argv[3]));
+    if(sscanf(argv[1], "%d", &f_bits) != 1) { /* if sscanf returns 1, then we know it was able to convert and assign */
+        printf("Invalid number of fraction bits.\n");
+        return EXIT_FAILURE;
+    }
+    
+    if(sscanf(argv[2], "%d", &e_bits) != 1) {
+        printf("Invalid number of exponent bits.\n");
+        return EXIT_FAILURE;
+    }
+    
+    if(!check_argument(argv[3]) || sscanf(argv[3], "%x", &num) != 1) {
+        printf("Invalid hex number inputted.\n");
+        return EXIT_FAILURE;
+    }
 
     /* bounds check sign bits */
     if ((f_bits < 2 || f_bits > 10) || (e_bits < 3 || e_bits > 5)) {
-        wrapped_printf("Invalid argument\n");
+        printf("Invalid argument\n");
         return EXIT_FAILURE;
     }
 
@@ -133,7 +128,7 @@ int main(int argc, char **argv) {
         bias = pow(2, e_bits - 1) - 1; /* from spec */
         show_float(f_bits, e_bits, bias, num);
     } else {
-        wrapped_printf("Invalid input.\n");
+        printf("Invalid input.\n");
         return EXIT_FAILURE;
     }
 
