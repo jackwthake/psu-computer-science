@@ -1,10 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
-
 #include <math.h>
-
 
 /*
  * searches for illegal characters in an input string
@@ -97,29 +93,29 @@ int main(int argc, char **argv) {
     
     if (argc != 4) {
         printf("Not enough arguments supplied.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
     /* grab command line arguments */
     if(sscanf(argv[1], "%d", &f_bits) != 1) { /* if sscanf returns 1, then we know it was able to convert and assign */
         printf("Invalid number of fraction bits.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
     
     if(sscanf(argv[2], "%d", &e_bits) != 1) {
         printf("Invalid number of exponent bits.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
     
     if(!check_argument(argv[3]) || sscanf(argv[3], "%x", &num) != 1) {
         printf("Invalid hex number inputted.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
     /* bounds check sign bits */
     if ((f_bits < 2 || f_bits > 10) || (e_bits < 3 || e_bits > 5)) {
         printf("Invalid argument\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
     /* checks that the inputted number can be represented within the inputted amount of bits, + 1 is for sign bit */
@@ -129,8 +125,8 @@ int main(int argc, char **argv) {
         show_float(f_bits, e_bits, bias, num);
     } else {
         printf("Invalid input.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }
