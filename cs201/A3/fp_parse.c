@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-
-#define __STDC_WANT_LIB_EXT1__ 1 /* https://en.cppreference.com/w/c/string/byte/strlen */
 #include <string.h>
 
 /*
@@ -10,7 +8,7 @@
 */
 int check_argument(const char *buf) {
     int i;
-    for (i = 0; i < strnlen_s(buf, 5); ++i) {
+    for (i = 0; i < strnlen(buf, 5); ++i) {
         int is_hex = (buf[i] >= '0' && buf[i] <= '9') ||
                      (buf[i] >= 'a' && buf[i] <= 'f') ||
                      (buf[i] >= 'A' && buf[i] <= 'F');
