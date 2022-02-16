@@ -1,6 +1,8 @@
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
+
+#define __STDC_WANT_LIB_EXT1__ 1 /* https://en.cppreference.com/w/c/string/byte/strlen */
+#include <string.h>
 
 /*
  * searches for illegal characters in an input string
@@ -8,7 +10,7 @@
 */
 int check_argument(const char *buf) {
     int i;
-    for (i = 0; i < strnlen(buf, 5); ++i) {
+    for (i = 0; i < strnlen_s(buf, 5); ++i) {
         int is_hex = (buf[i] >= '0' && buf[i] <= '9') ||
                      (buf[i] >= 'a' && buf[i] <= 'f') ||
                      (buf[i] >= 'A' && buf[i] <= 'F');
@@ -24,7 +26,7 @@ int check_argument(const char *buf) {
 int get_binary_length(int num) {
     int acc = 0, i;
     /* reconstruct binary, bit * 2^i stop when it adds up to the target, returning the number of bits in the number */
-    for (i = 0; i < 16; ++i) { /* the largest possible bit string is 16 bits */
+    for (i = 0; i < 16; ++i) { /* the largest possible bit string is 16 bits, per spec */
         acc += ((num >> i) & 0x1) * pow(2, i);
 
         if (acc == num)
@@ -82,7 +84,7 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
         E = exponent - bias;
     }
 
-    /* print final calculation */
+    /* print final calculation, V value */
     printf("%f\n", pow(-1, sign) * M * pow(2, E));
 }
 
@@ -107,6 +109,7 @@ int main(int argc, char **argv) {
         return -1;
     }
     
+    /* check the inputted hex number for illegal characters */
     if(!check_argument(argv[3]) || sscanf(argv[3], "%x", &num) != 1) {
         printf("Invalid hex number inputted.\n");
         return -1;
