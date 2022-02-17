@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <math.h>
 #include <string.h>
 
@@ -58,9 +60,10 @@ unsigned generate_bitmask(int offset, int mask_length) {
 
 /* Show the IEEE 754 representation of the passed number with the specified number of bits */
 void show_float(int f_bits, int e_bits, int bias, int num) {
-    unsigned fraction = generate_bitmask(0, f_bits) & num, exponent = (generate_bitmask(f_bits, e_bits) & num) >> f_bits; /* isolate fields and shift appropriately */
+    unsigned fraction = generate_bitmask(0, f_bits) & num; /* isolate fields and shift appropriately */
+    unsigned exponent = (generate_bitmask(f_bits, e_bits) & num) >> f_bits;
     int sign = num >> (f_bits + e_bits), E;
-    float M;
+    float M, V;
 
     if (exponent == generate_bitmask(0, e_bits)) { /* exponent is all 1's - Special values */
         if (fraction == 0x00) { /* either positive or negative infinity */
@@ -82,8 +85,9 @@ void show_float(int f_bits, int e_bits, int bias, int num) {
         E = exponent - bias;
     }
 
-    /* print final calculation, V value */
-    printf("%f\n", pow(-1, sign) * M * pow(2, E));
+    /* calculate and print final value, V = -1^S * M * 2^E */
+    V = pow(-1, sign) * M * pow(2, E);
+    printf("%f\n", V);
 }
 
 
@@ -93,30 +97,30 @@ int main(int argc, char **argv) {
     
     if (argc != 4) {
         printf("Not enough arguments supplied.\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
     /* grab command line arguments */
     if(sscanf(argv[1], "%d", &f_bits) != 1) { /* if sscanf returns 1, then we know it was able to convert and assign */
         printf("Invalid number of fraction bits.\n");
-        return -1;
+        return EXIT_FAILURE;
     }
     
     if(sscanf(argv[2], "%d", &e_bits) != 1) {
         printf("Invalid number of exponent bits.\n");
-        return -1;
+        return EXIT_FAILURE;
     }
     
     /* check the inputted hex number for illegal characters */
     if(!check_argument(argv[3]) || sscanf(argv[3], "%x", &num) != 1) {
         printf("Invalid hex number inputted.\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
     /* bounds check sign bits */
     if ((f_bits < 2 || f_bits > 10) || (e_bits < 3 || e_bits > 5)) {
         printf("Invalid argument\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
     /* checks that the inputted number can be represented within the inputted amount of bits, + 1 is for sign bit */
@@ -126,8 +130,8 @@ int main(int argc, char **argv) {
         show_float(f_bits, e_bits, bias, num);
     } else {
         printf("Invalid input.\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
