@@ -19,7 +19,7 @@ typedef void (*menu_callback)(callback_args *);
  * Represents one entry in the menu
 */
 typedef struct menu_entry_t {
-    int valid;
+    size_t menu_length;
     char *menu_text;
     menu_callback callback;
 } menu_entry_t;
@@ -36,6 +36,13 @@ typedef struct menu_t {
 
 /* menu_entry_t functions */
 int create_entry(menu_entry_t *entry, const char *text, menu_callback callback);
+int copy_entry(menu_entry_t *dest, const menu_entry_t *src);
 void destroy_entry(menu_entry_t *entry);
+
+/* menu_t functions */
+int create_menu(menu_t *menu, menu_entry_t *entries, size_t length);
+void destroy_menu(menu_t *menu);
+void print_menu(menu_t *menu);
+void execute_entry(menu_t *menu, unsigned index, callback_args *args);
 
 #endif

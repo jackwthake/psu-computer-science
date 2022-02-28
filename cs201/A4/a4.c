@@ -13,18 +13,20 @@ void test_callback(callback_args *args) {
 }
 
 int main(int argc, char **argv) {
-    menu_entry_t entry;
-    if (!create_entry(&entry, "hello", test_callback)) {
-        exit_error_state("Failed to create entry");
-    }
+    menu_entry_t entries[1];
+    create_entry(&entries[0], "hellow", test_callback);
+
+    menu_t menu;
+    create_menu(&menu, entries, 1);
 
     if (argc < 3 || argc > 15) {
-       exit_error_state("Invalid number of inputs supplied.");
+      exit_error_state("Invalid number of inputs supplied.");
     }
 
-    printf("%s\n", entry.menu_text);
-    entry.callback(NULL);
-    destroy_entry(&entry);
+    print_menu(&menu);
+    execute_entry(&menu, 0, NULL);
 
+    destroy_menu(&menu);
+    destroy_entry(&entries[0]);
     return EXIT_SUCCESS;
 }
