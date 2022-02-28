@@ -1,12 +1,16 @@
 CC=gcc
 CFLAGS=-Wall -ansi
 DFLAGS=-g
-PROGS= setBits showBits
+PROGS=a4
+OBJS=menu.o
 
-all: $(PROGS)
+all: $(OBJS) $(PROGS)
 
-%: %.c
-	$(CC) $(CFLAGS) $(DFLAGS) $< -o $@
+a4: a4.c 
+	$(CC) $(CFLAGS) $(DFLAGS) $< -o $@ $(OBJS)
+
+menu.o: menu.c menu.h 
+	$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(PROGS) *.o ~*
