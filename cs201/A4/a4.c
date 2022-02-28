@@ -13,5 +13,13 @@ int main(int argc, char **argv) {
         exit_error_state("Invalid number of inputs supplied.");
     }
 
+    menu_entry_t *entry = create_menu_entry("hello", NULL);
+    if (!entry) {
+        printf("failed to create entry\n");
+    } else {
+        printf("%s\n", entry->text);
+    }
+    destroy_menu_entry(entry);
+
     return EXIT_SUCCESS;
 }
