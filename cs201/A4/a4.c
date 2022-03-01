@@ -29,7 +29,7 @@ int is_hex(const char *arg) {
     return 1;
 }
 
-void print_nums_format(int *args, size_t length, int is_hex, const char *seporator) {
+void print_nums_format(int *args, size_t length, int result, int is_hex, const char *seporator) {
     int i = 1;
     if (is_hex) {
         printf("0x%x", args[0]);
@@ -43,6 +43,12 @@ void print_nums_format(int *args, size_t length, int is_hex, const char *seporat
         } else {
             printf(" %s %d", seporator, args[i]);
         }
+    }
+
+    if (is_hex) {
+        printf(" = 0x%x\n", result);
+    } else {
+        printf(" = %d\n", result);
     }
 }
 
@@ -103,10 +109,8 @@ void addition_com(callback_args *args) {
         acc += args->parsed[i];
     }
 
-    print_nums_format(args->parsed, args->argc, 0, "+");
-    printf(" = %d\n", acc);
-    print_nums_format(args->parsed, args->argc, 1, "+");
-    printf(" = 0x%x\n", acc);
+    print_nums_format(args->parsed, args->argc, acc, 0, "+");
+    print_nums_format(args->parsed, args->argc, acc, 1, "+");
 }
 
 void subtraction_com(callback_args *args) {
@@ -115,10 +119,8 @@ void subtraction_com(callback_args *args) {
         acc -= args->parsed[i];
     }
 
-    print_nums_format(args->parsed, args->argc, 0, "-");
-    printf(" = %d\n", acc);
-    print_nums_format(args->parsed, args->argc, 1, "-");
-    printf(" = 0x%x\n", acc);
+    print_nums_format(args->parsed, args->argc, acc, 0, "-");
+    print_nums_format(args->parsed, args->argc, acc, 1, "-");
 }
 
 void multiplication_com(callback_args *args) {
@@ -127,10 +129,8 @@ void multiplication_com(callback_args *args) {
         acc *= args->parsed[i];
     }
 
-    print_nums_format(args->parsed, args->argc, 0, "*");
-    printf(" = %d\n", acc);
-    print_nums_format(args->parsed, args->argc, 1, "*");
-    printf(" = 0x%x\n", acc);
+    print_nums_format(args->parsed, args->argc, acc, 0, "*");
+    print_nums_format(args->parsed, args->argc, acc, 1, "*");
 }
 
 void division_com(callback_args *args) {
@@ -141,10 +141,8 @@ void division_com(callback_args *args) {
 void modulo_com(callback_args *args) {
     int res = args->parsed[0] % args->parsed[1];
 
-    print_nums_format(args->parsed, 2, 0, "mod"); //TODO: Refector print_nums_format to incorporate final value
-    printf(" = %d\n", res);
-    print_nums_format(args->parsed, 2, 1, "mod");
-    printf(" = 0x%x\n", res);
+    print_nums_format(args->parsed, 2, res, 0, "mod");
+    print_nums_format(args->parsed, 2, res, 1, "mod");
 }
 
 void reverse_com(callback_args *args) {
