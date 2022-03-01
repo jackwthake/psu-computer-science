@@ -68,8 +68,63 @@ int process_args(callback_args *args, int argc, char **argv) {
 }
 
 
+/*
+ * Menu callback functions
+*/
+
+void exit_com(callback_args *args) {
+    exit(EXIT_SUCCESS);
+}
+
+void addition_com(callback_args *args) {
+    int i = 1, acc = args->parsed[0];
+
+    printf("%d", args->parsed[0]);
+    for (; i < args->argc; ++i) {
+        printf(" + %d", args->parsed[i]);
+        acc += args->parsed[i];
+    }
+
+    printf(" = %d\n", acc);
+}
+
+void subtraction_com(callback_args *args) {
+    int i = 1, acc = args->parsed[0];
+
+    printf("%d", args->parsed[0]);
+    for (; i < args->argc; ++i) {
+        printf(" - %d", args->parsed[i]);
+        acc -= args->parsed[i];
+    }
+
+    printf(" = %d\n", acc);
+}
+
+
+/*
+ * Register all menu functions
+*/
+int create_and_register_entries(menu_t *menu) {
+    if (!menu) {
+        return 0;
+    }
+
+    menu_entry_t entries[3] = { 
+        { 5, "Exit", exit_com },
+        { 9, "Addition", addition_com },
+        { 12, "Subtraction", subtraction_com } 
+    };
+    
+    create_menu(menu, entries, 3);
+
+    return 1;
+}
+
+
 int main(int argc, char **argv) {
     callback_args args;
+    menu_t main_menu;
+
     if (argc < 3 || argc > 15) {
       exit_error_state("Invalid number of inputs supplied.");
     }
@@ -77,6 +132,13 @@ int main(int argc, char **argv) {
     if (!process_args(&args, argc - 1, argv + 1)) { /* we advance argv just to isolate the actual arguments */
         exit_error_state("Failed to parse arguments.");
     }
+
+    if (!create_and_register_entries(&main_menu)) {
+        exit_error_state("Failed to register menu entries.");
+    }
+
+    print_menu(&main_menu);
+    execute_entry(&main_menu, 2, &args);
 
     return EXIT_SUCCESS;
 }
