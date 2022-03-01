@@ -9,7 +9,7 @@
  * Little helper to print an error message and exit returning an error code
 */
 void exit_error_state(const char *err) {
-    printf("%s\n", err);
+    fprintf(stderr, "%s\n", err);
     exit(EXIT_FAILURE);
 }
 
@@ -34,6 +34,10 @@ int process_args(callback_args *args, int argc, char **argv) {
         return 0;
     }
 
+    /* 
+     * NOTE: I'm not deep copying argv because to my knowledge there's no chance of it getting deallocated, 
+     *       unless the program itself exits or aborts.
+    */
     args->argc = argc;
     args->argv = argv;
     args->parsed = calloc(argc, sizeof(int));
@@ -41,6 +45,7 @@ int process_args(callback_args *args, int argc, char **argv) {
         return 0;
     }
 
+    /* parse and copy over arguments */
     int i = 0;
     char *fail_ptr = NULL;
     for (; i < argc; ++i) {
@@ -69,7 +74,7 @@ int main(int argc, char **argv) {
       exit_error_state("Invalid number of inputs supplied.");
     }
 
-    if (!process_args(&args, argc - 1, argv + 1)) {
+    if (!process_args(&args, argc - 1, argv + 1)) { /* we advance argv just to isolate the actual arguments */
         exit_error_state("Failed to parse arguments.");
     }
 
