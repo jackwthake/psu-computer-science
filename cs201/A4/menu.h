@@ -8,7 +8,7 @@
 */
 typedef struct callback_args {
     size_t argc, length;
-    char *argv;
+    char **argv;
     int *parsed;
 } callback_args;
 
