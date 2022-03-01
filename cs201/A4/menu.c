@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MENU_TEXT_MAX_LENGTH 10
+#define MENU_TEXT_MAX_LENGTH 15
 
 /*
  * Creates a memory entry structure, copying over relevant memory

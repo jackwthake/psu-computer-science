@@ -20,7 +20,7 @@ typedef void (*menu_callback)(callback_args *);
 */
 typedef struct menu_entry_t {
     size_t menu_length;
-    char *menu_text;
+    const char *menu_text;
     menu_callback callback;
 } menu_entry_t;
 

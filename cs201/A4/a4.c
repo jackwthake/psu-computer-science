@@ -17,7 +17,11 @@ void exit_error_state(const char *err) {
 /*
  * Checks if a buffer has the beggining of a hex string 
 */
-int is_valid_hex(const char *arg) {
+int is_hex(const char *arg) {
+    if (*arg == '-') { /* consume negative sign */
+        ++arg;
+    }
+
     if (*arg != '0' && tolower(arg[1]) != 'x') {
         return 0;
     }
@@ -49,7 +53,7 @@ int process_args(callback_args *args, int argc, char **argv) {
     int i = 0;
     char *fail_ptr = NULL;
     for (; i < argc; ++i) {
-        if (is_valid_hex(argv[i])) { /* possible hex string */
+        if (is_hex(argv[i])) { /* possible hex string */
             args->parsed[i] = strtol(argv[i], &fail_ptr, 16);
 
             if (strncmp(fail_ptr, "", 1) != 0) { /* check for invalid input */
@@ -115,7 +119,9 @@ int create_and_register_entries(menu_t *menu) {
         { 12, "Subtraction", subtraction_com } 
     };
     
-    create_menu(menu, entries, 3);
+    if (!create_menu(menu, entries, 3)) {
+        return 0;
+    }
 
     return 1;
 }
@@ -137,8 +143,15 @@ int main(int argc, char **argv) {
         exit_error_state("Failed to register menu entries.");
     }
 
-    print_menu(&main_menu);
-    execute_entry(&main_menu, 2, &args);
+    for (;;) {
+        int choice = 0;
+        
+        printf("\n");
+        print_menu(&main_menu);
+        printf("\nMenu item: ");
+        scanf("%1d", &choice);
+        execute_entry(&main_menu, choice, &args);
+    }
 
     return EXIT_SUCCESS;
 }
