@@ -29,6 +29,23 @@ int is_hex(const char *arg) {
     return 1;
 }
 
+void print_nums_format(int *args, size_t length, int is_hex, const char *seporator) {
+    int i = 1;
+    if (is_hex) {
+        printf("0x%x", args[0]);
+    } else {
+        printf("%d", args[0]);
+    }
+
+    for (; i < length; ++i) {
+        if (is_hex) {
+            printf(" %s 0x%x", seporator, args[i]);
+        } else {
+            printf(" %s %d", seporator, args[i]);
+        }
+    }
+}
+
 
 /*
  * Process the command line arguments, populating the callback_args struct
@@ -81,27 +98,66 @@ void exit_com(callback_args *args) {
 }
 
 void addition_com(callback_args *args) {
-    int i = 1, acc = args->parsed[0];
-
-    printf("%d", args->parsed[0]);
+    int i = 0, acc = 0;
     for (; i < args->argc; ++i) {
-        printf(" + %d", args->parsed[i]);
         acc += args->parsed[i];
     }
 
+    print_nums_format(args->parsed, args->argc, 0, "+");
     printf(" = %d\n", acc);
+    print_nums_format(args->parsed, args->argc, 1, "+");
+    printf(" = 0x%x\n", acc);
 }
 
 void subtraction_com(callback_args *args) {
     int i = 1, acc = args->parsed[0];
-
-    printf("%d", args->parsed[0]);
     for (; i < args->argc; ++i) {
-        printf(" - %d", args->parsed[i]);
         acc -= args->parsed[i];
     }
 
+    print_nums_format(args->parsed, args->argc, 0, "-");
     printf(" = %d\n", acc);
+    print_nums_format(args->parsed, args->argc, 1, "-");
+    printf(" = 0x%x\n", acc);
+}
+
+void multiplication_com(callback_args *args) {
+    int i = 1, acc = args->parsed[0];
+    for (; i < args->argc; ++i) {
+        acc *= args->parsed[i];
+    }
+
+    print_nums_format(args->parsed, args->argc, 0, "*");
+    printf(" = %d\n", acc);
+    print_nums_format(args->parsed, args->argc, 1, "*");
+    printf(" = 0x%x\n", acc);
+}
+
+void division_com(callback_args *args) {
+    float res = args->parsed[0] / args->parsed[1];
+    printf("%d / %d = %f\n", args->parsed[0], args->parsed[1], res);
+}
+
+void modulo_com(callback_args *args) {
+    int res = args->parsed[0] % args->parsed[1];
+
+    print_nums_format(args->parsed, 2, 0, "mod"); //TODO: Refector print_nums_format to incorporate final value
+    printf(" = %d\n", res);
+    print_nums_format(args->parsed, 2, 1, "mod");
+    printf(" = 0x%x\n", res);
+}
+
+void reverse_com(callback_args *args) {
+    int i = args->argc - 1;
+    for (; i >= 0; --i) {
+        char *str = args->argv[i];
+        int j = strnlen(str, 10); //TODO: Find currect max length of number
+        for (; j >= 0; --j) {
+            putc(str[j], stdout);
+        }
+
+        putc(' ', stdout);
+    }
 }
 
 
@@ -113,13 +169,17 @@ int create_and_register_entries(menu_t *menu) {
         return 0;
     }
 
-    menu_entry_t entries[3] = { 
+    menu_entry_t entries[7] = { 
         { 5, "Exit", exit_com },
         { 9, "Addition", addition_com },
-        { 12, "Subtraction", subtraction_com } 
+        { 12, "Subtraction", subtraction_com },
+        { 15, "Multiplication", multiplication_com },
+        { 9, "Division", division_com },
+        { 7, "Modulo", modulo_com },
+        { 14, "Reverse Input", reverse_com }
     };
     
-    if (!create_menu(menu, entries, 3)) {
+    if (!create_menu(menu, entries, 7)) {
         return 0;
     }
 
@@ -131,7 +191,7 @@ int main(int argc, char **argv) {
     callback_args args;
     menu_t main_menu;
 
-    if (argc < 3 || argc > 15) {
+    if (argc < 3 || argc > 16) {
       exit_error_state("Invalid number of inputs supplied.");
     }
 
