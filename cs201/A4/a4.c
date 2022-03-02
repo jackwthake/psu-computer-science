@@ -130,7 +130,7 @@ void multiplication_com(callback_args *args) {
 }
 
 void division_com(callback_args *args) {
-    float res = args->parsed[0] / args->parsed[1];
+    float res = (float)args->parsed[0] / (float)args->parsed[1];
     printf("%d / %d = %f\n", args->parsed[0], args->parsed[1], res);
 }
 
