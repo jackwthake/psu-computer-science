@@ -99,10 +99,6 @@ int process_args(callback_args *args, int argc, char **argv) {
  * Menu callback functions
 */
 
-void exit_com(callback_args *args) {
-    exit(EXIT_SUCCESS);
-}
-
 void addition_com(callback_args *args) {
     int i = 0, acc = 0;
     for (; i < args->argc; ++i) {
@@ -168,7 +164,7 @@ int create_and_register_entries(menu_t *menu) {
     }
 
     menu_entry_t entries[7] = { 
-        { 5, "Exit", exit_com },
+        { 5, "Exit", NULL },
         { 9, "Addition", addition_com },
         { 12, "Subtraction", subtraction_com },
         { 15, "Multiplication", multiplication_com },
@@ -208,8 +204,16 @@ int main(int argc, char **argv) {
         print_menu(&main_menu);
         printf("\nMenu item: ");
         scanf("%1d", &choice);
+
+        if (choice == 0) {
+            break;
+        }
+
         execute_entry(&main_menu, choice, &args);
     }
+
+    destroy_menu(&main_menu);
+    free(args.parsed);
 
     return EXIT_SUCCESS;
 }
