@@ -17,10 +17,12 @@ int create_entry(menu_entry_t *entry, const char *text, menu_callback callback) 
     /* populate fields */
     entry->callback = callback;
     entry->menu_length = strnlen(text, MENU_TEXT_MAX_LENGTH);
-    entry->menu_text = calloc(entry->menu_length, sizeof(char)); /* allocate and copy over text */
+    entry->menu_text = calloc(entry->menu_length + 1, sizeof(char)); /* allocate and copy over text */
     if (!entry->menu_text || !strncpy(entry->menu_text, text, entry->menu_length)) {
         return 0;
     }
+
+    entry->menu_text[entry->menu_length] = '\0'; /* ensure termination */
 
     return 1;
 }
