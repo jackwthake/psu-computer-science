@@ -145,12 +145,12 @@ void reverse_com(callback_args *args) {
     int i = args->argc - 1;
     for (; i >= 0; --i) {
         char *str = args->argv[i];
-        int j = strnlen(str, 10); //TODO: Find currect max length of number
+        int j = strnlen(str, 15) - 1;
         for (; j >= 0; --j) {
-            putc(str[j], stdout);
+            putchar(str[j]);
         }
 
-        putc(' ', stdout);
+        putchar(' ');
     }
 }
 
