@@ -171,9 +171,8 @@ int create_and_register_entries(menu_t *menu) {
         return 0;
     }
 
-    /* create all of the menu entries */
     menu_entry_t entries[NUM_MENU_ENTRIES] = { 
-        { 5, "Exit", NULL }, /* exit doesn't need a function pointer */
+        { 5, "Exit", NULL },
         { 9, "Addition", addition_com },
         { 12, "Subtraction", subtraction_com },
         { 15, "Multiplication", multiplication_com },
@@ -182,7 +181,6 @@ int create_and_register_entries(menu_t *menu) {
         { 14, "Reverse Input", reverse_com }
     };
     
-    /* create the menu struct with the above created entries */
     if (!create_menu(menu, entries, NUM_MENU_ENTRIES)) {
         return 0;
     }
