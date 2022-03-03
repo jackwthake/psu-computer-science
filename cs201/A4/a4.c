@@ -210,14 +210,22 @@ int main(int argc, char **argv) {
 
     /* main loop */
     for (;;) {
-        int choice = 0;
-        
+        int choice = -1;
+
         printf("\n");
         print_menu(&main_menu);
+        
         printf("\nMenu item: ");
-        scanf("%1d", &choice);
+        if (scanf("%d", &choice) != 1) { /* attempt to read input */
+            char c = '\0';
 
-        if (choice == 0) {
+            printf("Error, Bad input.\n");
+            while((c = getchar()) != '\n' && c != EOF); /* clear input buffer */
+
+            continue; /* skip attempting to execute comand since it was invalid */
+        }
+
+        if (choice == 0) { /* exit */
             break;
         }
 
