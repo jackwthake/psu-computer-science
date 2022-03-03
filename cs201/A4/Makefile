@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-std=gnu++11 -Wall -ansi
+CFLAGS=-Wall -ansi
 DFLAGS=-g
 PROGS=a4
 OBJS=menu.o

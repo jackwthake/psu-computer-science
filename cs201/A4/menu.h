@@ -4,6 +4,13 @@
 #include <stddef.h>
 
 /*
+ * strnlen seems to be a wonky function in the standard, every resource I've looked at
+ * claims it should be in string.h (including man pages), however there doesn't seem
+ * to be a proptotype in there. This supresses compiler warnings
+*/
+extern size_t strnlen(const char *, size_t);
+
+/*
  * Helper struct to group together arguments
 */
 typedef struct callback_args {
