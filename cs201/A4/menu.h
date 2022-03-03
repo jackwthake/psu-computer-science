@@ -5,7 +5,7 @@
 
 /*
  * strnlen seems to be a wonky function in the standard, every resource I've looked at
- * claims it should be in string.h (including man pages), however there doesn't seem
+ * claims it should be in string.h (including man pages). However, there doesn't seem
  * to be a proptotype in there. This supresses compiler warnings
 */
 extern size_t strnlen(const char *, size_t);
@@ -43,7 +43,6 @@ typedef struct menu_t {
 
 /* menu_entry_t functions */
 int create_entry(menu_entry_t *entry, const char *text, menu_callback callback);
-int copy_entry(menu_entry_t *dest, const menu_entry_t *src);
 void destroy_entry(menu_entry_t *entry);
 
 /* menu_t functions */

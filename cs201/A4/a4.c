@@ -5,6 +5,8 @@
 
 #include "menu.h"
 
+#define NUM_MENU_ENTRIES 7
+
 /*
  * Little helper to print an error message and exit returning an error code
 */
@@ -29,14 +31,18 @@ int is_hex(const char *arg) {
     return 1;
 }
 
+/*
+ * print out a string of numbers in a specific format, with a separator
+*/
 void print_nums_format(int *args, size_t length, int result, int is_hex, const char *seporator) {
     int i = 1;
-    if (is_hex) {
+    if (is_hex) { /* print the first element with the right format */
         printf("0x%x", args[0]);
     } else {
         printf("%d", args[0]);
     }
 
+    /* print the rest of the array in the correct format */
     for (; i < length; ++i) {
         if (is_hex) {
             printf(" %s 0x%x", seporator, args[i]);
@@ -45,6 +51,7 @@ void print_nums_format(int *args, size_t length, int result, int is_hex, const c
         }
     }
 
+    /* print the result value in format */
     if (is_hex) {
         printf(" = 0x%x\n", result);
     } else {
@@ -102,7 +109,7 @@ int process_args(callback_args *args, int argc, char **argv) {
 void addition_com(callback_args *args) {
     int i = 0, acc = 0;
     for (; i < args->argc; ++i) {
-        acc += args->parsed[i];
+        acc += args->parsed[i]; /* add from left to right */
     }
 
     print_nums_format(args->parsed, args->argc, acc, 0, "+");
@@ -112,7 +119,7 @@ void addition_com(callback_args *args) {
 void subtraction_com(callback_args *args) {
     int i = 1, acc = args->parsed[0];
     for (; i < args->argc; ++i) {
-        acc -= args->parsed[i];
+        acc -= args->parsed[i]; /* subtract from left to right */
     }
 
     print_nums_format(args->parsed, args->argc, acc, 0, "-");
@@ -122,7 +129,7 @@ void subtraction_com(callback_args *args) {
 void multiplication_com(callback_args *args) {
     int i = 1, acc = args->parsed[0];
     for (; i < args->argc; ++i) {
-        acc *= args->parsed[i];
+        acc *= args->parsed[i]; /* multiply from left to right */
     }
 
     print_nums_format(args->parsed, args->argc, acc, 0, "*");
@@ -130,23 +137,24 @@ void multiplication_com(callback_args *args) {
 }
 
 void division_com(callback_args *args) {
-    float res = (float)args->parsed[0] / (float)args->parsed[1];
+    float res = (float)args->parsed[0] / (float)args->parsed[1]; /* divide first and second argument */
     printf("%d / %d = %f\n", args->parsed[0], args->parsed[1], res);
 }
 
 void modulo_com(callback_args *args) {
-    int res = args->parsed[0] % args->parsed[1];
+    int res = args->parsed[0] % args->parsed[1]; /* get argument 1 mod argument 2 */
 
     print_nums_format(args->parsed, 2, res, 0, "mod");
     print_nums_format(args->parsed, 2, res, 1, "mod");
 }
 
+/* reverses the text entered to the program */
 void reverse_com(callback_args *args) {
     int i = args->argc - 1;
-    for (; i >= 0; --i) {
+    for (; i >= 0; --i) { /* loop through arguments starting at the last */
         char *str = args->argv[i];
         int j = strnlen(str, 15) - 1;
-        for (; j >= 0; --j) {
+        for (; j >= 0; --j) { /* loop through characters starting from last */
             putchar(str[j]);
         }
 
@@ -163,7 +171,7 @@ int create_and_register_entries(menu_t *menu) {
         return 0;
     }
 
-    menu_entry_t entries[7] = { 
+    menu_entry_t entries[NUM_MENU_ENTRIES] = { 
         { 5, "Exit", NULL },
         { 9, "Addition", addition_com },
         { 12, "Subtraction", subtraction_com },
@@ -173,7 +181,7 @@ int create_and_register_entries(menu_t *menu) {
         { 14, "Reverse Input", reverse_com }
     };
     
-    if (!create_menu(menu, entries, 7)) {
+    if (!create_menu(menu, entries, NUM_MENU_ENTRIES)) {
         return 0;
     }
 
@@ -185,18 +193,22 @@ int main(int argc, char **argv) {
     callback_args args;
     menu_t main_menu;
 
+    /* check number of arguments */
     if (argc < 3 || argc > 16) {
       exit_error_state("Invalid number of inputs supplied.");
     }
 
+    /* process and populate argument structure */
     if (!process_args(&args, argc - 1, argv + 1)) { /* we advance argv just to isolate the actual arguments */
         exit_error_state("Failed to parse arguments.");
     }
 
+    /* create the menu struct */
     if (!create_and_register_entries(&main_menu)) {
         exit_error_state("Failed to register menu entries.");
     }
 
+    /* main loop */
     for (;;) {
         int choice = 0;
         
