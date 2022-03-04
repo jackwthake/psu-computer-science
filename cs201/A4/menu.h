@@ -14,7 +14,7 @@ extern size_t strnlen(const char *, size_t);
  * Helper struct to group together arguments
 */
 typedef struct callback_args {
-    size_t argc;
+    size_t argc, parsed_len;
     char **argv;
     int *parsed;
 } callback_args;

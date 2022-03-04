@@ -28,6 +28,14 @@ int is_hex(const char *arg) {
         return 0;
     }
 
+    arg += 2; /* advance passed the '0x' */
+    int i = 0, length = strnlen(arg, 10);
+    for (; i < length; ++i) { /* loop through to check for valid hex characters */
+        if (!ishexnumber(arg[i])) {
+            return 0;
+        }
+    }
+
     return 1;
 }
 
@@ -80,24 +88,27 @@ int process_args(callback_args *args, int argc, char **argv) {
     }
 
     /* parse and copy over arguments */
-    int i = 0;
+    int i = 0, parsed_ind = 0;
     char *fail_ptr = NULL;
     for (; i < argc; ++i) {
-        if (is_hex(argv[i])) { /* possible hex string */
-            args->parsed[i] = strtol(argv[i], &fail_ptr, 16);
+        if (is_hex(argv[i])) { /* detect hex string */
+            args->parsed[parsed_ind] = strtol(argv[i], &fail_ptr, 16);
 
             if (strncmp(fail_ptr, "", 1) != 0) { /* check for invalid input */
-                return 0;
+                return 0; /* we can't except invalid hex numbers regardless */
+            } else {
+                ++parsed_ind;
             }
         } else { /* not a hex string */
-            args->parsed[i] = strtol(argv[i], &fail_ptr, 10);
+            args->parsed[parsed_ind] = strtol(argv[i], &fail_ptr, 10);
 
-            if (strncmp(fail_ptr, "", 1) != 0) { /* check for invalid input */
-                return 0;
+            if (strncmp(fail_ptr, "", 1) == 0) { /* check for invalid input */
+                ++parsed_ind; /* if this check succeeds, we successfully read in a number, advance our parsed index */
             }
         }
     }
 
+    args->parsed_len = parsed_ind; /* our last index will be the length of the parsed array */
     return 1;
 }
 
@@ -108,32 +119,32 @@ int process_args(callback_args *args, int argc, char **argv) {
 
 void addition_com(callback_args *args) {
     int i = 0, acc = 0;
-    for (; i < args->argc; ++i) {
+    for (; i < args->parsed_len; ++i) {
         acc += args->parsed[i]; /* add from left to right */
     }
 
-    print_nums_format(args->parsed, args->argc, acc, 0, "+");
-    print_nums_format(args->parsed, args->argc, acc, 1, "+");
+    print_nums_format(args->parsed, args->parsed_len, acc, 0, "+");
+    print_nums_format(args->parsed, args->parsed_len, acc, 1, "+");
 }
 
 void subtraction_com(callback_args *args) {
     int i = 1, acc = args->parsed[0];
-    for (; i < args->argc; ++i) {
+    for (; i < args->parsed_len; ++i) {
         acc -= args->parsed[i]; /* subtract from left to right */
     }
 
-    print_nums_format(args->parsed, args->argc, acc, 0, "-");
-    print_nums_format(args->parsed, args->argc, acc, 1, "-");
+    print_nums_format(args->parsed, args->parsed_len, acc, 0, "-");
+    print_nums_format(args->parsed, args->parsed_len, acc, 1, "-");
 }
 
 void multiplication_com(callback_args *args) {
     int i = 1, acc = args->parsed[0];
-    for (; i < args->argc; ++i) {
+    for (; i < args->parsed_len; ++i) {
         acc *= args->parsed[i]; /* multiply from left to right */
     }
 
-    print_nums_format(args->parsed, args->argc, acc, 0, "*");
-    print_nums_format(args->parsed, args->argc, acc, 1, "*");
+    print_nums_format(args->parsed, args->parsed_len, acc, 0, "*");
+    print_nums_format(args->parsed, args->parsed_len, acc, 1, "*");
 }
 
 void division_com(callback_args *args) {
