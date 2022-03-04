@@ -31,7 +31,7 @@ int is_hex(const char *arg) {
     arg += 2; /* advance passed the '0x' */
     int i = 0, length = strnlen(arg, 10);
     for (; i < length; ++i) { /* loop through to check for valid hex characters */
-        if (!ishexnumber(arg[i])) {
+        if (!isxdigit(arg[i])) {
             return 0;
         }
     }
